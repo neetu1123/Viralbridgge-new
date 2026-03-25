@@ -83,7 +83,7 @@ export default function FinalCTA() {
                   value={email}
                   onChange={e => { setEmail(e.target.value); setError(''); }}
                   placeholder="Enter your work email"
-                  className="w-full bg-surface border border-white/10 rounded-full px-6 py-4 text-sm text-fg placeholder:text-fg-dim focus:outline-none focus:border-primary/60 transition-colors font-body"
+                  className="w-full bg-surface border outline-primary rounded-full px-6 py-4 text-sm text-fg placeholder:text-fg-dim focus:outline-none focus:border-primary/60 transition-colors font-body"
                   aria-label="Work email address"
                 />
               </div>

@@ -52,9 +52,13 @@ export default function DashboardPreview() {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Heading */}
         <div className="text-center mb-16 scroll-reveal-hidden">
-          <span className="text-xs font-display font-700 uppercase tracking-widest text-primary mb-4 block">
-            Real-Time Intelligence
+           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border outline-primary mb-8 ">
+          <span className="w-2 h-2 rounded-full bg-vb-green pulse-dot" />
+          <span className="text-xs font-display font-600 text-primary-light uppercase tracking-widest">
+ Real-Time Intelligence
           </span>
+        </div>
+         
           <h2 className="font-display font-800 text-fg mb-4"
             style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}>
             Track Everything in{' '}

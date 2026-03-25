@@ -140,9 +140,13 @@ export default function CreatorMarketplace() {
         {/* Heading */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 scroll-reveal-hidden">
           <div>
-            <span className="text-xs font-display font-700 uppercase tracking-widest text-primary mb-4 block">
-              Creator Network
-            </span>
+               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border outline-primary mb-8 ">
+          <span className="w-2 h-2 rounded-full bg-vb-green pulse-dot" />
+          <span className="text-xs font-display font-600 text-primary-light uppercase tracking-widest">
+   Creator Network
+          </span>
+        </div>
+            
             <h2 className="font-display font-800 text-fg"
               style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}>
               Discover High-Performing{' '}

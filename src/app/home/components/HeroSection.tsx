@@ -62,7 +62,7 @@ export default function HeroSection() {
           {/* LEFT: Typography */}
           <div className="lg:col-span-7">
             {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 mb-8 scroll-reveal-hidden revealed">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border outline-primary bg-primary/10 mb-8 scroll-reveal-hidden revealed">
               <span className="w-2 h-2 rounded-full bg-vb-green pulse-dot" />
               <span className="text-xs font-display font-600 text-primary-light uppercase tracking-widest">
                 Live Platform · 85K+ Creators
