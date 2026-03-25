@@ -174,6 +174,7 @@ export default function DashboardPreview() {
                     <div
                       key={i}
                       className="bg-surface-2 rounded-xl p-4 card-hover cursor-default hover:border-accent/40 hover:shadow-lg transition-all"
+                      style={{border: '1px solid var(--color-button-main)'  }}
                     >
                       <div className="flex items-start justify-between mb-3">
                         <div>

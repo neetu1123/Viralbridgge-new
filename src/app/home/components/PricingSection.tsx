@@ -108,7 +108,7 @@ export default function PricingSection() {
                 ...(tier.highlight ? {
                   background: 'linear-gradient(135deg, rgba(124,58,237,0.25) 0%, rgba(124,58,237,0.08) 100%)',
                   border: '1px solid rgba(124,58,237,0.4)',
-                } : {}),
+                } : { border: '1px solid rgba(124,58,237,0.4)'}),
               }}
             >
               {tier.highlight && (

@@ -183,8 +183,8 @@ export default function CreatorMarketplace() {
           {filteredCreators.map((creator, i) => (
             <div
               key={creator.handle}
-              className="scroll-reveal-hidden card-hover bg-surface border border-white/6 rounded-2xl p-6 relative overflow-hidden"
-              style={{ transitionDelay: `${i * 0.08}s` }}
+              className="scroll-reveal-hidden card-hover bg-surface border rounded-2xl p-6 relative overflow-hidden"
+              style={{ transitionDelay: `${i * 0.08}s`, border: '1px solid rgba(124,58,237,0.25)' }}
             >
               {/* Viral score badge */}
               <div
