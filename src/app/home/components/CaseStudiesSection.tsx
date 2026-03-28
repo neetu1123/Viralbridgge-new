@@ -57,12 +57,12 @@ export default function CaseStudiesSection() {
   }, []);
 
   return (
-    <section className="section-padding bg-white">
+    <section className="section-padding bg-[#f3e8ff]">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center max-w-xl mx-auto mb-14">
           <span className="badge badge-primary mb-4">Case Studies</span>
           <h2 className="font-display text-[32px] lg:text-[40px] font-700 text-heading tracking-tight leading-tight">
-            Real campaigns,<br />real numbers
+            Real campaigns,<br />real <i>numbers</i>
           </h2>
           <p className="text-[17px] text-sub mt-4">No cherry-picked stats. These are real campaigns run on ViralBridgge.</p>
         </div>

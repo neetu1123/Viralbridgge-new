@@ -41,7 +41,7 @@ export default function ForBrandsCreatorsSection() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-14">
           <h2 className="font-display text-[32px] lg:text-[40px] font-700 text-heading tracking-tight leading-tight">
-           Only Pay for What Works — Views, <br /> Clicks, or Conversions
+           Only Pay for What Works — Views,<br /> Clicks, or <i>Conversions</i>
           </h2>
           <p className="text-[17px] text-sub mt-4 max-w-xl mx-auto">
             Whether you are a brand chasing ROI or a creator building income — ViralBridgge works for you.

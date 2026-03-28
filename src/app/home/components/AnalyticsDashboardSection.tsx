@@ -47,7 +47,7 @@ export default function AnalyticsDashboardSection() {
         <div className="text-center max-w-xl mx-auto mb-14">
           <span className="badge badge-primary mb-4">Analytics</span>
           <h2 className="font-display text-[32px] lg:text-[40px] font-700 text-heading tracking-tight leading-tight">
-            Your campaign dashboard,<br />always live
+            Your campaign dashboard,<br />always <i>live</i>
           </h2>
           <p className="text-[17px] text-sub mt-4">
             Every metric you need, updated hourly. No more waiting for agency reports.

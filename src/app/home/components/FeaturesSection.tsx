@@ -64,7 +64,7 @@ export default function FeaturesSection() {
         <div className="text-center max-w-2xl mx-auto mb-14">
           <span className="badge badge-primary mb-4">Why ViralBridgge</span>
           <h2 className="font-display text-[36px] lg:text-[44px] font-700 text-heading tracking-tight leading-tight mb-4">
-            Built for results,<br />not just reach
+            Built for <i>results</i>,<br />not just reach
           </h2>
           <p className="text-[17px] text-sub leading-relaxed">
             Every feature is designed around one outcome: campaigns that drive real revenue, not vanity metrics.

@@ -75,7 +75,7 @@ export default function PricingSection() {
         <div className="text-center max-w-xl mx-auto mb-14">
           <span className="badge badge-primary mb-4">Pricing</span>
           <h2 className="font-display  text-[32px] lg:text-[40px] font-700 text-heading tracking-tight leading-tight">
-            Transparent pricing,<br />zero surprises
+            Transparent pricing,<br />zero <i>surprises</i>
           </h2>
           <p className="text-[17px] text-sub mt-4">
             No retainers. No hidden fees. Pay for what you use.

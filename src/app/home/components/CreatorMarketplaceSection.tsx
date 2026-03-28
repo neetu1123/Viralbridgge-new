@@ -158,7 +158,7 @@ export default function CreatorMarketplaceSection() {
                   backgroundClip: 'text',
                 }}
               >
-                actually convert
+                <i>actually convert</i>
               </span>
             </h2>
           </div>

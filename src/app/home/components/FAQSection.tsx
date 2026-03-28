@@ -49,7 +49,7 @@ export default function FAQSection() {
         <div className="text-center max-w-xl mx-auto mb-14">
           <span className="badge badge-primary mb-4">FAQ</span>
           <h2 className="font-display text-[32px] lg:text-[40px] font-700 text-heading tracking-tight leading-tight">
-            Questions we get<br />all the time
+            Questions we get<br /><span className='italic'><i>all the time</i></span>
           </h2>
           <p className="text-[17px] text-sub mt-4">
              find your answer?{' '}

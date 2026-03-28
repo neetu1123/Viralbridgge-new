@@ -106,7 +106,7 @@ export default function HeroSection() {
                     backgroundClip: 'text',
                   }}
                 >
-                  Minutes,
+                  <i>Minutes</i>,
                 </span>
                 <br />
                 <span

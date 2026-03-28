@@ -63,7 +63,7 @@ export default function FinalCTA() {
           style={{ fontSize: 'clamp(2.2rem, 6vw, 4rem)' }}
         >
           Start Your First Campaign{' '}
-          <span className="gradient-text">Today</span>
+          <span className="gradient-text"><i>today</i></span>
         </h2>
 
         <p className="text-lg text-fg-muted mb-12 scroll-reveal-hidden">
