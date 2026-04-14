@@ -1,6 +1,6 @@
 import React from 'react';
 import { UserPlus, Send, DollarSign, Megaphone, Users, Handshake } from 'lucide-react';
-import Icon from '@/components/ui/AppIcon';
+// import AppIcon from '@/src/components/ui/AppIcon';
 
 
 const CREATOR_STEPS = [
@@ -68,7 +68,7 @@ function StepCard({
 }: {
   step: { id: string; step: string; icon: React.ElementType; title: string; desc: string; color: string; bg: string };
 }) {
-  const Icon = step.icon;
+  const AppIcon = step.icon;
   return (
     <div className="group bg-white rounded-2xl border border-[#E5E7EB] p-6 shadow-card hover:shadow-card-hover transition-all duration-200 hover:-translate-y-1 relative overflow-hidden">
       <div className="absolute top-4 right-4 font-display font-800 text-[48px] leading-none text-[#F2F3F7] select-none">
@@ -78,7 +78,7 @@ function StepCard({
         className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 relative z-10"
         style={{ backgroundColor: step.bg }}
       >
-        <Icon size={22} style={{ color: step.color }} />
+        <AppIcon size={22} style={{ color: step.color }} />
       </div>
       <h3 className="font-display font-700 text-[#1F1F2E] text-base mb-2 relative z-10">{step.title}</h3>
       <p className="text-[#6B6B8A] text-sm leading-relaxed relative z-10">{step.desc}</p>
