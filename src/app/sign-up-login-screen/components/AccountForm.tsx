@@ -57,7 +57,7 @@ export default function AccountForm({ role, onNext }: AccountFormProps) {
             {...register('firstName', { required: 'First name is required' })}
             type="text"
             placeholder="Sofia"
-            className={`w-full px-4 py-2.5 rounded-xl border text-[#1F1F2E] text-sm placeholder-[#9AA0B4] outline-none transition-all duration-150 focus:border-[#7B2FF7] focus:ring-2 focus:ring-[#7B2FF7]/10 ₹{
+            className={`w-full px-4 py-2.5 rounded-xl border text-[#1F1F2E] text-sm placeholder-[#9AA0B4] outline-none transition-all duration-150 focus:border-[#7B2FF7] focus:ring-2 focus:ring-[#7B2FF7]/10 ${ 
               errors.firstName ? 'border-red-400 bg-red-50' : 'border-[#E5E7EB] bg-white'
             }`}
           />
@@ -73,7 +73,7 @@ export default function AccountForm({ role, onNext }: AccountFormProps) {
             {...register('lastName', { required: 'Last name is required' })}
             type="text"
             placeholder="Chen"
-            className={`w-full px-4 py-2.5 rounded-xl border text-[#1F1F2E] text-sm placeholder-[#9AA0B4] outline-none transition-all duration-150 focus:border-[#7B2FF7] focus:ring-2 focus:ring-[#7B2FF7]/10 ₹{
+            className={`w-full px-4 py-2.5 rounded-xl border text-[#1F1F2E] text-sm placeholder-[#9AA0B4] outline-none transition-all duration-150 focus:border-[#7B2FF7] focus:ring-2 focus:ring-[#7B2FF7]/10 ${ 
               errors.lastName ? 'border-red-400 bg-red-50' : 'border-[#E5E7EB] bg-white'
             }`}
           />
@@ -95,7 +95,7 @@ export default function AccountForm({ role, onNext }: AccountFormProps) {
           })}
           type="email"
           placeholder={role === 'brand' ? 'marketing@yourbrand.com' : 'sofia@gmail.com'}
-          className={`w-full px-4 py-2.5 rounded-xl border text-[#1F1F2E] text-sm placeholder-[#9AA0B4] outline-none transition-all duration-150 focus:border-[#7B2FF7] focus:ring-2 focus:ring-[#7B2FF7]/10 ₹{
+          className={`w-full px-4 py-2.5 rounded-xl border text-[#1F1F2E] text-sm placeholder-[#9AA0B4] outline-none transition-all duration-150 focus:border-[#7B2FF7] focus:ring-2 focus:ring-[#7B2FF7]/10 ${ 
             errors.email ? 'border-red-400 bg-red-50' : 'border-[#E5E7EB] bg-white'
           }`}
         />
@@ -115,7 +115,7 @@ export default function AccountForm({ role, onNext }: AccountFormProps) {
               {...register('companyName', { required: role === 'brand' ? 'Company name is required' : false })}
               type="text"
               placeholder="Glossier, Inc."
-              className={`w-full px-4 py-2.5 rounded-xl border text-[#1F1F2E] text-sm placeholder-[#9AA0B4] outline-none transition-all duration-150 focus:border-[#7B2FF7] focus:ring-2 focus:ring-[#7B2FF7]/10 ₹{
+              className={`w-full px-4 py-2.5 rounded-xl border text-[#1F1F2E] text-sm placeholder-[#9AA0B4] outline-none transition-all duration-150 focus:border-[#7B2FF7] focus:ring-2 focus:ring-[#7B2FF7]/10 ${ 
                 errors.companyName ? 'border-red-400 bg-red-50' : 'border-[#E5E7EB] bg-white'
               }`}
             />
@@ -156,7 +156,7 @@ export default function AccountForm({ role, onNext }: AccountFormProps) {
             })}
             type={showPassword ? 'text' : 'password'}
             placeholder="Min. 8 characters"
-            className={`w-full px-4 py-2.5 pr-10 rounded-xl border text-[#1F1F2E] text-sm placeholder-[#9AA0B4] outline-none transition-all duration-150 focus:border-[#7B2FF7] focus:ring-2 focus:ring-[#7B2FF7]/10 ₹{
+            className={`w-full px-4 py-2.5 pr-10 rounded-xl border text-[#1F1F2E] text-sm placeholder-[#9AA0B4] outline-none transition-all duration-150 focus:border-[#7B2FF7] focus:ring-2 focus:ring-[#7B2FF7]/10 ${ 
               errors.password ? 'border-red-400 bg-red-50' : 'border-[#E5E7EB] bg-white'
             }`}
           />
@@ -186,7 +186,7 @@ export default function AccountForm({ role, onNext }: AccountFormProps) {
             })}
             type={showConfirm ? 'text' : 'password'}
             placeholder="Repeat your password"
-            className={`w-full px-4 py-2.5 pr-10 rounded-xl border text-[#1F1F2E] text-sm placeholder-[#9AA0B4] outline-none transition-all duration-150 focus:border-[#7B2FF7] focus:ring-2 focus:ring-[#7B2FF7]/10 ₹{
+            className={`w-full px-4 py-2.5 pr-10 rounded-xl border text-[#1F1F2E] text-sm placeholder-[#9AA0B4] outline-none transition-all duration-150 focus:border-[#7B2FF7] focus:ring-2 focus:ring-[#7B2FF7]/10 ${ 
               errors.confirmPassword ? 'border-red-400 bg-red-50' : 'border-[#E5E7EB] bg-white'
             }`}
           />

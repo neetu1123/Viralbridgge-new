@@ -113,7 +113,7 @@ export default function HeroSection() {
               'Verified creators only',
               'Instant matching']?.
               map((item) =>
-              <div key={`trust-₹{item}`} className="flex items-center gap-1.5">
+              <div key={`trust-${ item}`} className="flex items-center gap-1.5">
                   <CheckCircle size={15} className="text-[#7B2FF7]" />
                   <span className="text-[#6B6B8A] text-sm font-medium">{item}</span>
                 </div>
@@ -136,7 +136,7 @@ export default function HeroSection() {
               <span className="text-[#9AA0B4] text-sm font-medium">Works with</span>
               {PLATFORM_BADGES?.map((p) =>
               <span
-                key={`platform-badge-₹{p?.name}`}
+                key={`platform-badge-${ p?.name}`}
                 className="text-xs font-semibold px-3 py-1.5 rounded-full border border-[#E5E7EB]"
                 style={{ color: p?.color, backgroundColor: p?.bg }}>
                 
@@ -181,7 +181,7 @@ export default function HeroSection() {
                 {MOCK_CREATORS?.map((creator, idx) =>
                 <div
                   key={creator?.id}
-                  className={`flex items-center gap-3 p-2.5 rounded-xl transition-all duration-300 cursor-pointer ₹{
+                  className={`flex items-center gap-3 p-2.5 rounded-xl transition-all duration-300 cursor-pointer ${ 
                   idx === activeCreator ?
                   'bg-[#EFEAFF] border border-[#7B2FF7]/20' :
                   'hover:bg-[#F8F7FC]'}`

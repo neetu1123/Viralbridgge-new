@@ -33,11 +33,19 @@ const YoutubeIcon = ({ size = 16, className = '' }: { size?: number; className?:
 
 const FOOTER_LINKS = {
   Product: [
-    { label: 'Explore Creators', href: '/creators-explore-page' },
-    { label: 'Browse Campaigns', href: '/creators-explore-page' },
-    { label: 'Pricing', href: '#pricing' },
+    { label: 'Explore Creators', href: '/discover' },
+    { label: 'Browse Campaigns', href: '/campaigns-explore-page' },
+    { label: 'Pricing', href: '/pricing' },
     { label: 'Creator Dashboard', href: '/sign-up-login-screen' },
     { label: 'Brand Dashboard', href: '/sign-up-login-screen' },
+  ],
+  'Explore Creators': [
+    { label: 'Creators by City', href: '/discover/city' },
+    { label: 'Creators by Language', href: '/discover/language' },
+    { label: 'Creators by Category', href: '/discover/category' },
+    { label: 'Creators by Platform', href: '/discover/platform' },
+    { label: 'Premium Creators', href: '/discover/premium' },
+    { label: 'View All Creators', href: '/discover' },
   ],
   Company: [
     { label: 'About Us', href: '#about' },
@@ -71,7 +79,7 @@ export default function Footer() {
     <footer className="bg-[#1F1F2E] text-white">
       <div className="max-w-screen-xl mx-auto px-6 lg:px-10 py-16">
         {/* Top row */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-12 mb-12">
           {/* Brand */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
@@ -100,11 +108,11 @@ export default function Footer() {
 
           {/* Link columns */}
           {Object.entries(FOOTER_LINKS)?.map(([section, links]) => (
-            <div key={`footer-section-₹{section}`}>
+            <div key={`footer-section-${section}`}>
               <h4 className="font-display font-700 text-white text-sm mb-4 uppercase tracking-widest">{section}</h4>
               <ul className="space-y-3">
                 {links?.map((link) => (
-                  <li key={`footer-link-₹{link?.label}`}>
+                  <li key={`footer-link-${link?.label}`}>
                     <Link
                       href={link?.href}
                       className="text-white/50 text-sm hover:text-white transition-colors duration-150"

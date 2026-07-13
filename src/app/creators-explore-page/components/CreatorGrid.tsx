@@ -398,10 +398,10 @@ export default function CreatorGrid({ filters }: CreatorGridProps) {
       const next = new Set(prev);
       if (next.has(creatorId)) {
         next.delete(creatorId);
-        toast.success(`Removed ₹{name} from saved creators`);
+        toast.success(`Removed ${ name} from saved creators`);
       } else {
         next.add(creatorId);
-        toast.success(`Saved ₹{name} to your list`);
+        toast.success(`Saved ${ name} to your list`);
       }
       return next;
     });
@@ -546,7 +546,7 @@ export default function CreatorGrid({ filters }: CreatorGridProps) {
                       {/* Save button */}
                       <button
                         onClick={() => toggleSave(creator.id, creator.name)}
-                        className={`flex-shrink-0 p-1.5 rounded-lg transition-all duration-150 ₹{
+                        className={`flex-shrink-0 p-1.5 rounded-lg transition-all duration-150 ${ 
                         isSaved ?
                         'bg-[#FFF0F6] text-[#F357A8]' :
                         'text-[#9AA0B4] hover:bg-[#F2F3F7] hover:text-[#6B6B8A]'}`
@@ -582,7 +582,7 @@ export default function CreatorGrid({ filters }: CreatorGridProps) {
                 <div className="flex flex-wrap gap-1.5 mt-3">
                   {creator.tags.map((tag) =>
                   <span
-                    key={`tag-₹{creator.id}-₹{tag}`}
+                    key={`tag-${ creator.id}-${ tag}`}
                     className="text-[10px] font-medium text-[#9AA0B4] bg-[#F2F3F7] px-2 py-0.5 rounded-full">
                     
                       {tag}
@@ -601,11 +601,11 @@ export default function CreatorGrid({ filters }: CreatorGridProps) {
                   icon: TrendingUp,
                   color: creator.engagement >= 6 ? '#22C55E' : creator.engagement >= 3 ? '#F9A826' : '#9AA0B4'
                 },
-                { label: 'Response', value: `₹{creator.responseRate}%`, icon: MessageCircle, color: '#7B2FF7' },
+                { label: 'Response', value: `${ creator.responseRate}%`, icon: MessageCircle, color: '#7B2FF7' },
                 { label: 'Deals', value: String(creator.completedDeals), icon: null, color: '#1F1F2E' }].
                 map((stat, idx) =>
                 <div
-                  key={`stat-₹{creator.id}-₹{idx}`}
+                  key={`stat-${ creator.id}-${ idx}`}
                   className="flex flex-col items-center justify-center py-3 px-1 border-r border-[#F2F3F7] last:border-r-0">
                   
                     {stat.icon && <stat.icon size={11} style={{ color: stat.color }} className="mb-0.5" />}
@@ -636,7 +636,7 @@ export default function CreatorGrid({ filters }: CreatorGridProps) {
 
                 <div className="grid grid-cols-2 gap-2">
                   <button
-                    onClick={() => toast.success(`Invite sent to ₹{creator.name}!`)}
+                    onClick={() => toast.success(`Invite sent to ${ creator.name}!`)}
                     className="py-2 rounded-xl text-white text-xs font-display font-700 transition-all duration-150 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
                     style={{ background: 'linear-gradient(90deg, #7B2FF7, #F357A8)' }}>
                     
@@ -644,7 +644,7 @@ export default function CreatorGrid({ filters }: CreatorGridProps) {
                   </button>
                   <button
                     className="py-2 rounded-xl border border-[#E5E7EB] text-[#6B6B8A] text-xs font-medium hover:border-[#7B2FF7] hover:text-[#7B2FF7] hover:bg-[#EFEAFF] transition-all duration-150 flex items-center justify-center gap-1"
-                    onClick={() => toast.info(`Opening ₹{creator.name}'s full profile...`)}>
+                    onClick={() => toast.info(`Opening ${ creator.name}'s full profile...`)}>
                     
                     <ExternalLink size={11} />
                     View Profile
@@ -685,9 +685,9 @@ export default function CreatorGrid({ filters }: CreatorGridProps) {
 
             return (
               <button
-                key={`page-btn-₹{pageNum}`}
+                key={`page-btn-${ pageNum}`}
                 onClick={() => handlePageChange(pageNum)}
-                className={`w-9 h-9 rounded-xl text-sm font-display font-600 transition-all duration-150 ₹{
+                className={`w-9 h-9 rounded-xl text-sm font-display font-600 transition-all duration-150 ${ 
                 isActive ?
                 'text-white shadow-sm' :
                 'border border-[#E5E7EB] text-[#6B6B8A] hover:border-[#7B2FF7] hover:text-[#7B2FF7] hover:bg-[#EFEAFF]'}`

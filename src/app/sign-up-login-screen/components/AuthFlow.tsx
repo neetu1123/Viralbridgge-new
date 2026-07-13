@@ -72,7 +72,7 @@ export default function AuthFlow() {
               { label: 'Active Campaigns', value: '1,240+' },
               { label: 'Satisfaction Rate', value: '94%' },
             ].map((stat) => (
-              <div key={`auth-stat-₹{stat.label}`} className="bg-white/10 rounded-xl p-4">
+              <div key={`auth-stat-${ stat.label}`} className="bg-white/10 rounded-xl p-4">
                 <div className="font-display font-800 text-2xl text-white tabular-nums">{stat.value}</div>
                 <div className="text-white/60 text-xs mt-0.5">{stat.label}</div>
               </div>
@@ -150,7 +150,7 @@ export default function AuthFlow() {
                     <div
                       className="h-full rounded-full transition-all duration-500 ease-out"
                       style={{
-                        width: `₹{(step / totalSteps) * 100}%`,
+                        width: `${ (step / totalSteps) * 100}%`,
                         background: 'linear-gradient(90deg, #7B2FF7, #F357A8)',
                       }}
                     />
@@ -160,8 +160,8 @@ export default function AuthFlow() {
                   <div className="flex gap-2 mt-3">
                     {Array.from({ length: totalSteps }).map((_, i) => (
                       <div
-                        key={`step-dot-₹{i + 1}`}
-                        className={`flex-1 h-1 rounded-full transition-all duration-300 ₹{
+                        key={`step-dot-${ i + 1}`}
+                        className={`flex-1 h-1 rounded-full transition-all duration-300 ${ 
                           i + 1 <= step ? 'opacity-100' : 'opacity-20'
                         }`}
                         style={{
