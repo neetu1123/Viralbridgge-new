@@ -113,15 +113,13 @@ export default function Navbar() {
             ))}
             <hr className="my-4 border-[#E5E7EB]" />
             <Link
-              href="/sign-up-login-screen"
-              onClick={() => setMobileOpen(false)}
+              href="https://admin-viralbridgge-new.vercel.app/"
               className="text-[#6B6B8A] font-medium text-base py-3 px-4 rounded-xl hover:bg-[#F2F3F7] transition-colors"
             >
               Login
             </Link>
             <Link
-              href="/sign-up-login-screen"
-              onClick={() => setMobileOpen(false)}
+              href="https://admin-viralbridgge-new.vercel.app/"
               className="btn-primary text-center mt-2"
             >
               Sign Up Free
