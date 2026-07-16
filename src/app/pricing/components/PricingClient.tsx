@@ -223,7 +223,7 @@ function PlanCard({
       </div>
 
       {plan.enterprise ? (
-        <Link href="/sign-up-login-screen" className="w-full text-center py-3 rounded-xl border border-[#7B2FF7] text-[#7B2FF7] text-sm font-semibold hover:bg-[#EFEAFF] transition-colors">
+        <Link href="https://admin-viralbridgge-new.vercel.app/" className="w-full text-center py-3 rounded-xl border border-[#7B2FF7] text-[#7B2FF7] text-sm font-semibold hover:bg-[#EFEAFF] transition-colors">
           Contact Sales
         </Link>
       ) : plan.current ? (

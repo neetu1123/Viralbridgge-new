@@ -36,8 +36,8 @@ const FOOTER_LINKS = {
     { label: 'Explore Creators', href: '/discover' },
     { label: 'Browse Campaigns', href: '/campaigns-explore-page' },
     { label: 'Pricing', href: '/pricing' },
-    { label: 'Creator Dashboard', href: '/sign-up-login-screen' },
-    { label: 'Brand Dashboard', href: '/sign-up-login-screen' },
+    { label: 'Creator Dashboard', href: 'https://admin-viralbridgge-new.vercel.app/' },
+    { label: 'Brand Dashboard', href: 'https://admin-viralbridgge-new.vercel.app/' },
   ],
   'Explore Creators': [
     { label: 'Creators by City', href: '/discover/city' },

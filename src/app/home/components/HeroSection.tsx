@@ -122,11 +122,11 @@ export default function HeroSection() {
 
             {/* CTAs */}
             <div className="flex flex-wrap gap-4">
-              <Link href="/sign-up-login-screen" className="btn-primary flex items-center gap-2 text-base">
+              <Link href="https://admin-viralbridgge-new.vercel.app/" className="btn-primary flex items-center gap-2 text-base">
                 Join as Creator
                 <ArrowRight size={16} />
               </Link>
-              <Link href="/sign-up-login-screen" className="btn-secondary flex items-center gap-2 text-base">
+              <Link href="https://admin-viralbridgge-new.vercel.app/" className="btn-secondary flex items-center gap-2 text-base">
                 Hire Creators
               </Link>
             </div>

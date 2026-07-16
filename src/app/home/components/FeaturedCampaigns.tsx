@@ -204,7 +204,7 @@ export default function FeaturedCampaigns() {
 
               {/* CTA */}
               <Link
-                href="/sign-up-login-screen"
+                href="https://admin-viralbridgge-new.vercel.app/"
                 className="mt-auto w-full text-center py-2.5 rounded-xl border border-[#7B2FF7] text-[#7B2FF7] text-sm font-semibold hover:bg-[#EFEAFF] transition-colors duration-150 group-hover:bg-[#7B2FF7] group-hover:text-white"
               >
                 View Campaign

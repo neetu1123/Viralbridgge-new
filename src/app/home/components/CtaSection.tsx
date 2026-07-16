@@ -33,14 +33,14 @@ export default function CtaSection() {
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                href="/sign-up-login-screen"
+                href="https://admin-viralbridgge-new.vercel.app/"
                 className="bg-white text-[#7B2FF7] font-display font-700 px-8 py-3.5 rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-200 active:scale-[0.98] flex items-center gap-2"
               >
                 Join as Creator
                 <ArrowRight size={16} />
               </Link>
               <Link
-                href="/sign-up-login-screen"
+                href="https://admin-viralbridgge-new.vercel.app/"
                 className="border-2 border-white/60 text-white font-display font-700 px-8 py-3.5 rounded-xl hover:bg-white/10 hover:border-white transition-all duration-200 active:scale-[0.98]"
               >
                 Hire Creators

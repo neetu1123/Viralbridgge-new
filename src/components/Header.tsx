@@ -58,13 +58,13 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
             <Link
-              href="/sign-up-login-screen"
+              href="https://admin-viralbridgge-new.vercel.app/"
               className="text-[#6B6B8A] hover:text-[#1F1F2E] font-medium text-[15px] transition-colors duration-150 px-4 py-2"
             >
               Login
             </Link>
             <Link
-              href="/sign-up-login-screen"
+              href="https://admin-viralbridgge-new.vercel.app/"
               className="btn-primary text-sm px-5 py-2.5 inline-block"
             >
               Sign Up Free
