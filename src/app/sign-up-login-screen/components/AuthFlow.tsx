@@ -68,7 +68,7 @@ export default function AuthFlow() {
           <div className="grid grid-cols-2 gap-4">
             {[
               { label: 'Verified Creators', value: '52K+' },
-              { label: 'Paid Out', value: '₹18.4M' },
+              { label: 'Paid Out', value: '₹18.4L' },
               { label: 'Active Campaigns', value: '1,240+' },
               { label: 'Satisfaction Rate', value: '94%' },
             ].map((stat) => (
