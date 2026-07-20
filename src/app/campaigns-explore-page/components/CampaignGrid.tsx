@@ -329,7 +329,7 @@ export default function CampaignGrid({ filters }: CampaignGridProps) {
               {/* CTA */}
               <Link
                 href="https://admin-viralbridgge-new.vercel.app/"
-                className="mt-auto w-full text-center py-2.5 rounded-xl border border-[#7B2FF7] text-[#7B2FF7] text-sm font-semibold hover:bg-[#EFEAFF] transition-colors hover:text-blackduration-150 group-hover:bg-[#7B2FF7] group-hover:text-black flex items-center justify-center gap-2"
+                className="mt-auto w-full text-center py-2.5 rounded-xl border border-[#7B2FF7] text-[#7B2FF7] text-sm font-semibold hover:bg-[#EFEAFF] transition-colors hover:text-black duration-150 group-hover:bg-[#7B2FF7] group-hover:text-white flex items-center justify-center gap-2"
               >
                 Apply Now <ArrowRight size={14} />
               </Link>
