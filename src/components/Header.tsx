@@ -3,11 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import AppLogo from './ui/AppLogo';
+import UserMenu from './UserMenu';
+import { useAuth } from './AuthProvider';
 import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { user, loading, logout, isAuthenticated } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 16);
@@ -16,8 +19,8 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { label: 'Campaign', href: '/campaigns-explore-page' },
-    { label: 'Creators', href: '/creators-explore-page' },
+    { label: 'Campaign', href: '/explore/campaigns-v2' },
+    { label: 'Creators', href: '/explore/creators-v2' },
     { label: 'Pricing', href: '/pricing' },
   ];
 
@@ -31,47 +34,50 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-screen-xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
-          {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-             <AppLogo
-            src="/viralbridge_logo_transparent.png"
-            size={150}
-            className="text-primary"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          />
-        
+            <AppLogo
+              src="/viralbridge_logo_transparent.png"
+              size={150}
+              className="text-primary"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            />
           </Link>
 
-          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
-            {navLinks?.map((link) => (
+            {navLinks.map((link) => (
               <Link
-                key={`nav-${link?.label}`}
-                href={link?.href}
+                key={`nav-${link.label}`}
+                href={link.href}
                 className="text-[#6B6B8A] hover:text-[#1F1F2E] font-medium text-[15px] transition-colors duration-150"
               >
-                {link?.label}
+                {link.label}
               </Link>
             ))}
           </nav>
 
-          {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <Link
-              href="https://admin-viralbridgge-new.vercel.app/"
-              className="text-[#6B6B8A] hover:text-[#1F1F2E] font-medium text-[15px] transition-colors duration-150 px-4 py-2"
-            >
-              Login
-            </Link>
-            <Link
-              href="https://admin-viralbridgge-new.vercel.app/"
-              className="btn-primary text-sm px-5 py-2.5 inline-block"
-            >
-              Sign Up Free
-            </Link>
+            {loading ? (
+              <div className="w-24 h-9 rounded-xl bg-[#F2F3F7] animate-pulse" />
+            ) : isAuthenticated && user ? (
+              <UserMenu />
+            ) : (
+              <>
+                <Link
+                  href="/sign-up-login-screen?mode=login"
+                  className="text-[#6B6B8A] hover:text-[#1F1F2E] font-medium text-[15px] transition-colors duration-150 px-4 py-2"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/sign-up-login-screen?mode=signup"
+                  className="btn-primary text-sm px-5 py-2.5 inline-block"
+                >
+                  Sign Up Free
+                </Link>
+              </>
+            )}
           </div>
 
-          {/* Mobile Hamburger */}
           <button
             className="md:hidden p-2 rounded-xl hover:bg-[#F2F3F7] transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -85,7 +91,7 @@ export default function Navbar() {
           </button>
         </div>
       </header>
-      {/* Mobile Drawer */}
+
       <div
         className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ${
           mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
@@ -101,29 +107,49 @@ export default function Navbar() {
           }`}
         >
           <div className="p-6 pt-20 flex flex-col gap-2">
-            {navLinks?.map((link) => (
+            {navLinks.map((link) => (
               <Link
-                key={`mobile-nav-${link?.label}`}
-                href={link?.href}
+                key={`mobile-nav-${link.label}`}
+                href={link.href}
                 onClick={() => setMobileOpen(false)}
                 className="text-[#1F1F2E] font-medium text-base py-3 px-4 rounded-xl hover:bg-[#F2F3F7] transition-colors"
               >
-                {link?.label}
+                {link.label}
               </Link>
             ))}
             <hr className="my-4 border-[#E5E7EB]" />
-            <Link
-              href="https://admin-viralbridgge-new.vercel.app/"
-              className="text-[#6B6B8A] font-medium text-base py-3 px-4 rounded-xl hover:bg-[#F2F3F7] transition-colors"
-            >
-              Login
-            </Link>
-            <Link
-              href="https://admin-viralbridgge-new.vercel.app/"
-              className="btn-primary text-center mt-2"
-            >
-              Sign Up Free
-            </Link>
+            {!loading && isAuthenticated && user ? (
+              <>
+                <p className="px-4 text-sm text-[#6B6B8A]">Signed in as {user.name}</p>
+                <button
+                  onClick={async () => {
+                    await logout();
+                    setMobileOpen(false);
+                    window.location.href = '/';
+                  }}
+                  className="text-red-600 font-medium text-base py-3 px-4 rounded-xl hover:bg-red-50 transition-colors text-left"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/sign-up-login-screen?mode=login"
+                  onClick={() => setMobileOpen(false)}
+                  className="text-[#6B6B8A] font-medium text-base py-3 px-4 rounded-xl hover:bg-[#F2F3F7] transition-colors"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/sign-up-login-screen?mode=signup"
+                  onClick={() => setMobileOpen(false)}
+                  className="btn-primary text-center mt-2"
+                >
+                  Sign Up Free
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

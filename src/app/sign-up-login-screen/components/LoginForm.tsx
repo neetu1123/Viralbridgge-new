@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { Eye, EyeOff, Loader2, ArrowRight } from 'lucide-react';
 import { toast } from 'sonner';
-
+import { login } from '@/src/lib/auth/api';
+import { useAuth } from '@/src/components/AuthProvider';
 
 interface LoginFormData {
   email: string;
@@ -15,6 +17,8 @@ interface LoginFormData {
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const { setUser } = useAuth();
 
   const {
     register,
@@ -25,25 +29,25 @@ export default function LoginForm() {
 
   const onSubmit = async (data: LoginFormData) => {
     setLoading(true);
-    // TODO: Backend integration — POST /api/auth/login
-    await new Promise((resolve) => setTimeout(resolve, 1200));
-    setLoading(false);
-
-    // Mock credential validation
-    if (data.email !== 'demo@viralbridgge.io' || data.password !== 'VB_demo2026!') {
+    try {
+      const result = await login(data.email, data.password);
+      setUser(result.user);
+      toast.success('Welcome back!');
+      const redirect = sessionStorage.getItem('auth_redirect');
+      sessionStorage.removeItem('auth_redirect');
+      router.push(redirect || '/');
+    } catch (error) {
       setError('email', {
-        message: 'Invalid credentials — use the demo accounts below to sign in',
+        message: error instanceof Error ? error.message : 'Invalid email or password',
       });
-      toast.error('Sign-in failed. Check your credentials and try again.');
-      return;
+      toast.error(error instanceof Error ? error.message : 'Sign-in failed');
+    } finally {
+      setLoading(false);
     }
-
-    toast.success('Welcome back! Redirecting to your dashboard...');
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-      {/* Email */}
       <div>
         <label className="block font-display font-600 text-[#1F1F2E] text-sm mb-1.5">
           Email address <span className="text-[#F357A8]">*</span>
@@ -51,11 +55,11 @@ export default function LoginForm() {
         <input
           {...register('email', {
             required: 'Email is required',
-            pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+₹/, message: 'Enter a valid email address' },
+            pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Enter a valid email address' },
           })}
           type="email"
           placeholder="your@email.com"
-          className={`w-full px-4 py-2.5 rounded-xl border text-[#1F1F2E] text-sm placeholder-[#9AA0B4] outline-none transition-all duration-150 focus:border-[#7B2FF7] focus:ring-2 focus:ring-[#7B2FF7]/10 ${ 
+          className={`w-full px-4 py-2.5 rounded-xl border text-[#1F1F2E] text-sm placeholder-[#9AA0B4] outline-none transition-all duration-150 focus:border-[#7B2FF7] focus:ring-2 focus:ring-[#7B2FF7]/10 ${
             errors.email ? 'border-red-400 bg-red-50' : 'border-[#E5E7EB] bg-white'
           }`}
         />
@@ -64,7 +68,6 @@ export default function LoginForm() {
         )}
       </div>
 
-      {/* Password */}
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label className="font-display font-600 text-[#1F1F2E] text-sm">
@@ -79,7 +82,7 @@ export default function LoginForm() {
             {...register('password', { required: 'Password is required' })}
             type={showPassword ? 'text' : 'password'}
             placeholder="Your password"
-            className={`w-full px-4 py-2.5 pr-10 rounded-xl border text-[#1F1F2E] text-sm placeholder-[#9AA0B4] outline-none transition-all duration-150 focus:border-[#7B2FF7] focus:ring-2 focus:ring-[#7B2FF7]/10 ${ 
+            className={`w-full px-4 py-2.5 pr-10 rounded-xl border text-[#1F1F2E] text-sm placeholder-[#9AA0B4] outline-none transition-all duration-150 focus:border-[#7B2FF7] focus:ring-2 focus:ring-[#7B2FF7]/10 ${
               errors.password ? 'border-red-400 bg-red-50' : 'border-[#E5E7EB] bg-white'
             }`}
           />
@@ -96,7 +99,6 @@ export default function LoginForm() {
         )}
       </div>
 
-      {/* Remember me */}
       <div className="flex items-center gap-2.5">
         <input
           {...register('remember')}
@@ -109,7 +111,6 @@ export default function LoginForm() {
         </label>
       </div>
 
-      {/* Submit */}
       <button
         type="submit"
         disabled={loading}

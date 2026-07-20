@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AppLogo from '@/src/components/ui/AppLogo';
 import RoleSelector from './RoleSelector';
@@ -15,6 +15,11 @@ export default function AuthFlow() {
   const [mode, setMode] = useState<'signup' | 'login'>('signup');
   const [step, setStep] = useState(1);
   const [role, setRole] = useState<UserRole>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('mode') === 'login') setMode('login');
+  }, []);
 
   const totalSteps = 3;
 
