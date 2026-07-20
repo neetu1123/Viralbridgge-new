@@ -11,6 +11,10 @@ export interface AuthUser {
 const TOKEN_KEY = 'token';
 const USER_KEY = 'user';
 
+export function getAdminBase(): string {
+  return (process.env.NEXT_PUBLIC_ADMIN_URL || 'https://admin-viralbridgge-new.vercel.app').replace(/\/$/, '');
+}
+
 export function getToken(): string | null {
   if (typeof window === 'undefined') return null;
   return localStorage.getItem(TOKEN_KEY);
@@ -53,11 +57,19 @@ export function normalizeRole(role?: string): UserRole | undefined {
 }
 
 export function getDashboardUrl(role?: string): string {
-  const adminBase = process.env.NEXT_PUBLIC_ADMIN_URL || 'https://admin-viralbridgge-new.vercel.app';
+  const adminBase = getAdminBase();
   const normalized = normalizeRole(role);
-  if (normalized === 'BRAND') return `${adminBase}/brand/dashboard`;
-  if (normalized === 'ADMIN' || normalized === 'SUPER_ADMIN') return `${adminBase}/admin/dashboard`;
-  return `${adminBase}/creator/dashboard`;
+  if (normalized === 'BRAND') return `${adminBase}/brand-campaign-management`;
+  if (normalized === 'ADMIN' || normalized === 'SUPER_ADMIN') return `${adminBase}/admin-panel`;
+  return `${adminBase}/campaign-discovery`;
+}
+
+export function getProfileUrl(role?: string): string {
+  const adminBase = getAdminBase();
+  const normalized = normalizeRole(role);
+  if (normalized === 'BRAND') return `${adminBase}/brand-settings`;
+  if (normalized === 'ADMIN' || normalized === 'SUPER_ADMIN') return `${adminBase}/admin-panel`;
+  return `${adminBase}/creator-profile`;
 }
 
 export function getRoleBadge(role?: string): { label: string; emoji: string } | null {

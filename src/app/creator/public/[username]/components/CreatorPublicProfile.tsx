@@ -14,7 +14,8 @@ import {
   BadgeCheck,
   Crown,
 } from 'lucide-react';
-import { toast } from 'sonner';
+import { handleInviteCreator } from '@/src/lib/auth/actions';
+import { toast, Toaster } from 'sonner';
 import { fetchPublicCreator } from '@/src/lib/api/public';
 import type { PublicCreatorDetail } from '@/src/lib/api/types';
 import { platformBadgeStyle } from '@/src/lib/explore-utils';
@@ -81,6 +82,7 @@ export default function CreatorPublicProfile({ username }: CreatorPublicProfileP
 
   return (
     <div className="max-w-4xl mx-auto px-6 lg:px-10 py-8">
+      <Toaster position="top-right" richColors />
       <Link
         href="/explore/creators-v2"
         className="inline-flex items-center gap-2 text-sm text-[#6B6B8A] hover:text-[#7B2FF7] mb-6 transition-colors"
@@ -223,7 +225,7 @@ export default function CreatorPublicProfile({ username }: CreatorPublicProfileP
             </div>
 
             <button
-              onClick={() => toast.success(`Invite sent to ${creator.name}!`)}
+              onClick={() => handleInviteCreator(creator.id, (msg) => toast.error(msg))}
               className="w-full py-3 rounded-xl text-white text-sm font-display font-700 mb-2"
               style={{ background: 'linear-gradient(90deg, #7B2FF7, #F357A8)' }}
             >

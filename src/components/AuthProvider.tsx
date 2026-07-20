@@ -2,8 +2,9 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { fetchMe, logoutApi } from '@/src/lib/auth/api';
-import { getStoredUser, getToken, type AuthUser } from '@/src/lib/auth/session';
+import { fetchMe } from '@/src/lib/auth/api';
+import { clearSsoChecked } from '@/src/lib/auth/sso';
+import { clearSession, getStoredUser, getToken, type AuthUser } from '@/src/lib/auth/session';
 import {
   buildAdminBridgeUrl,
   markSsoChecked,
@@ -16,7 +17,7 @@ interface AuthContextValue {
   isAuthenticated: boolean;
   setUser: (user: AuthUser | null) => void;
   refreshUser: () => Promise<void>;
-  logout: () => Promise<void>;
+  logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -64,8 +65,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     window.location.href = buildAdminBridgeUrl(receiveUrl);
   }, [pathname, refreshUser]);
 
-  const logout = useCallback(async () => {
-    await logoutApi();
+  const logout = useCallback(() => {
+    clearSession();
+    clearSsoChecked();
     setUser(null);
   }, []);
 

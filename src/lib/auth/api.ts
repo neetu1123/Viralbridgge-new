@@ -26,11 +26,18 @@ export async function fetchMe() {
 }
 
 export async function logoutApi() {
+  clearSession();
   try {
-    await apiFetch('/auth/logout', { method: 'POST' });
+    await fetch(
+      `${(process.env.NEXT_PUBLIC_API_URL || 'https://backend-admin-viralbridgge-new-three.vercel.app').replace(/\/$/, '')}/auth/logout`,
+      { method: 'POST', headers: { Accept: 'application/json' } },
+    );
   } catch {
-    // ignore
+    // ignore — session already cleared locally
   }
+}
+
+export function logoutInstant(): void {
   clearSession();
 }
 

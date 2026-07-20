@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import AppImage from '@/src/components/ui/AppImage';
 import { TrendingUp, Star, MessageCircle, Heart, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { handleInviteCreator } from '@/src/lib/auth/actions';
 import { toast } from 'sonner';
 import { fetchPublicCreators } from '@/src/lib/api/public';
 import type { PublicCreator } from '@/src/lib/api/types';
@@ -294,7 +295,7 @@ export default function CreatorGrid({ filters }: CreatorGridProps) {
 
                 <div className="grid grid-cols-2 gap-2">
                   <button
-                    onClick={() => toast.success(`Invite sent to ${creator.name}!`)}
+                    onClick={() => handleInviteCreator(creator.id, (msg) => toast.error(msg))}
                     className="py-2 rounded-xl text-white text-xs font-display font-700 transition-all duration-150 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
                     style={{ background: 'linear-gradient(90deg, #7B2FF7, #F357A8)' }}
                   >

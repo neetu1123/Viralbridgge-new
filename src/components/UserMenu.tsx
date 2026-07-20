@@ -9,7 +9,6 @@ import {
   LogOut,
   MessageCircle,
   Plus,
-  Settings,
   User,
   LayoutDashboard,
 } from 'lucide-react';
@@ -18,9 +17,11 @@ import {
   getDashboardUrl,
   getFirstName,
   getInitials,
+  getProfileUrl,
   getRoleBadge,
   normalizeRole,
 } from '@/src/lib/auth/session';
+import { logoutApi } from '@/src/lib/auth/api';
 
 export default function UserMenu() {
   const { user, logout } = useAuth();
@@ -49,12 +50,20 @@ export default function UserMenu() {
   const role = normalizeRole(user.role);
   const badge = getRoleBadge(user.role);
   const dashboardUrl = getDashboardUrl(user.role);
+  const profileUrl = getProfileUrl(user.role);
   const displayName = getFirstName(user.name);
   const initials = getInitials(user.name);
   const avatar = user.avatar;
 
   const isBrand = role === 'BRAND';
   const isAdmin = role === 'ADMIN' || role === 'SUPER_ADMIN';
+
+  const handleLogout = () => {
+    setOpen(false);
+    logout();
+    void logoutApi();
+    window.location.replace('/');
+  };
 
   return (
     <div className="flex items-center gap-2 md:gap-3" ref={menuRef}>
@@ -68,7 +77,7 @@ export default function UserMenu() {
 
       {isBrand && (
         <Link
-          href={`${process.env.NEXT_PUBLIC_ADMIN_URL || 'https://admin-viralbridgge-new.vercel.app'}/brand/campaigns/create`}
+          href="/brand/create-campaign"
           className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-white text-sm font-semibold"
           style={{ background: 'linear-gradient(90deg, #7B2FF7, #F357A8)' }}
         >
@@ -160,33 +169,20 @@ export default function UserMenu() {
                 <LayoutDashboard size={16} className="text-[#7B2FF7]" />
                 {isBrand ? 'Brand Dashboard' : isAdmin ? 'Admin Dashboard' : 'My Dashboard'}
               </a>
-              <Link
-                href="/sign-up-login-screen"
+              <a
+                href={profileUrl}
                 className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm text-[#1F1F2E] hover:bg-[#F2F3F7] transition-colors"
                 role="menuitem"
-                onClick={() => setOpen(false)}
               >
                 <User size={16} className="text-[#7B2FF7]" />
                 {isBrand ? 'Company Profile' : 'My Profile'}
-              </Link>
-              <button
-                type="button"
-                className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm text-[#1F1F2E] hover:bg-[#F2F3F7] transition-colors"
-                role="menuitem"
-              >
-                <Settings size={16} className="text-[#7B2FF7]" />
-                Settings
-              </button>
+              </a>
             </div>
 
             <div className="p-2 border-t border-[#F2F3F7]">
               <button
                 type="button"
-                onClick={async () => {
-                  setOpen(false);
-                  await logout();
-                  window.location.href = '/';
-                }}
+                onClick={handleLogout}
                 className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm text-red-600 hover:bg-red-50 transition-colors"
                 role="menuitem"
               >

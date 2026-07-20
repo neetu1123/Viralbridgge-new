@@ -11,7 +11,8 @@ import {
   Users,
   CheckCircle2,
 } from 'lucide-react';
-import { toast } from 'sonner';
+import { handleApplyCampaign } from '@/src/lib/auth/actions';
+import { toast, Toaster } from 'sonner';
 import { fetchPublicCampaign } from '@/src/lib/api/public';
 import type { PublicCampaignDetail } from '@/src/lib/api/types';
 
@@ -70,6 +71,7 @@ export default function CampaignPublicDetail({ campaignId }: CampaignPublicDetai
 
   return (
     <div className="max-w-4xl mx-auto px-6 lg:px-10 py-8">
+      <Toaster position="top-right" richColors />
       <Link
         href="/explore/campaigns-v2"
         className="inline-flex items-center gap-2 text-sm text-[#6B6B8A] hover:text-[#7B2FF7] mb-6 transition-colors"
@@ -181,14 +183,14 @@ export default function CampaignPublicDetail({ campaignId }: CampaignPublicDetai
             <p className="font-display font-700 text-[#1F1F2E] mb-5">{campaign.category}</p>
 
             <button
-              onClick={() => toast.success('Application modal will open after login integration.')}
+              onClick={() => handleApplyCampaign(campaign.id, (msg) => toast.error(msg))}
               className="w-full py-3 rounded-xl text-white text-sm font-display font-700"
               style={{ background: 'linear-gradient(90deg, #7B2FF7, #F357A8)' }}
             >
               Apply Now
             </button>
             <p className="text-[10px] text-[#9AA0B4] text-center mt-3">
-              Login required to apply — auth integration coming next
+              Creators can apply after signing in. Brands manage campaigns in the client portal.
             </p>
           </div>
         </div>
