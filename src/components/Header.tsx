@@ -5,6 +5,7 @@ import Link from 'next/link';
 import AppLogo from './ui/AppLogo';
 import UserMenu from './UserMenu';
 import { useAuth } from './AuthProvider';
+import { buildAdminLoginUrl } from '@/src/lib/auth/sso';
 import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
@@ -23,6 +24,8 @@ export default function Navbar() {
     { label: 'Creators', href: '/explore/creators-v2' },
     { label: 'Pricing', href: '/pricing' },
   ];
+
+  const adminLoginUrl = buildAdminLoginUrl('/explore/creators-v2');
 
   return (
     <>
@@ -62,18 +65,18 @@ export default function Navbar() {
               <UserMenu />
             ) : (
               <>
-                <Link
-                  href="/sign-up-login-screen?mode=login"
+                <a
+                  href={adminLoginUrl}
                   className="text-[#6B6B8A] hover:text-[#1F1F2E] font-medium text-[15px] transition-colors duration-150 px-4 py-2"
                 >
                   Login
-                </Link>
-                <Link
-                  href="/sign-up-login-screen?mode=signup"
+                </a>
+                <a
+                  href={adminLoginUrl}
                   className="btn-primary text-sm px-5 py-2.5 inline-block"
                 >
                   Sign Up Free
-                </Link>
+                </a>
               </>
             )}
           </div>
@@ -134,20 +137,20 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <Link
-                  href="/sign-up-login-screen?mode=login"
+                <a
+                  href={adminLoginUrl}
                   onClick={() => setMobileOpen(false)}
                   className="text-[#6B6B8A] font-medium text-base py-3 px-4 rounded-xl hover:bg-[#F2F3F7] transition-colors"
                 >
                   Login
-                </Link>
-                <Link
-                  href="/sign-up-login-screen?mode=signup"
+                </a>
+                <a
+                  href={adminLoginUrl}
                   onClick={() => setMobileOpen(false)}
                   className="btn-primary text-center mt-2"
                 >
                   Sign Up Free
-                </Link>
+                </a>
               </>
             )}
           </div>

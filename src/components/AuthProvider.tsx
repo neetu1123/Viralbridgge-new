@@ -1,8 +1,14 @@
 'use client';
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { fetchMe, logoutApi } from '@/src/lib/auth/api';
-import { getStoredUser, type AuthUser } from '@/src/lib/auth/session';
+import { getStoredUser, getToken, type AuthUser } from '@/src/lib/auth/session';
+import {
+  buildAdminBridgeUrl,
+  markSsoChecked,
+  wasSsoCheckedRecently,
+} from '@/src/lib/auth/sso';
 
 interface AuthContextValue {
   user: AuthUser | null;
@@ -15,7 +21,12 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
+function shouldSkipSso(pathname: string): boolean {
+  return pathname.startsWith('/auth/') || pathname.startsWith('/sign-up-login-screen');
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -35,13 +46,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const stored = getStoredUser();
-    setUser(stored);
-    if (stored) {
+    const token = getToken();
+
+    if (token && stored) {
+      setUser(stored);
       refreshUser().finally(() => setLoading(false));
-    } else {
-      setLoading(false);
+      return;
     }
-  }, [refreshUser]);
+
+    if (shouldSkipSso(pathname) || wasSsoCheckedRecently()) {
+      setLoading(false);
+      return;
+    }
+
+    markSsoChecked();
+    const receiveUrl = `${window.location.origin}/auth/receive?next=${encodeURIComponent(pathname || '/')}`;
+    window.location.href = buildAdminBridgeUrl(receiveUrl);
+  }, [pathname, refreshUser]);
 
   const logout = useCallback(async () => {
     await logoutApi();
