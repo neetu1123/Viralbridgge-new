@@ -72,6 +72,10 @@ export function getProfileUrl(role?: string): string {
   return `${adminBase}/creator-profile`;
 }
 
+export function getCreateCampaignUrl(): string {
+  return `${getAdminBase()}/brand-campaign-management/create`;
+}
+
 export function getRoleBadge(role?: string): { label: string; emoji: string } | null {
   const normalized = normalizeRole(role);
   if (normalized === 'CREATOR') return { label: 'Verified Creator', emoji: '✔' };

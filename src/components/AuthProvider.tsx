@@ -2,9 +2,15 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { fetchMe } from '@/src/lib/auth/api';
+import { fetchMe, ApiError } from '@/src/lib/auth/api';
 import { clearSsoChecked } from '@/src/lib/auth/sso';
-import { clearSession, getStoredUser, getToken, type AuthUser } from '@/src/lib/auth/session';
+import {
+  clearSession,
+  getStoredUser,
+  getToken,
+  setSession,
+  type AuthUser,
+} from '@/src/lib/auth/session';
 import {
   buildAdminBridgeUrl,
   markSsoChecked,
@@ -32,15 +38,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   const refreshUser = useCallback(async () => {
+    const token = getToken();
     const stored = getStoredUser();
-    if (!stored) {
+    if (!token || !stored) {
+      clearSession();
       setUser(null);
       return;
     }
+
     try {
       const me = await fetchMe();
-      setUser({ ...stored, ...me, role: me.role ?? stored.role });
-    } catch {
+      setSession(token, me);
+      setUser(me);
+    } catch (error) {
+      if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
+        clearSession();
+        clearSsoChecked();
+        setUser(null);
+        return;
+      }
       setUser(stored);
     }
   }, []);

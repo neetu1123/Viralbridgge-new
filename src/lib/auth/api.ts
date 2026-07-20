@@ -1,5 +1,23 @@
-import { apiFetch } from '../api/client';
+import { apiFetch, ApiError } from '../api/client';
 import { clearSession, setSession, type AuthUser } from './session';
+
+function normalizeMeUser(me: Record<string, unknown>): AuthUser {
+  const rawRole = me.role;
+  let role: string | undefined;
+  if (typeof rawRole === 'object' && rawRole && 'name' in rawRole) {
+    role = String((rawRole as { name?: string }).name);
+  } else if (typeof rawRole === 'string') {
+    role = rawRole;
+  }
+
+  return {
+    id: String(me.id),
+    name: String(me.name),
+    email: String(me.email),
+    role: role ? role.toUpperCase() : undefined,
+    avatar: typeof me.avatar === 'string' ? me.avatar : undefined,
+  };
+}
 
 export async function login(email: string, password: string) {
   const result = await apiFetch<{ access_token: string; user: AuthUser }>('/auth/login', {
@@ -7,8 +25,9 @@ export async function login(email: string, password: string) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
   });
-  setSession(result.access_token, result.user);
-  return result;
+  const user = normalizeMeUser(result.user as unknown as Record<string, unknown>);
+  setSession(result.access_token, user);
+  return { ...result, user };
 }
 
 export async function register(name: string, email: string, password: string, role: string) {
@@ -17,12 +36,14 @@ export async function register(name: string, email: string, password: string, ro
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, email, password, role }),
   });
-  setSession(result.access_token, result.user);
-  return result;
+  const user = normalizeMeUser(result.user as unknown as Record<string, unknown>);
+  setSession(result.access_token, user);
+  return { ...result, user };
 }
 
-export async function fetchMe() {
-  return apiFetch<AuthUser>('/auth/me');
+export async function fetchMe(): Promise<AuthUser> {
+  const me = await apiFetch<Record<string, unknown>>('/auth/me');
+  return normalizeMeUser(me);
 }
 
 export async function logoutApi() {
@@ -43,3 +64,4 @@ export function logoutInstant(): void {
 
 export { clearSession, getStoredUser, getToken, setSession } from './session';
 export type { AuthUser } from './session';
+export { ApiError };

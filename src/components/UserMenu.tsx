@@ -15,6 +15,7 @@ import {
 import { useAuth } from './AuthProvider';
 import {
   getDashboardUrl,
+  getCreateCampaignUrl,
   getFirstName,
   getInitials,
   getProfileUrl,
@@ -76,13 +77,13 @@ export default function UserMenu() {
       </button>
 
       {isBrand && (
-        <Link
-          href="/brand/create-campaign"
+        <a
+          href={getCreateCampaignUrl()}
           className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-white text-sm font-semibold"
           style={{ background: 'linear-gradient(90deg, #7B2FF7, #F357A8)' }}
         >
           <Plus size={14} /> Create Campaign
-        </Link>
+        </a>
       )}
 
       {!isBrand && !isAdmin && (

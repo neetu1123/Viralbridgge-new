@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { clearSsoChecked, parseSsoHash } from '@/src/lib/auth/sso';
-import { setSession } from '@/src/lib/auth/session';
+import { setSession, normalizeRole } from '@/src/lib/auth/session';
+import { fetchMe } from '@/src/lib/auth/api';
 import { useAuth } from '@/src/components/AuthProvider';
 
 export default function AuthReceiveClient() {
@@ -22,11 +23,27 @@ export default function AuthReceiveClient() {
       return;
     }
 
-    setSession(parsed.token, parsed.user);
-    setUser(parsed.user);
-    clearSsoChecked();
-    window.history.replaceState(null, '', window.location.pathname + window.location.search);
-    window.location.replace(next.startsWith('/') ? next : '/');
+    const bridgeUser = {
+      ...parsed.user,
+      role: normalizeRole(parsed.user.role),
+    };
+
+    setSession(parsed.token, bridgeUser);
+    setUser(bridgeUser);
+
+    fetchMe()
+      .then((me) => {
+        setSession(parsed.token, me);
+        setUser(me);
+      })
+      .catch(() => {
+        // keep bridged session if profile refresh fails briefly
+      })
+      .finally(() => {
+        clearSsoChecked();
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+        window.location.replace(next.startsWith('/') ? next : '/');
+      });
   }, [searchParams, setUser]);
 
   return (
