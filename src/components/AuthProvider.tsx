@@ -15,8 +15,9 @@ import {
   buildAdminBridgeUrl,
   markSsoChecked,
   wasSsoCheckedRecently,
+  wasLoggedOutRecently,
+  clearLoggedOut,
 } from '@/src/lib/auth/sso';
-
 interface AuthContextValue {
   user: AuthUser | null;
   loading: boolean;
@@ -50,6 +51,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const me = await fetchMe();
       setSession(token, me);
       setUser(me);
+      clearLoggedOut();
     } catch (error) {
       if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
         clearSession();
@@ -71,7 +73,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    if (shouldSkipSso(pathname) || wasSsoCheckedRecently()) {
+    if (shouldSkipSso(pathname) || wasSsoCheckedRecently() || wasLoggedOutRecently()) {
       setLoading(false);
       return;
     }

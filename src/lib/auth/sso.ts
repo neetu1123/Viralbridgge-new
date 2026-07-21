@@ -60,6 +60,24 @@ export function parseSsoHash(hash: string): { token: string; user: SsoUser } | n
 }
 
 export const SSO_SESSION_KEY = 'vb_sso_checked';
+export const LOGOUT_FLAG_KEY = 'vb_logged_out';
+
+export function markLoggedOut(): void {
+  sessionStorage.setItem(LOGOUT_FLAG_KEY, Date.now().toString());
+  sessionStorage.removeItem(SSO_SESSION_KEY);
+}
+
+export function clearLoggedOut(): void {
+  sessionStorage.removeItem(LOGOUT_FLAG_KEY);
+}
+
+export function wasLoggedOutRecently(maxAgeMs = 30 * 60 * 1000): boolean {
+  const raw = sessionStorage.getItem(LOGOUT_FLAG_KEY);
+  if (!raw) return false;
+  const ts = Number(raw);
+  if (Number.isNaN(ts)) return true;
+  return Date.now() - ts < maxAgeMs;
+}
 
 export function markSsoChecked(): void {
   sessionStorage.setItem(SSO_SESSION_KEY, Date.now().toString());

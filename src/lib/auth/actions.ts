@@ -1,5 +1,15 @@
 import { getAdminBase, getStoredUser, normalizeRole } from './session';
-import { buildMarketingBridgeUrl } from './sso';
+import { markLoggedOut } from './sso';
+
+export function buildMarketingLogoutUrl(): string {
+  const adminBase = getAdminBase();
+  const marketingBase = (process.env.NEXT_PUBLIC_MARKETING_URL || 'https://viralbridgge-new.vercel.app').replace(/\/$/, '');
+  return `${adminBase}/auth/logout?returnUrl=${encodeURIComponent(`${marketingBase}/`)}`;
+}
+
+export function performMarketingLogout(): void {
+  markLoggedOut();
+}
 
 function normalizeAdminPath(path: string): string {
   return path.startsWith('/') ? path : `/${path}`;
@@ -34,7 +44,7 @@ export function goToAdminPortal(adminPath: string): void {
 export function handleApplyCampaign(campaignId: string, onWrongRole?: (message: string) => void): void {
   const user = getStoredUser();
   const role = normalizeRole(user?.role);
-  const path = `/campaign-discovery?apply=${encodeURIComponent(campaignId)}`;
+  const path = `/campaign-discovery/apply/${encodeURIComponent(campaignId)}`;
 
   if (!user) {
     window.location.href = buildAdminLoginForAction(path);

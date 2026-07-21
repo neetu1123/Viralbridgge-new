@@ -23,6 +23,7 @@ import {
   normalizeRole,
 } from '@/src/lib/auth/session';
 import { logoutApi } from '@/src/lib/auth/api';
+import { buildMarketingLogoutUrl, performMarketingLogout } from '@/src/lib/auth/actions';
 
 export default function UserMenu() {
   const { user, logout } = useAuth();
@@ -62,8 +63,9 @@ export default function UserMenu() {
   const handleLogout = () => {
     setOpen(false);
     logout();
+    performMarketingLogout();
     void logoutApi();
-    window.location.replace('/');
+    window.location.replace(buildMarketingLogoutUrl());
   };
 
   return (
