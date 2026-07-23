@@ -1,724 +1,311 @@
-Implement complete Authentication Integration between the Main Marketing Portal and the Dashboard.
+Implement a Portfolio section for both Creator and Brand profiles.
 
 IMPORTANT
 
-The frontend already exists.
+Frontend only.
 
-Do NOT modify the existing Creator Explore page or Campaign Explore page.
+Mock data.
 
-Create NEW routes for development and API integration.
+--------------------------------------------------
+PURPOSE
+--------------------------------------------------
 
-The existing pages must remain unchanged for UI reference.
+Allow users to showcase previous work directly on their public profiles.
 
----
+This section should help Brands evaluate creators and help Creators demonstrate their experience.
 
-## OBJECTIVE
+--------------------------------------------------
+CREATOR PROFILE
+--------------------------------------------------
 
-The Main Marketing Portal should become a public website where visitors can:
-
-• Learn about ViralBridge
-• Browse public creators
-• Browse public campaigns
-• View creator profiles
-• View campaign details
-• Login
-• Sign Up
-
-Once authenticated, users should remain logged in across the Marketing Portal and Dashboard.
-
----
-
-## AUTHENTICATION FLOW
-
-Use Firebase Authentication.
-
-After successful login:
-
-Store:
-
-Firebase Token
-
-User Information
-
-Role
-
-Refresh Token
-
-Display logged-in state on the Main Portal.
-
-The login session should persist after refresh.
-
----
-
-## HEADER BEHAVIOUR
-
-NOT LOGGED IN
-
-Display:
-
-Login
-
-Sign Up
-
----
-
-LOGGED IN
-
-Replace Login button with:
-
-Profile Avatar
-
-First Name
-
-Notification Icon
-
-Dropdown Menu
-
-Dropdown:
-
-Dashboard
-
-Profile
-
-Settings
-
-Logout
-
-Display profile picture if available.
-
-Otherwise display initials.
-
-Example:
-
-NC
-
----
-
-## ROLE BASED DASHBOARD
-
-Creator
-
-Dashboard →
-
-/creator/dashboard
-
-Brand
-
-Dashboard →
-
-/brand/dashboard
-
-Admin
-
-Dashboard →
-
-/admin/dashboard
-
----
-
-## NEW ROUTES
-
-Do NOT modify existing pages.
-
-Create:
-
-/explore/creators-v2
-
-/explore/campaigns-v2
-
-/creator/public/:username
-
-/campaign/public/:campaignId
-
-These pages will later integrate with backend APIs.
-
-Existing pages remain untouched.
-
----
-
-## PUBLIC CREATOR LIST
-
-Display:
-
-Profile Photo
-
-Name
-
-Username
-
-Category
-
-Followers
-
-Engagement Rate
-
-Location
-
-Languages
-
-Premium Badge
-
-Verified Badge
-
-Campaigns Completed
-
-View Profile Button
-
-Invite Creator Button
-
----
-
-## VIEW PROFILE
-
-Click:
-
-View Profile
-
-Navigate:
-
-/creator/public/:username
-
-Display:
-
-Cover Image
-
-Profile Picture
-
-Bio
-
-Categories
-
-Languages
-
-Followers
-
-Engagement Rate
-
-Completed Campaigns
-
-Brands Worked With
+Create a new section:
 
 Portfolio
 
-Recent Campaigns
+Display:
 
-Social Links
+Video thumbnails
 
-Reviews
+Instagram posts
 
-Invite Creator
+YouTube videos
 
----
+Short-form reels
 
-## INVITE CREATOR
+Campaign images
 
-If NOT logged in:
+Case studies
 
-Redirect to:
+--------------------------------------------------
+Each portfolio item should display:
 
-Login
+Thumbnail
 
-After successful login:
+Platform Icon
 
-Automatically return user to the same creator profile.
+Campaign Name
 
-Open Invite Creator modal.
+Brand Name
 
----
+Views
 
-## PUBLIC CAMPAIGN PAGE
+Likes
 
-Create:
+Comments
 
-/campaign/public/:campaignId
+Publish Date
+
+--------------------------------------------------
+Clicking an item opens:
+
+Large preview modal.
+
+--------------------------------------------------
+BRAND PROFILE
+--------------------------------------------------
+
+Create a section:
+
+Previous Campaigns
 
 Display:
 
 Campaign Banner
 
-Brand Logo
+Campaign Name
 
-Campaign Title
-
-Description
+Industry
 
 Budget
 
-Deliverables
+Creator Count
+
+Platforms
+
+Campaign Status
+
+Thumbnail Gallery
+
+--------------------------------------------------
+FILTERS
+--------------------------------------------------
 
 Platform
 
-Deadline
+Instagram
 
-Creator Requirements
+YouTube
 
-Languages
+LinkedIn
 
-Location
+Facebook
 
-Skills
-
-Apply Button
-
----
-
-## APPLY NOW
-
-If NOT logged in:
-
-Redirect to Login.
-
-After successful login:
-
-Return user to:
-
-Same Campaign
-
-Open Apply Campaign modal automatically.
-
----
-
-## LOGIN REDIRECTION
-
-If user attempts:
-
-Invite Creator
-
-Apply Campaign
-
-Save Campaign
-
-Bookmark Creator
-
-Message Brand
-
-Without login:
-
-Store intended destination.
-
-After login:
-
-Automatically redirect back.
-
-Examples:
-
-/campaign/public/123
-
-/creator/public/neetu
-
-Continue the original action.
-
----
-
-## PUBLIC PLATFORM STATS
-
-Homepage should display real platform statistics.
-
-Cards:
-
-Verified Creators
-
-Active Brands
-
-Live Campaigns
-
-Campaigns Completed
-
-Total Payouts
-
-Cities Covered
-
-Languages Supported
-
-Premium Members
-
----
-
-## LIVE COUNTERS
-
-Animate numbers.
-
-Examples:
-
-25,000+
-
-Verified Creators
-
-4,200+
-
-Brands
-
-18,000+
-
-Campaigns
-
-₹8.5 Cr+
-
-Creator Earnings
-
-Update from backend APIs later.
-
----
-
-## HOMEPAGE SECTIONS
-
-Featured Creators
-
-Trending Campaigns
-
-Popular Categories
-
-Popular Cities
-
-Popular Languages
-
-Success Stories
-
-Top Brands
-
-Testimonials
-
-Platform Statistics
-
-Premium Creators
-
----
-
-## SEARCH EXPERIENCE
-
-Homepage search.
-
-Search:
-
-Creators
-
-Campaigns
-
-Categories
-
-Cities
-
-Languages
-
-Redirect to:
-
-Explore pages.
-
----
-
-## EMPTY STATES
-
-If no creators:
-
-"No creators available."
-
-If no campaigns:
-
-"No active campaigns."
-
----
-
-## UI REQUIREMENTS
-
-Modern SaaS Design
-
-Responsive
-
-Tailwind CSS
-
-Framer Motion
-
-Sticky Header
-
-Animated Statistics
-
-Skeleton Loading
-
-Premium Cards
-
-Smooth Page Transitions
-
-Gradient Hero Section
-
-Glassmorphism where appropriate
-
----
-
-## BACKEND INTEGRATION READY
-
-Prepare pages for future API integration.
-
-Use a dedicated service layer.
-
-Keep mock data separate from components.
-
-Components should consume data through hooks/services.
-
-Easy to replace mock data with APIs later.
-
----
-
-## DELIVERABLES
-
-Create:
-
-New Routes
-
-Authentication Integration
-
-Protected Actions
-
-Role-based Navigation
-
-Public Creator Profile
-
-Public Campaign Details
-
-Homepage Statistics
-
-Animated Counters
-
-Reusable Components
-
-State Management
-
-Firebase Authentication Integration
-
-Responsive UI
-
-Do NOT modify existing Creator Explore or Campaign Explore pages.
-
-Create separate V2 pages for development while preserving the existing UI.
-
-
-
-===========================================================
+TikTok
 
 --------------------------------------------------
-LOGGED-IN USER EXPERIENCE
+LAYOUT
 --------------------------------------------------
 
-Once a user logs in, the Main Marketing Portal should immediately reflect the authenticated state without requiring them to navigate to the dashboard.
+Responsive Masonry Grid.
 
-The login session should be shared across the Marketing Portal and Dashboard.
+Carousel for featured content.
 
-The header should dynamically update based on the user's role.
+Hover effects.
+
+Preview modal.
+
+Lazy loading.
+
+Skeleton loading.
 
 --------------------------------------------------
-CREATOR HEADER
+EMPTY STATE
 --------------------------------------------------
 
-Replace Login and Sign Up with:
+Illustration
 
-🔔 Notifications
+"No portfolio available yet."
 
-💬 Messages
+Upload CTA placeholder.
 
-❤️ Saved Campaigns
+--------------------------------------------------
+DESIGN
+--------------------------------------------------
 
-👤 Profile Avatar
+Premium gallery layout.
 
-Display:
+Rounded cards.
 
-• Profile Picture (if uploaded)
-• Otherwise show user's initials
-• Display First Name beside the avatar
+Modern lightbox preview.
+
+Responsive.
+
+Mock data only.
+
+Implement an AI Recommendations section on the Brand Dashboard homepage.
+
+IMPORTANT
+
+This is a frontend implementation only.
+
+Do NOT implement AI logic or backend APIs.
+
+Use mock/static data for now.
+
+--------------------------------------------------
+PURPOSE
+--------------------------------------------------
+
+When a Brand logs into the Client Portal, the dashboard should immediately display personalized AI-powered recommendations to help them quickly discover suitable creators and improve campaign performance.
+
+--------------------------------------------------
+LOCATION
+--------------------------------------------------
+
+Brand Dashboard Home
+
+Place this section below the dashboard summary cards and above recent campaigns.
+
+--------------------------------------------------
+SECTION TITLE
+--------------------------------------------------
+
+✨ AI Recommendations
+
+Subtitle:
+
+Recommended for you based on your previous campaigns, industry, interests, and platform activity.
+
+--------------------------------------------------
+DISPLAY CARDS
+--------------------------------------------------
+
+Each recommendation card should display:
+
+• Creator Profile Image
+• Creator Name
+• Category
+• Platform
+• Followers
+• Engagement Rate
+• Location
+• Languages
+• AI Match Score (e.g. 96% Match)
+• Short recommendation reason
 
 Example:
 
-👤 Neetu ▼
-
-Profile Dropdown:
-
-My Dashboard
-
-My Profile
-
-Saved Campaigns
-
-Messages
-
-Notifications
-
-Settings
-
-Logout
-
-The creator should feel like they are already inside the platform while browsing the public website.
+"High engagement with Fashion campaigns."
 
 --------------------------------------------------
-BRAND HEADER
+ACTIONS
 --------------------------------------------------
 
-Replace Login and Sign Up with:
+Each card should have:
 
-🔔 Notifications
-
-❤️ Saved Creators
-
-➕ Create Campaign
-
-👤 Profile Avatar
-
-Display:
-
-• Company Logo if uploaded
-• Otherwise profile image
-• Otherwise company initials
-• Display Company Name or User First Name
-
-Example:
-
-🏢 Acme Pvt Ltd ▼
-
-Dropdown Menu:
-
-Brand Dashboard
-
-Company Profile
-
-My Campaigns
-
-Saved Creators
-
-Notifications
-
-Billing & Subscription
-
-Settings
-
-Logout
-
---------------------------------------------------
-ADMIN HEADER
---------------------------------------------------
-
-If an administrator logs into the Marketing Portal, display:
-
-🔔 Notifications
-
-🛠 Admin Dashboard
-
-👤 Admin Avatar
-
-Dropdown:
-
-Dashboard
-
-Users
-
-Campaigns
-
-Settings
-
-Logout
-
---------------------------------------------------
-GLOBAL AUTHENTICATION
---------------------------------------------------
-
-The authenticated state should be available across every public page including:
-
-Home
-
-Explore Creators
-
-Explore Campaigns
-
-Pricing
-
-Creator Profile
-
-Campaign Details
-
-About
-
-Contact
-
-Footer Pages
-
-The header should never revert back to Login / Sign Up while the user is authenticated.
-
---------------------------------------------------
-PROTECTED ACTIONS
---------------------------------------------------
-
-When a logged-in user performs actions on the public website, they should remain on the same page.
-
-Examples:
-
-Creator:
-
-Apply to Campaign
-
-Save Campaign
-
-Message Brand
-
-View Dashboard
-
-Brand:
+View Profile
 
 Invite Creator
 
 Save Creator
 
-Create Campaign
-
-Message Creator
-
-No unnecessary redirects should occur.
-
 --------------------------------------------------
-USER MENU DESIGN
+FILTERS
 --------------------------------------------------
 
-Create a modern dropdown menu similar to LinkedIn, Fiverr, Upwork, or Airbnb.
+All Recommendations
 
-Include:
+Trending
 
-Profile Card
+Recently Active
 
-Profile Image
+Premium Creators
 
-Name
-
-Role Badge
-
-Email
-
-Quick Actions
-
-Navigation Links
-
-Logout Button
-
-Use smooth animations.
-
-Close when clicking outside.
-
-Support keyboard navigation.
+Verified Creators
 
 --------------------------------------------------
-PROFILE DISPLAY
+UI REQUIREMENTS
 --------------------------------------------------
 
-Avatar Priority:
+Horizontal carousel on desktop.
 
-1. Profile Picture
-2. Company Logo (Brand)
-3. Initials with colored background
+Swipe cards on mobile.
 
-Display role badges such as:
+Modern card design.
 
-✔ Verified Creator
+Gradient AI badge.
 
-👑 Premium Creator
+Hover animations.
 
-🏢 Premium Brand
+Skeleton loaders.
 
-⭐ Verified Brand
+Mock data only.
+Enhance the Broadcast Email module by adding an Inactive Users filter.
 
-These badges should also appear inside the dropdown menu.
+IMPORTANT
 
-so check this an dcreate it but make sure deisgn and fucnioanlity shuod not be bronken
+Frontend only.
+
+Use mock data.
+
+--------------------------------------------------
+PURPOSE
+--------------------------------------------------
+
+Allow administrators to easily target inactive users when sending broadcast emails.
+
+--------------------------------------------------
+ADD FILTER
+--------------------------------------------------
+
+Include a new filter:
+
+User Status
+
+Options:
+
+All Users
+
+Active Users
+
+Inactive Users
+
+Verified Users
+
+Premium Users
+
+--------------------------------------------------
+INACTIVE USER
+--------------------------------------------------
+
+Display inactive users with:
+
+Gray status badge
+
+"Inactive"
+
+Tooltip:
+
+"No activity detected within the configured inactivity period."
+
+--------------------------------------------------
+EMAIL PREVIEW
+--------------------------------------------------
+
+Show the total number of selected recipients.
+
+Display sample recipient list.
+
+--------------------------------------------------
+UI
+--------------------------------------------------
+
+Modern filter panel.
+
+Search bar.
+
+Checkbox selection.
+
+Responsive layout.
+
+No backend implementation.
