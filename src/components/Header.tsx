@@ -23,6 +23,7 @@ export default function Navbar() {
     { label: 'Campaign', href: '/explore/campaigns-v2' },
     { label: 'Creators', href: '/explore/creators-v2' },
     { label: 'Pricing', href: '/pricing' },
+    { label: 'Services', href: '/services' },
   ];
 
   const adminLoginUrl = buildAdminLoginUrl('/explore/creators-v2');
