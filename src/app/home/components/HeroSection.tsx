@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import AppImage from '@/src/components/ui/AppImage';
+import FadeIn from '@/src/components/animations/FadeIn';
 import { TrendingUp, Users, Zap, Star, CheckCircle, ArrowRight } from 'lucide-react';
 
 const PLATFORM_BADGES = [
@@ -84,70 +85,75 @@ export default function HeroSection() {
       <div className="max-w-screen-xl mx-auto px-6 lg:px-10 py-20 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left: Copy */}
-          <div className="space-y-8 animate-slide-up">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-[#EFEAFF] rounded-full px-4 py-2">
-              <Star size={14} className="text-[#7B2FF7] fill-[#7B2FF7]" />
-              <span className="text-[#7B2FF7] font-semibold text-sm font-display">
-                #1 Creator Marketplace in 2026
-              </span>
-            </div>
-
-            {/* Headline */}
-            <div>
-              <h1 className="font-display text-5xl xl:text-6xl font-800 leading-[1.1] tracking-tight text-[#1F1F2E]">
-                Connect Brands
-                <br />
-                with Creators{' '}
-                <span className="gradient-text">Instantly</span>
-              </h1>
-              <p className="mt-6 text-[#6B6B8A] text-lg leading-relaxed max-w-lg font-body">
-                viralbridgge is the all-in-one platform where brands find authentic creators, launch campaigns, and track ROI — while creators discover paid opportunities that match their niche.
-              </p>
-            </div>
-
-            {/* Trust signals */}
-            <div className="flex flex-wrap gap-3">
-              {[
-              'No upfront fees',
-              'Verified creators only',
-              'Instant matching']?.
-              map((item) =>
-              <div key={`trust-${ item}`} className="flex items-center gap-1.5">
-                  <CheckCircle size={15} className="text-[#7B2FF7]" />
-                  <span className="text-[#6B6B8A] text-sm font-medium">{item}</span>
-                </div>
-              )}
-            </div>
-
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-4">
-              <Link href="https://admin-viralbridgge-new.vercel.app/" className="btn-primary flex items-center gap-2 text-base">
-                Join as Creator
-                <ArrowRight size={16} />
-              </Link>
-              <Link href="https://admin-viralbridgge-new.vercel.app/" className="btn-secondary flex items-center gap-2 text-base">
-                Hire Creators
-              </Link>
-            </div>
-
-            {/* Platform badges */}
-            <div className="flex items-center gap-3 flex-wrap">
-              <span className="text-[#9AA0B4] text-sm font-medium">Works with</span>
-              {PLATFORM_BADGES?.map((p) =>
-              <span
-                key={`platform-badge-${ p?.name}`}
-                className="text-xs font-semibold px-3 py-1.5 rounded-full border border-[#E5E7EB]"
-                style={{ color: p?.color, backgroundColor: p?.bg }}>
-                
-                  {p?.name}
+          <div className="space-y-8">
+            <FadeIn>
+              <div className="inline-flex items-center gap-2 bg-[#EFEAFF] rounded-full px-4 py-2">
+                <Star size={14} className="text-[#7B2FF7] fill-[#7B2FF7]" />
+                <span className="text-[#7B2FF7] font-semibold text-sm font-display">
+                  #1 Creator Marketplace in 2026
                 </span>
-              )}
-            </div>
+              </div>
+            </FadeIn>
+
+            <FadeIn delay={0.06}>
+              <div>
+                <h1 className="font-display text-5xl xl:text-6xl font-800 leading-[1.1] tracking-tight text-[#1F1F2E]">
+                  Connect Brands
+                  <br />
+                  with Creators{' '}
+                  <span className="gradient-text">Instantly</span>
+                </h1>
+                <p className="mt-6 text-[#6B6B8A] text-lg leading-relaxed max-w-lg font-body">
+                  viralbridgge is the all-in-one platform where brands find authentic creators, launch campaigns, and track ROI — while creators discover paid opportunities that match their niche.
+                </p>
+              </div>
+            </FadeIn>
+
+            <FadeIn delay={0.12}>
+              <div className="flex flex-wrap gap-3">
+                {[
+                'No upfront fees',
+                'Verified creators only',
+                'Instant matching']?.
+                map((item) =>
+                <div key={`trust-${ item}`} className="flex items-center gap-1.5">
+                    <CheckCircle size={15} className="text-[#7B2FF7]" />
+                    <span className="text-[#6B6B8A] text-sm font-medium">{item}</span>
+                  </div>
+                )}
+              </div>
+            </FadeIn>
+
+            <FadeIn delay={0.16}>
+              <div className="flex flex-wrap gap-4">
+                <Link href="https://admin-viralbridgge-new.vercel.app/" className="btn-primary flex items-center gap-2 text-base">
+                  Join as Creator
+                  <ArrowRight size={16} />
+                </Link>
+                <Link href="https://admin-viralbridgge-new.vercel.app/" className="btn-secondary flex items-center gap-2 text-base">
+                  Hire Creators
+                </Link>
+              </div>
+            </FadeIn>
+
+            <FadeIn delay={0.2}>
+              <div className="flex items-center gap-3 flex-wrap">
+                <span className="text-[#9AA0B4] text-sm font-medium">Works with</span>
+                {PLATFORM_BADGES?.map((p) =>
+                <span
+                  key={`platform-badge-${ p?.name}`}
+                  className="text-xs font-semibold px-3 py-1.5 rounded-full border border-[#E5E7EB]"
+                  style={{ color: p?.color, backgroundColor: p?.bg }}>
+                  
+                    {p?.name}
+                  </span>
+                )}
+              </div>
+            </FadeIn>
           </div>
 
           {/* Right: Product mockup */}
-          <div className="relative hidden lg:block">
+          <FadeIn delay={0.12} scale className="relative hidden lg:block">
             {/* Main dashboard card */}
             <div className="relative z-10 bg-white rounded-3xl border border-[#E5E7EB] shadow-card-hover p-6 space-y-5">
               {/* Header */}
@@ -253,7 +259,7 @@ export default function HeroSection() {
                 <div className="text-[#9AA0B4] text-[10px]">₹2,400 to Marcus Reid</div>
               </div>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </div>
     </section>);

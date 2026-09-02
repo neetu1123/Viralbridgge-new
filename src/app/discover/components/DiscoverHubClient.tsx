@@ -55,8 +55,9 @@ export default function DiscoverHubClient() {
     <div className="max-w-screen-2xl mx-auto px-6 lg:px-10 py-8">
       {/* Hero */}
       <motion.section
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: [0.25, 1, 0.5, 1] }}
         className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#7B2FF7] via-[#9B4FF7] to-[#F357A8] px-8 py-14 md:py-20 mb-12"
       >
         <div className="absolute inset-0 opacity-20">

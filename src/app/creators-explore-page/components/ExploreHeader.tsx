@@ -3,6 +3,7 @@
 import React from 'react';
 import { Search, SlidersHorizontal, ChevronDown } from 'lucide-react';
 import type { CreatorFilters } from './CreatorsExploreClient';
+import FadeIn from '@/src/components/animations/FadeIn';
 
 const SORT_OPTIONS = [
   { value: 'relevance', label: 'Most Relevant' },
@@ -22,7 +23,7 @@ interface ExploreHeaderProps {
 
 export default function ExploreHeader({ filters, updateFilter, activeFilterCount, onOpenMobileSidebar }: ExploreHeaderProps) {
   return (
-    <div className="mb-2">
+    <FadeIn className="mb-2">
       {/* Page title */}
       <div className="mb-6">
         <h1 className="font-display font-800 text-3xl text-[#1F1F2E] tracking-tight">Discover Creators</h1>
@@ -73,6 +74,6 @@ export default function ExploreHeader({ filters, updateFilter, activeFilterCount
           )}
         </button>
       </div>
-    </div>
+    </FadeIn>
   );
 }

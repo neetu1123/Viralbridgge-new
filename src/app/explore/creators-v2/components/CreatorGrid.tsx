@@ -10,6 +10,7 @@ import { fetchPublicCreators } from '@/src/lib/api/public';
 import type { PublicCreator } from '@/src/lib/api/types';
 import { mapCreatorSort, platformBadgeStyle } from '@/src/lib/explore-utils';
 import type { CreatorFilters } from './CreatorsExploreClient';
+import { StaggerItem } from '@/src/components/animations/Stagger';
 
 const ITEMS_PER_PAGE = 9;
 
@@ -19,7 +20,7 @@ interface CreatorGridProps {
 
 function CreatorCardSkeleton() {
   return (
-    <div className="bg-white rounded-2xl border border-[#E5E7EB] overflow-hidden animate-pulse">
+    <div className="bg-white rounded-2xl border border-[#E5E7EB] overflow-hidden skeleton-shimmer">
       <div className="p-5 pb-4">
         <div className="flex gap-4">
           <div className="w-14 h-14 rounded-2xl bg-[#F2F3F7]" />
@@ -169,20 +170,20 @@ export default function CreatorGrid({ filters }: CreatorGridProps) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-        {creators.map((creator) => {
+        {creators.map((creator, index) => {
           const platformStyle = platformBadgeStyle(creator.platform);
           const isSaved = savedCreators.has(creator.id);
           const avatarSrc = creator.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(creator.name)}&background=7B2FF7&color=fff`;
 
           return (
+            <StaggerItem key={creator.id} index={index}>
             <div
-              key={creator.id}
-              className="group bg-white rounded-2xl border border-[#E5E7EB] shadow-card hover:shadow-card-hover transition-all duration-200 hover:-translate-y-1 overflow-hidden flex flex-col"
+              className="group bg-white rounded-2xl border border-[#E5E7EB] shadow-card hover:shadow-card-hover transition-all duration-200 hover:-translate-y-0.5 overflow-hidden flex flex-col"
             >
               <div className="p-5 pb-4">
                 <div className="flex items-start gap-4">
                   <div className="relative flex-shrink-0">
-                    <div className="w-14 h-14 rounded-2xl overflow-hidden bg-[#F2F3F7] ring-2 ring-[#F8F7FC]">
+                    <div className="w-14 h-14 rounded-2xl overflow-hidden bg-[#F2F3F7] ring-2 ring-[#F8F7FC] vb-img-zoom">
                       <AppImage
                         src={avatarSrc}
                         alt={creator.alt}
@@ -311,6 +312,7 @@ export default function CreatorGrid({ filters }: CreatorGridProps) {
                 </div>
               </div>
             </div>
+            </StaggerItem>
           );
         })}
       </div>

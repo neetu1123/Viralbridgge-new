@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
 import { ArrowRight, Target, BarChart3, Shield, Zap, TrendingUp, CheckCircle, Users, DollarSign } from 'lucide-react';
+import FadeIn from '@/src/components/animations/FadeIn';
 
 const steps = [
 { num: '01', title: 'Create your brand profile', desc: 'Set up your brand page with logo, description, industry, and target audience. This is what creators see when they review your campaigns.' },
@@ -45,7 +46,7 @@ export default function BrandGuidePage() {
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-violet-950/85 to-purple-900/80" />
         <div className="relative max-w-6xl mx-auto px-6 py-24">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
+            <FadeIn>
               <span className="inline-flex items-center gap-2 bg-violet-500/20 text-violet-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-6 border border-violet-500/30">
                 <Target className="w-3.5 h-3.5" /> Brand Guide
               </span>
@@ -58,7 +59,7 @@ export default function BrandGuidePage() {
               <Link href="/sign-up-login-screen" className="inline-flex items-center gap-2 bg-violet-500 hover:bg-violet-400 text-white px-6 py-3 rounded-xl font-semibold transition-colors">
                 Start your first campaign <ArrowRight className="w-4 h-4" />
               </Link>
-            </div>
+            </FadeIn>
             <div className="grid grid-cols-2 gap-4">
               {[
               { icon: TrendingUp, label: 'Average campaign ROI', value: '3.4x', color: 'border-violet-500/30 bg-violet-500/10' },

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import AppImage from '@/src/components/ui/AppImage';
 import { BadgeCheck, Crown, MapPin, TrendingUp, ExternalLink } from 'lucide-react';
 import type { DiscoverCreator } from '@/src/data/discoverCreators';
@@ -15,12 +15,13 @@ interface DiscoverCreatorCardProps {
 }
 
 export default function DiscoverCreatorCard({ creator, index = 0, highlight = false }: DiscoverCreatorCardProps) {
+  const reduce = useReducedMotion();
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={reduce ? false : { opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05, duration: 0.35 }}
-      className={`group bg-white rounded-2xl border overflow-hidden flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover ${
+      transition={{ delay: Math.min(index, 8) * 0.05, duration: 0.4 }}
+      className={`group bg-white rounded-2xl border overflow-hidden flex flex-col transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card-hover ${
         highlight
           ? 'border-[#F9A826] shadow-[0_0_0_2px_rgba(249,168,38,0.15)]'
           : 'border-[#E5E7EB] shadow-card'

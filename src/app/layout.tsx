@@ -31,6 +31,9 @@ export default function RootLayout({
         <AuthProvider>
           {children}
         </AuthProvider>
+        <noscript>
+          <style>{`[data-reveal],.scroll-reveal,.scroll-reveal-left,.scroll-reveal-right{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
 
         <script type="module" async src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fviralbridg2511back.builtwithrocket.new&_be=https%3A%2F%2Fappanalytics.rocket.new&_v=0.1.17" />
         <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.2" />

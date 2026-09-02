@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
 import { Download, ExternalLink, Image as ImageIcon, FileText, Palette, ArrowRight, Mail } from 'lucide-react';
+import FadeIn from '@/src/components/animations/FadeIn';
 
 const assets = [
 { label: 'Logo Pack (SVG + PNG)', desc: 'Full color, white, and dark variants', icon: ImageIcon, tag: 'Logos' },
@@ -49,12 +50,14 @@ export default function PressKitPage() {
         
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-violet-950/80 to-slate-900/90" />
         <div className="relative max-w-6xl mx-auto px-6 py-24">
+          <FadeIn>
           <span className="inline-block bg-violet-500/20 text-violet-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-6 border border-violet-500/30">Press & Media</span>
           <h1 className="text-5xl font-bold mb-6 max-w-2xl leading-tight text-white">Everything you need to cover ViralBridge</h1>
           <p className="text-xl text-slate-300 max-w-xl mb-8">Logos, screenshots, founder photos, fact sheets, and press contacts — all in one place.</p>
           <button className="inline-flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white px-6 py-3 rounded-xl font-semibold transition-colors">
             <Download className="w-4 h-4" /> Download Full Press Kit
           </button>
+          </FadeIn>
         </div>
       </section>
       {/* Company Facts */}

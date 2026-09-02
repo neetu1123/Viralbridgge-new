@@ -1,11 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import Reveal from '@/src/components/animations/Reveal';
 
 export default function CtaSection() {
   return (
     <section className="py-24 bg-white">
       <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
+        <Reveal scale>
         <div
           className="relative rounded-3xl overflow-hidden p-12 md:p-16 text-center"
           style={{
@@ -52,6 +54,7 @@ export default function CtaSection() {
             </p>
           </div>
         </div>
+        </Reveal>
       </div>
     </section>
   );

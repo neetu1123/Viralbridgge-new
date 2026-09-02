@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { Calendar, ArrowRight } from 'lucide-react';
 import { fetchPublicCampaigns } from '@/src/lib/api/public';
 import type { PublicCampaign } from '@/src/lib/api/types';
+import Reveal from '@/src/components/animations/Reveal';
+import { StaggerItem } from '@/src/components/animations/Stagger';
 
 const FALLBACK_CAMPAIGNS = [
   {
@@ -184,7 +186,7 @@ export default function FeaturedCampaigns() {
   return (
     <section className="py-24 bg-white">
       <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
-        <div className="flex items-end justify-between mb-12">
+        <Reveal className="flex items-end justify-between mb-12">
           <div>
             <span className="inline-block text-[#7B2FF7] font-semibold text-sm uppercase tracking-widest mb-3 font-display">
               Featured Campaigns
@@ -199,13 +201,13 @@ export default function FeaturedCampaigns() {
           >
             View all campaigns <ArrowRight size={15} />
           </Link>
-        </div>
+        </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-          {campaigns.map((campaign) => (
+          {campaigns.map((campaign, index) => (
+            <StaggerItem key={campaign.id} index={index}>
             <div
-              key={campaign.id}
-              className="group bg-white rounded-2xl border border-[#E5E7EB] shadow-card hover:shadow-card-hover transition-all duration-200 hover:-translate-y-1 p-5 flex flex-col gap-4"
+              className="group bg-white rounded-2xl border border-[#E5E7EB] shadow-card hover:shadow-card-hover transition-all duration-200 hover:-translate-y-0.5 p-5 flex flex-col gap-4"
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
@@ -262,6 +264,7 @@ export default function FeaturedCampaigns() {
                 View Campaign
               </Link>
             </div>
+            </StaggerItem>
           ))}
         </div>
 

@@ -135,7 +135,7 @@ export default function UserMenu() {
 
         {open && (
           <div
-            className="absolute right-0 top-full mt-2 w-72 bg-white rounded-2xl border border-[#E5E7EB] shadow-xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200"
+            className="absolute right-0 top-full mt-2 w-72 bg-white rounded-2xl border border-[#E5E7EB] shadow-xl overflow-hidden z-50 dropdown-enter"
             role="menu"
           >
             <div className="p-4 border-b border-[#F2F3F7]" style={{ background: 'linear-gradient(135deg, #F8F7FC 0%, #EFEAFF 100%)' }}>

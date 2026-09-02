@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
 import { ArrowRight, CheckCircle, Star, TrendingUp, Shield, Zap, DollarSign, Users, Camera, ChevronDown } from 'lucide-react';
+import FadeIn from '@/src/components/animations/FadeIn';
 
 const steps = [
 { num: '01', title: 'Complete your profile', desc: 'Add your bio, social links, niche, and portfolio. A complete profile gets 4x more campaign invites.', tip: 'Pro tip: Upload at least 6 portfolio pieces to unlock "Featured Creator" status.' },
@@ -50,7 +51,7 @@ export default function CreatorGuidePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-rose-950/90 via-violet-950/80 to-transparent" />
         <div className="relative max-w-6xl mx-auto px-6 py-24">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
+            <FadeIn>
               <span className="inline-flex items-center gap-2 bg-rose-500/20 text-rose-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-6 border border-rose-500/30">
                 <Camera className="w-3.5 h-3.5" /> Creator Guide
               </span>
@@ -63,7 +64,7 @@ export default function CreatorGuidePage() {
               <Link href="/sign-up-login-screen" className="inline-flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white px-6 py-3 rounded-xl font-semibold transition-colors">
                 Start your creator journey <ArrowRight className="w-4 h-4" />
               </Link>
-            </div>
+            </FadeIn>
             <div className="grid grid-cols-2 gap-4">
               {[
               { icon: DollarSign, label: 'Avg monthly earnings', value: '₹48,200', color: 'border-green-500/30 bg-green-500/10 text-green-300' },

@@ -5,6 +5,7 @@ import FilterSidebar from '@/src/app/creators-explore-page/components/FilterSide
 import CreatorGrid from './CreatorGrid';
 import ExploreHeader from '@/src/app/creators-explore-page/components/ExploreHeader';
 import ActiveFilterChips from '@/src/app/creators-explore-page/components/ActiveFilterChips';
+import Reveal from '@/src/components/animations/Reveal';
 
 export interface CreatorFilters {
   search: string;
@@ -63,9 +64,9 @@ export default function CreatorsExploreClient() {
       )}
 
       <div className="flex gap-8 mt-6">
-        <div className="hidden lg:block w-72 flex-shrink-0">
+        <Reveal className="hidden lg:block w-72 flex-shrink-0">
           <FilterSidebar filters={filters} updateFilter={updateFilter} onReset={resetFilters} />
-        </div>
+        </Reveal>
 
         {sidebarOpen && (
           <div className="fixed inset-0 z-50 lg:hidden">

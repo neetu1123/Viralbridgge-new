@@ -4,6 +4,7 @@ import React, { useMemo } from 'react';
 import Link from 'next/link';
 import { DollarSign, Calendar, Users, ArrowRight } from 'lucide-react';
 import type { CampaignFilters } from './CampaignsExploreClient';
+import { StaggerItem } from '@/src/components/animations/Stagger';
 
 const ALL_CAMPAIGNS = [
   {
@@ -270,10 +271,10 @@ export default function CampaignGrid({ filters }: CampaignGridProps) {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-          {sorted.map((campaign) => (
+          {sorted.map((campaign, index) => (
+            <StaggerItem key={campaign.id} index={index}>
             <div
-              key={campaign.id}
-              className="group bg-white rounded-2xl border border-[#E5E7EB] shadow-card hover:shadow-card-hover transition-all duration-200 hover:-translate-y-1 p-5 flex flex-col gap-4"
+              className="group bg-white rounded-2xl border border-[#E5E7EB] shadow-card hover:shadow-card-hover transition-all duration-200 hover:-translate-y-0.5 p-5 flex flex-col gap-4"
             >
               {/* Brand + Status */}
               <div className="flex items-start justify-between gap-3">
@@ -334,6 +335,7 @@ export default function CampaignGrid({ filters }: CampaignGridProps) {
                 Apply Now <ArrowRight size={14} />
               </Link>
             </div>
+            </StaggerItem>
           ))}
         </div>
       )}

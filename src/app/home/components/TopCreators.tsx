@@ -6,6 +6,8 @@ import AppImage from '@/src/components/ui/AppImage';
 import { ArrowRight, TrendingUp, Star } from 'lucide-react';
 import { fetchPublicCreators } from '@/src/lib/api/public';
 import type { PublicCreator } from '@/src/lib/api/types';
+import Reveal from '@/src/components/animations/Reveal';
+import { StaggerItem } from '@/src/components/animations/Stagger';
 
 const FALLBACK_CREATORS = [
   {
@@ -163,7 +165,7 @@ export default function TopCreators() {
   return (
     <section className="py-24 bg-[#F8F7FC]">
       <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
-        <div className="flex items-end justify-between mb-12">
+        <Reveal className="flex items-end justify-between mb-12">
           <div>
             <span className="inline-block text-[#7B2FF7] font-semibold text-sm uppercase tracking-widest mb-3 font-display">
               Top Creators
@@ -178,16 +180,16 @@ export default function TopCreators() {
           >
             Browse all creators <ArrowRight size={15} />
           </Link>
-        </div>
+        </Reveal>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {creators.map((creator) => (
+          {creators.map((creator, index) => (
+            <StaggerItem key={creator.id} index={index}>
             <div
-              key={creator.id}
-              className="group bg-white rounded-2xl border border-[#E5E7EB] shadow-card hover:shadow-card-hover transition-all duration-200 hover:-translate-y-1 p-5 flex flex-col items-center text-center gap-4"
+              className="group bg-white rounded-2xl border border-[#E5E7EB] shadow-card hover:shadow-card-hover transition-all duration-200 hover:-translate-y-0.5 p-5 flex flex-col items-center text-center gap-4"
             >
               <div className="relative">
-                <div className="w-20 h-20 rounded-full overflow-hidden bg-[#F2F3F7] ring-4 ring-[#F8F7FC] group-hover:ring-[#EFEAFF] transition-all duration-200">
+                <div className="w-20 h-20 rounded-full overflow-hidden bg-[#F2F3F7] ring-4 ring-[#F8F7FC] group-hover:ring-[#EFEAFF] transition-all duration-200 vb-img-zoom">
                   <AppImage
                     src={creator.avatar}
                     alt={creator.alt}
@@ -246,6 +248,7 @@ export default function TopCreators() {
                 View Profile
               </Link>
             </div>
+            </StaggerItem>
           ))}
         </div>
 

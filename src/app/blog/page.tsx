@@ -5,6 +5,9 @@ import Image from 'next/image';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
 import { ArrowRight, Clock, TrendingUp, BookOpen } from 'lucide-react';
+import FadeIn from '@/src/components/animations/FadeIn';
+import Reveal from '@/src/components/animations/Reveal';
+import { StaggerItem } from '@/src/components/animations/Stagger';
 
 const featured = {
   slug: 'ai-matching-creator-economy',
@@ -111,17 +114,19 @@ export default function BlogPage() {
         
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 to-slate-900/95" />
         <div className="relative max-w-6xl mx-auto px-6 py-20">
+          <FadeIn>
           <div className="flex items-center gap-3 mb-4">
             <BookOpen className="w-6 h-6 text-violet-400" />
             <span className="text-violet-400 font-semibold text-sm uppercase tracking-wider">ViralBridge Blog</span>
           </div>
           <h1 className="text-5xl font-bold text-white mb-4">Insights for the creator economy</h1>
           <p className="text-xl text-slate-400 max-w-2xl">Data, strategies, and stories from the intersection of creators, brands, and AI.</p>
+          </FadeIn>
         </div>
       </section>
       {/* Featured */}
       <section className="py-12 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
+        <Reveal className="max-w-6xl mx-auto px-6">
           <Link href={`/blog/${featured?.slug}`} className="block group">
             <div className="rounded-3xl overflow-hidden relative shadow-xl shadow-violet-100/50">
               <Image
@@ -153,7 +158,7 @@ export default function BlogPage() {
               </div>
             </div>
           </Link>
-        </div>
+        </Reveal>
       </section>
       {/* Filter + Grid */}
       <section className="py-12">
@@ -170,8 +175,9 @@ export default function BlogPage() {
             )}
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered?.map((post) =>
-            <Link key={post?.slug} href={`/blog/${post?.slug}`} className="block">
+            {filtered?.map((post, index) =>
+            <StaggerItem key={post?.slug} index={index}>
+            <Link href={`/blog/${post?.slug}`} className="block">
                 <article className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 overflow-hidden group cursor-pointer h-full">
                   <div className="relative overflow-hidden">
                     <Image
@@ -179,7 +185,7 @@ export default function BlogPage() {
                     alt={post?.imageAlt}
                     width={600}
                     height={240}
-                    className="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500" />
+                    className="w-full h-44 object-cover group-hover:scale-[1.02] transition-transform duration-500" />
                   
                     <span className={`absolute top-3 left-3 text-xs font-semibold px-2.5 py-1 rounded-full ${post?.categoryColor}`}>{post?.category}</span>
                   </div>
@@ -198,6 +204,7 @@ export default function BlogPage() {
                   </div>
                 </article>
               </Link>
+            </StaggerItem>
             )}
           </div>
         </div>

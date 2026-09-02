@@ -4,6 +4,8 @@ import React, { useState, useMemo } from 'react';
 import CampaignFilterSidebar from './CampaignFilterSidebar';
 import CampaignGrid from './CampaignGrid';
 import { SlidersHorizontal, Search } from 'lucide-react';
+import FadeIn from '@/src/components/animations/FadeIn';
+import Reveal from '@/src/components/animations/Reveal';
 
 export interface CampaignFilters {
   search: string;
@@ -48,7 +50,7 @@ export default function CampaignsExploreClient() {
   return (
     <div className="max-w-screen-2xl mx-auto px-6 lg:px-10 py-8">
       {/* Page Header */}
-      <div className="mb-8">
+      <FadeIn className="mb-8">
         <span className="inline-block text-[#7B2FF7] font-semibold text-sm uppercase tracking-widest mb-2 font-display">
           Campaigns
         </span>
@@ -88,14 +90,14 @@ export default function CampaignsExploreClient() {
             </button>
           </div>
         </div>
-      </div>
+      </FadeIn>
 
       {/* Main layout */}
       <div className="flex gap-8">
         {/* Desktop sidebar */}
-        <div className="hidden lg:block w-72 flex-shrink-0">
+        <Reveal className="hidden lg:block w-72 flex-shrink-0">
           <CampaignFilterSidebar filters={filters} updateFilter={updateFilter} onReset={resetFilters} />
-        </div>
+        </Reveal>
 
         {/* Mobile sidebar overlay */}
         {sidebarOpen && (

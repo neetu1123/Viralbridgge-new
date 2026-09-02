@@ -1,5 +1,7 @@
 import React from 'react';
 import { UserPlus, Send, DollarSign, Megaphone, Users, Handshake } from 'lucide-react';
+import Reveal from '@/src/components/animations/Reveal';
+import { StaggerItem } from '@/src/components/animations/Stagger';
 // import AppIcon from '@/src/components/ui/AppIcon';
 
 
@@ -65,12 +67,15 @@ const BRAND_STEPS = [
 
 function StepCard({
   step,
+  index,
 }: {
   step: { id: string; step: string; icon: React.ElementType; title: string; desc: string; color: string; bg: string };
+  index: number;
 }) {
   const AppIcon = step.icon;
   return (
-    <div className="group bg-white rounded-2xl border border-[#E5E7EB] p-6 shadow-card hover:shadow-card-hover transition-all duration-200 hover:-translate-y-1 relative overflow-hidden">
+    <StaggerItem index={index}>
+    <div className="group bg-white rounded-2xl border border-[#E5E7EB] p-6 shadow-card hover:shadow-card-hover transition-all duration-200 hover:-translate-y-0.5 relative overflow-hidden">
       <div className="absolute top-4 right-4 font-display font-800 text-[48px] leading-none text-[#F2F3F7] select-none">
         {step.step}
       </div>
@@ -83,6 +88,7 @@ function StepCard({
       <h3 className="font-display font-700 text-[#1F1F2E] text-base mb-2 relative z-10">{step.title}</h3>
       <p className="text-[#6B6B8A] text-sm leading-relaxed relative z-10">{step.desc}</p>
     </div>
+    </StaggerItem>
   );
 }
 
@@ -91,7 +97,7 @@ export default function HowItWorks() {
     <section className="py-24 bg-[#F8F7FC]">
       <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
         {/* Header */}
-        <div className="text-center mb-16">
+        <Reveal className="text-center mb-16">
           <span className="inline-block text-[#7B2FF7] font-semibold text-sm uppercase tracking-widest mb-4 font-display">
             How It Works
           </span>
@@ -101,7 +107,7 @@ export default function HowItWorks() {
           <p className="text-[#6B6B8A] text-lg mt-4 max-w-xl mx-auto leading-relaxed">
             Whether you are a creator looking for brand deals or a brand seeking authentic voices, viralbridgge makes it seamless.
           </p>
-        </div>
+        </Reveal>
 
         {/* Two-column grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -112,8 +118,8 @@ export default function HowItWorks() {
               <h3 className="font-display font-700 text-xl text-[#1F1F2E]">For Creators</h3>
             </div>
             <div className="space-y-4">
-              {CREATOR_STEPS.map((step) => (
-                <StepCard key={step.id} step={step} />
+              {CREATOR_STEPS.map((step, i) => (
+                <StepCard key={step.id} step={step} index={i} />
               ))}
             </div>
           </div>
@@ -125,8 +131,8 @@ export default function HowItWorks() {
               <h3 className="font-display font-700 text-xl text-[#1F1F2E]">For Brands</h3>
             </div>
             <div className="space-y-4">
-              {BRAND_STEPS.map((step) => (
-                <StepCard key={step.id} step={step} />
+              {BRAND_STEPS.map((step, i) => (
+                <StepCard key={step.id} step={step} index={i} />
               ))}
             </div>
           </div>

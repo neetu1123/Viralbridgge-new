@@ -7,6 +7,7 @@ import { fetchPublicCampaigns } from '@/src/lib/api/public';
 import type { PublicCampaign } from '@/src/lib/api/types';
 import { mapCampaignSort } from '@/src/lib/explore-utils';
 import type { CampaignFilters } from './CampaignsExploreClient';
+import { StaggerItem } from '@/src/components/animations/Stagger';
 
 function PlatformBadge({ platform }: { platform: string }) {
   const colors: Record<string, { text: string; bg: string }> = {
@@ -35,7 +36,7 @@ interface CampaignGridProps {
 
 function CampaignCardSkeleton() {
   return (
-    <div className="bg-white rounded-2xl border border-[#E5E7EB] p-5 animate-pulse">
+    <div className="bg-white rounded-2xl border border-[#E5E7EB] p-5 skeleton-shimmer">
       <div className="flex gap-3 mb-4">
         <div className="w-10 h-10 rounded-xl bg-[#F2F3F7]" />
         <div className="flex-1 space-y-2">
@@ -156,10 +157,10 @@ export default function CampaignGrid({ filters, updateFilter }: CampaignGridProp
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-          {campaigns.map((campaign) => (
+          {campaigns.map((campaign, index) => (
+            <StaggerItem key={campaign.id} index={index}>
             <div
-              key={campaign.id}
-              className="group bg-white rounded-2xl border border-[#E5E7EB] shadow-card hover:shadow-card-hover transition-all duration-200 hover:-translate-y-1 p-5 flex flex-col gap-4"
+              className="group bg-white rounded-2xl border border-[#E5E7EB] shadow-card hover:shadow-card-hover transition-all duration-200 hover:-translate-y-0.5 p-5 flex flex-col gap-4"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3">
@@ -222,6 +223,7 @@ export default function CampaignGrid({ filters, updateFilter }: CampaignGridProp
                 Apply Now <ArrowRight size={14} />
               </Link>
             </div>
+            </StaggerItem>
           ))}
         </div>
       )}

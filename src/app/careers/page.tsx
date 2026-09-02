@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
 import { ArrowRight, MapPin, Clock, Briefcase, Heart, Zap, Users, TrendingUp, Star, ChevronDown } from 'lucide-react';
+import FadeIn from '@/src/components/animations/FadeIn';
 
 const openRoles = [
 {
@@ -118,6 +119,7 @@ export default function CareersPage() {
         
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-violet-950/70 to-transparent" />
         <div className="relative max-w-6xl mx-auto px-6 py-28">
+          <FadeIn>
           <span className="inline-flex items-center gap-2 bg-violet-500/20 text-violet-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-6 border border-violet-500/30">
             <Briefcase className="w-3.5 h-3.5" /> We're hiring
           </span>
@@ -144,6 +146,7 @@ export default function CareersPage() {
               </div>
             )}
           </div>
+          </FadeIn>
         </div>
       </section>
 

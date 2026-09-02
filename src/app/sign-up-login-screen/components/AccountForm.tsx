@@ -62,7 +62,7 @@ export default function AccountForm({ role, onNext }: AccountFormProps) {
             }`}
           />
           {errors.firstName && (
-            <p className="text-red-500 text-xs mt-1">{errors.firstName.message}</p>
+            <p className="text-red-500 text-xs mt-1 form-error-enter">{errors.firstName.message}</p>
           )}
         </div>
         <div>
@@ -78,7 +78,7 @@ export default function AccountForm({ role, onNext }: AccountFormProps) {
             }`}
           />
           {errors.lastName && (
-            <p className="text-red-500 text-xs mt-1">{errors.lastName.message}</p>
+            <p className="text-red-500 text-xs mt-1 form-error-enter">{errors.lastName.message}</p>
           )}
         </div>
       </div>
@@ -100,7 +100,7 @@ export default function AccountForm({ role, onNext }: AccountFormProps) {
           }`}
         />
         {errors.email && (
-          <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+          <p className="text-red-500 text-xs mt-1 form-error-enter">{errors.email.message}</p>
         )}
       </div>
 
@@ -120,7 +120,7 @@ export default function AccountForm({ role, onNext }: AccountFormProps) {
               }`}
             />
             {errors.companyName && (
-              <p className="text-red-500 text-xs mt-1">{errors.companyName.message}</p>
+              <p className="text-red-500 text-xs mt-1 form-error-enter">{errors.companyName.message}</p>
             )}
           </div>
           <div>
@@ -169,7 +169,7 @@ export default function AccountForm({ role, onNext }: AccountFormProps) {
           </button>
         </div>
         {errors.password && (
-          <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+          <p className="text-red-500 text-xs mt-1 form-error-enter">{errors.password.message}</p>
         )}
       </div>
 
@@ -199,7 +199,7 @@ export default function AccountForm({ role, onNext }: AccountFormProps) {
           </button>
         </div>
         {errors.confirmPassword && (
-          <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>
+          <p className="text-red-500 text-xs mt-1 form-error-enter">{errors.confirmPassword.message}</p>
         )}
       </div>
 

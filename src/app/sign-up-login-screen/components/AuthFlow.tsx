@@ -8,6 +8,7 @@ import AccountForm from './AccountForm';
 import OnboardingForm from './OnboardingForm';
 import LoginForm from './LoginForm';
 import { ArrowLeft } from 'lucide-react';
+import FadeIn from '@/src/components/animations/FadeIn';
 
 export type UserRole = 'creator' | 'brand' | null;
 
@@ -45,7 +46,7 @@ export default function AuthFlow() {
   };
 
   return (
-    <div className="w-full max-w-screen-lg mx-auto">
+    <FadeIn className="w-full max-w-screen-lg mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px] rounded-3xl overflow-hidden shadow-card-hover border border-[#E5E7EB]">
         {/* Left: Brand panel */}
         <div
@@ -197,6 +198,6 @@ export default function AuthFlow() {
           )}
         </div>
       </div>
-    </div>
+    </FadeIn>
   );
 }

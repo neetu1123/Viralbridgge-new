@@ -5,6 +5,10 @@ import Image from 'next/image';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
 import { ArrowRight, Zap, Shield, Globe, Heart } from 'lucide-react';
+import FadeIn from '@/src/components/animations/FadeIn';
+import Reveal from '@/src/components/animations/Reveal';
+import { StaggerItem } from '@/src/components/animations/Stagger';
+import CountUp from '@/src/components/animations/CountUp';
 
 const stats = [
 { value: '12K+', label: 'Verified Creators' },
@@ -43,7 +47,7 @@ export default function AboutPage() {
         
         <div className="absolute inset-0 bg-gradient-to-r from-violet-950/90 via-slate-900/70 to-transparent" />
         <div className="relative max-w-6xl mx-auto px-6 py-28">
-          <div className="max-w-3xl">
+          <FadeIn className="max-w-3xl">
             <span className="inline-flex items-center gap-2 bg-violet-500/20 text-violet-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-6 border border-violet-500/30">
               <Zap className="w-3.5 h-3.5" /> Our Story
             </span>
@@ -62,7 +66,7 @@ export default function AboutPage() {
                 Press Kit →
               </Link>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
       {/* Stats */}
@@ -71,7 +75,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats?.map((s) =>
             <div key={s?.label} className="text-center">
-                <div className="text-4xl font-bold text-white mb-1">{s?.value}</div>
+                <div className="text-4xl font-bold text-white mb-1"><CountUp value={s?.value} /></div>
                 <div className="text-violet-200 text-sm">{s?.label}</div>
               </div>
             )}
@@ -81,7 +85,7 @@ export default function AboutPage() {
       {/* Mission with image */}
       <section className="py-24 bg-white">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <Reveal className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-4xl font-bold text-slate-900 mb-6">Why we exist</h2>
               <p className="text-lg text-slate-600 leading-relaxed mb-6">
@@ -106,7 +110,7 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="relative">
-              <div className="rounded-3xl overflow-hidden shadow-2xl shadow-violet-100">
+              <div className="rounded-3xl overflow-hidden shadow-2xl shadow-violet-100 vb-img-zoom">
                 <Image
                   src="https://img.rocket.new/generatedImages/rocket_gen_img_1585a31c3-1772888679194.png"
                   alt="Creator filming a product review video with professional lighting and camera setup"
@@ -120,7 +124,7 @@ export default function AboutPage() {
                 <div className="text-xs text-slate-500">Paid to creators</div>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
       {/* Team */}
@@ -142,8 +146,9 @@ export default function AboutPage() {
             </div>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {team?.map((member) =>
-            <div key={member?.name} className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+            {team?.map((member, index) =>
+            <StaggerItem key={member?.name} index={index}>
+            <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-shadow hover:-translate-y-0.5 duration-200">
                 <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${member?.gradient} flex items-center justify-center text-white font-bold text-xl mb-4`}>
                   {member?.initials}
                 </div>
@@ -151,13 +156,14 @@ export default function AboutPage() {
                 <p className="text-violet-600 text-sm font-medium mb-3">{member?.role}</p>
                 <p className="text-sm text-slate-500 leading-relaxed">{member?.bio}</p>
               </div>
+            </StaggerItem>
             )}
           </div>
         </div>
       </section>
       {/* CTA */}
       <section className="py-24 bg-white">
-        <div className="max-w-3xl mx-auto px-6 text-center">
+        <Reveal className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold text-slate-900 mb-4">Ready to build something real?</h2>
           <p className="text-lg text-slate-500 mb-8">Join thousands of creators and brands already on ViralBridge.</p>
           <div className="flex items-center justify-center gap-4 flex-wrap">
@@ -168,7 +174,7 @@ export default function AboutPage() {
               Talk to us →
             </Link>
           </div>
-        </div>
+        </Reveal>
       </section>
       </main>
       <Footer />

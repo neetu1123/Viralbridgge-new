@@ -6,6 +6,7 @@ import { TrendingUp, Star, MessageCircle, Heart, ExternalLink, ChevronLeft, Chev
 
 import { toast } from 'sonner';
 import type { CreatorFilters } from './CreatorsExploreClient';
+import { StaggerItem } from '@/src/components/animations/Stagger';
 
 interface Creator {
   id: string;
@@ -504,21 +505,21 @@ export default function CreatorGrid({ filters }: CreatorGridProps) {
 
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-        {paginated.map((creator) => {
+        {paginated.map((creator, index) => {
           const platformStyle = platformBadgeStyle(creator.platform);
           const isSaved = savedCreators.has(creator.id);
 
           return (
+            <StaggerItem key={creator.id} index={index}>
             <div
-              key={creator.id}
-              className="group bg-white rounded-2xl border border-[#E5E7EB] shadow-card hover:shadow-card-hover transition-all duration-200 hover:-translate-y-1 overflow-hidden flex flex-col">
+              className="group bg-white rounded-2xl border border-[#E5E7EB] shadow-card hover:shadow-card-hover transition-all duration-200 hover:-translate-y-0.5 overflow-hidden flex flex-col">
               
               {/* Card top — avatar + meta */}
               <div className="p-5 pb-4">
                 <div className="flex items-start gap-4">
                   {/* Avatar */}
                   <div className="relative flex-shrink-0">
-                    <div className="w-14 h-14 rounded-2xl overflow-hidden bg-[#F2F3F7] ring-2 ring-[#F8F7FC]">
+                    <div className="w-14 h-14 rounded-2xl overflow-hidden bg-[#F2F3F7] ring-2 ring-[#F8F7FC] vb-img-zoom">
                       <AppImage
                         src={creator.avatar}
                         alt={creator.alt}
@@ -651,7 +652,8 @@ export default function CreatorGrid({ filters }: CreatorGridProps) {
                   </button>
                 </div>
               </div>
-            </div>);
+            </div>
+            </StaggerItem>);
 
         })}
       </div>

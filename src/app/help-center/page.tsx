@@ -5,6 +5,8 @@ import Image from 'next/image';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
 import { Search, ChevronDown, ChevronRight, BookOpen, CreditCard, Shield, Users, Zap, MessageSquare, ArrowRight } from 'lucide-react';
+import FadeIn from '@/src/components/animations/FadeIn';
+import { StaggerItem } from '@/src/components/animations/Stagger';
 
 const categories = [
 {
@@ -115,6 +117,7 @@ export default function HelpCenterPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-violet-700/95 to-purple-800/95" />
         <div className="relative py-20 text-white">
           <div className="max-w-3xl mx-auto px-6 text-center">
+            <FadeIn>
             <h1 className="text-4xl font-bold mb-4">How can we help?</h1>
             <p className="text-violet-200 mb-8">Search our knowledge base or browse by category below.</p>
             <div className="relative">
@@ -130,6 +133,7 @@ export default function HelpCenterPage() {
               <button key={tag} className="bg-white/10 hover:bg-white/20 text-white text-sm px-3 py-1.5 rounded-full border border-white/20 transition-colors">{tag}</button>
               )}
             </div>
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -139,7 +143,8 @@ export default function HelpCenterPage() {
           <h2 className="text-2xl font-bold text-slate-900 mb-8">Browse by topic</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {categories?.map((cat, i) =>
-            <div key={cat?.title} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+            <StaggerItem key={cat?.title} index={i}>
+            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
                 <button
                 onClick={() => setExpandedCat(expandedCat === i ? null : i)}
                 className="w-full p-5 flex items-center gap-4 text-left hover:bg-slate-50 transition-colors">
@@ -167,6 +172,7 @@ export default function HelpCenterPage() {
                   </div>
               }
               </div>
+            </StaggerItem>
             )}
           </div>
         </div>

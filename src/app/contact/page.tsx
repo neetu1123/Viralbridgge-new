@@ -5,6 +5,9 @@ import Image from 'next/image';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
 import { Mail, MessageSquare, MapPin, Clock, Send, CheckCircle, Phone, ArrowRight } from 'lucide-react';
+import FadeIn from '@/src/components/animations/FadeIn';
+import Reveal from '@/src/components/animations/Reveal';
+import { StaggerItem } from '@/src/components/animations/Stagger';
 
 const channels = [
 { icon: MessageSquare, title: 'Live Chat', desc: 'Chat with our support team in real time', badge: 'Fastest', badgeColor: 'bg-green-100 text-green-700', action: 'Start chat' },
@@ -42,8 +45,10 @@ export default function ContactPage() {
         
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 to-violet-950/80" />
         <div className="relative max-w-6xl mx-auto px-6 py-20">
+          <FadeIn>
           <h1 className="text-5xl font-bold text-white mb-4">Get in touch</h1>
           <p className="text-xl text-slate-300 max-w-xl">Whether you're a creator, brand, or journalist — we're here to help.</p>
+          </FadeIn>
         </div>
       </section>
 
@@ -51,8 +56,9 @@ export default function ContactPage() {
       <section className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-4">
-            {channels.map((c) =>
-            <div key={c.title} className="bg-slate-50 rounded-2xl p-6 border border-slate-100 hover:border-violet-200 transition-colors group">
+            {channels.map((c, index) =>
+            <StaggerItem key={c.title} index={index}>
+            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 hover:border-violet-200 transition-colors group hover:-translate-y-0.5 duration-200">
                 <div className="flex items-start justify-between mb-4">
                   <div className="w-10 h-10 bg-violet-100 rounded-xl flex items-center justify-center">
                     <c.icon className="w-5 h-5 text-violet-700" />
@@ -65,6 +71,7 @@ export default function ContactPage() {
                   {c.action} <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
+            </StaggerItem>
             )}
           </div>
         </div>
@@ -75,7 +82,7 @@ export default function ContactPage() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid lg:grid-cols-5 gap-12">
             {/* Form */}
-            <div className="lg:col-span-3">
+            <Reveal className="lg:col-span-3">
               <h2 className="text-2xl font-bold text-slate-900 mb-6">Send us a message</h2>
               {submitted ?
               <div className="bg-green-50 border border-green-200 rounded-2xl p-8 text-center">
@@ -139,10 +146,10 @@ export default function ContactPage() {
                   </button>
                 </form>
               }
-            </div>
+            </Reveal>
 
             {/* Info */}
-            <div className="lg:col-span-2 space-y-6">
+            <Reveal delay={0.08} className="lg:col-span-2 space-y-6">
               {/* Office image */}
               <div className="rounded-2xl overflow-hidden shadow-md">
                 <Image
@@ -179,7 +186,7 @@ export default function ContactPage() {
                   <div className="flex justify-between"><span className="text-slate-500">Legal</span><a href="mailto:legal@viralbridge.in" className="text-violet-600 hover:underline">legal@viralbridge.in</a></div>
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>

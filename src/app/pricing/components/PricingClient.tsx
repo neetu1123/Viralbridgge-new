@@ -164,7 +164,7 @@ function PlanCard({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       className={`relative bg-white rounded-2xl border p-6 flex flex-col gap-5 transition-all duration-200 hover:-translate-y-1 ${
@@ -288,7 +288,7 @@ export default function PricingClient() {
       {/* Hero */}
       <section className="relative py-20 text-center px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-[#EFEAFF]/50 to-transparent pointer-events-none" />
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="relative">
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="relative">
           <span className="inline-flex items-center gap-1.5 text-[#7B2FF7] font-semibold text-sm uppercase tracking-widest mb-4 font-display">
             <Crown size={14} />
             Premium Membership

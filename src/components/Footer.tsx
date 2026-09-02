@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import AppLogo from './ui/AppLogo';
+import Reveal from './animations/Reveal';
 
 const TwitterIcon = ({ size = 16, className = '' }: { size?: number; className?: string }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -76,7 +77,7 @@ const SOCIALS = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#1F1F2E] text-white">
+    <Reveal as="footer" className="bg-[#1F1F2E] text-white">
       <div className="max-w-screen-xl mx-auto px-6 lg:px-10 py-16">
         {/* Top row */}
         <div className="grid grid-cols-1 md:grid-cols-6 gap-12 mb-12">
@@ -137,6 +138,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </footer>
+    </Reveal>
   );
 }

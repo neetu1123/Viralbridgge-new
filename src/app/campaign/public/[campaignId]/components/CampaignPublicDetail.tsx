@@ -15,6 +15,8 @@ import { handleApplyCampaign } from '@/src/lib/auth/actions';
 import { toast, Toaster } from 'sonner';
 import { fetchPublicCampaign } from '@/src/lib/api/public';
 import type { PublicCampaignDetail } from '@/src/lib/api/types';
+import FadeIn from '@/src/components/animations/FadeIn';
+import Reveal from '@/src/components/animations/Reveal';
 
 interface CampaignPublicDetailProps {
   campaignId: string;
@@ -46,8 +48,8 @@ export default function CampaignPublicDetail({ campaignId }: CampaignPublicDetai
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto px-6 lg:px-10 py-8 animate-pulse">
-        <div className="h-48 bg-[#EFEAFF] rounded-2xl mb-8" />
-        <div className="h-8 bg-[#F2F3F7] rounded w-2/3 mb-4" />
+        <div className="h-48 bg-[#EFEAFF] rounded-2xl mb-8 skeleton-shimmer" />
+        <div className="h-8 bg-[#F2F3F7] rounded w-2/3 mb-4 skeleton-shimmer" />
         <div className="h-4 bg-[#F2F3F7] rounded w-full mb-2" />
         <div className="h-4 bg-[#F2F3F7] rounded w-3/4" />
       </div>
@@ -79,6 +81,7 @@ export default function CampaignPublicDetail({ campaignId }: CampaignPublicDetai
         <ArrowLeft size={16} /> Back to Explore Campaigns
       </Link>
 
+      <FadeIn>
       <div
         className="rounded-2xl p-8 mb-8 text-white"
         style={{ background: 'linear-gradient(135deg, #7B2FF7 0%, #F357A8 100%)' }}
@@ -106,9 +109,10 @@ export default function CampaignPublicDetail({ campaignId }: CampaignPublicDetai
           </div>
         </div>
       </div>
+      </FadeIn>
 
       <div className="flex flex-col lg:flex-row gap-8">
-        <div className="flex-1 space-y-6">
+        <Reveal className="flex-1 space-y-6">
           <div>
             <h2 className="font-display font-700 text-[#1F1F2E] mb-2">Description</h2>
             <p className="text-[#6B6B8A] leading-relaxed whitespace-pre-line">{campaign.description}</p>
@@ -175,16 +179,16 @@ export default function CampaignPublicDetail({ campaignId }: CampaignPublicDetai
               <p className="text-[#6B6B8A] leading-relaxed">{String(campaign.creatorRequirements)}</p>
             </div>
           )}
-        </div>
+        </Reveal>
 
-        <div className="w-full lg:w-80">
+        <Reveal delay={0.08} className="w-full lg:w-80">
           <div className="bg-white rounded-2xl border border-[#E5E7EB] p-5 shadow-card sticky top-24">
             <p className="text-xs text-[#9AA0B4] uppercase tracking-wide mb-1">Category</p>
             <p className="font-display font-700 text-[#1F1F2E] mb-5">{campaign.category}</p>
 
             <button
               onClick={() => handleApplyCampaign(campaign.id, (msg) => toast.error(msg))}
-              className="w-full py-3 rounded-xl text-white text-sm font-display font-700"
+              className="w-full py-3 rounded-xl text-white text-sm font-display font-700 transition-transform duration-200 hover:-translate-y-px hover:shadow-md active:scale-[0.99]"
               style={{ background: 'linear-gradient(90deg, #7B2FF7, #F357A8)' }}
             >
               Apply Now
@@ -193,7 +197,7 @@ export default function CampaignPublicDetail({ campaignId }: CampaignPublicDetai
               Creators can apply after signing in. Brands manage campaigns in the client portal.
             </p>
           </div>
-        </div>
+        </Reveal>
       </div>
     </div>
   );

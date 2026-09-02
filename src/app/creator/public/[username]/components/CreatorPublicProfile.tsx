@@ -19,6 +19,9 @@ import { toast, Toaster } from 'sonner';
 import { fetchPublicCreator } from '@/src/lib/api/public';
 import type { PublicCreatorDetail } from '@/src/lib/api/types';
 import { platformBadgeStyle } from '@/src/lib/explore-utils';
+import FadeIn from '@/src/components/animations/FadeIn';
+import Reveal from '@/src/components/animations/Reveal';
+import { StaggerItem } from '@/src/components/animations/Stagger';
 
 interface CreatorPublicProfileProps {
   username: string;
@@ -50,9 +53,9 @@ export default function CreatorPublicProfile({ username }: CreatorPublicProfileP
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto px-6 lg:px-10 py-8 animate-pulse">
-        <div className="h-40 bg-[#EFEAFF] rounded-2xl mb-16" />
-        <div className="h-8 bg-[#F2F3F7] rounded w-1/3 mb-4" />
-        <div className="h-4 bg-[#F2F3F7] rounded w-2/3 mb-8" />
+        <div className="h-40 bg-[#EFEAFF] rounded-2xl mb-16 skeleton-shimmer" />
+        <div className="h-8 bg-[#F2F3F7] rounded w-1/3 mb-4 skeleton-shimmer" />
+        <div className="h-4 bg-[#F2F3F7] rounded w-2/3 mb-8 skeleton-shimmer" />
         <div className="grid grid-cols-3 gap-4">
           {Array.from({ length: 3 }).map((_, i) => (
             <div key={i} className="h-20 bg-[#F2F3F7] rounded-xl" />
@@ -90,13 +93,14 @@ export default function CreatorPublicProfile({ username }: CreatorPublicProfileP
         <ArrowLeft size={16} /> Back to Explore Creators
       </Link>
 
+      <FadeIn>
       <div className="relative mb-20">
         <div
           className="h-40 lg:h-48 rounded-2xl"
           style={{ background: 'linear-gradient(135deg, #7B2FF7 0%, #F357A8 100%)' }}
         />
         <div className="absolute -bottom-12 left-6 flex items-end gap-5">
-          <div className="w-24 h-24 rounded-2xl overflow-hidden ring-4 ring-white shadow-lg bg-[#F2F3F7]">
+          <div className="w-24 h-24 rounded-2xl overflow-hidden ring-4 ring-white shadow-lg bg-[#F2F3F7] vb-img-zoom">
             <AppImage src={avatarSrc} alt={creator.name} width={96} height={96} className="object-cover w-full h-full" />
           </div>
           <div className="pb-2">
@@ -117,9 +121,10 @@ export default function CreatorPublicProfile({ username }: CreatorPublicProfileP
           </div>
         </div>
       </div>
+      </FadeIn>
 
       <div className="flex flex-col lg:flex-row gap-8">
-        <div className="flex-1 space-y-6">
+        <Reveal className="flex-1 space-y-6">
           <div>
             <h2 className="font-display font-700 text-[#1F1F2E] mb-2">About</h2>
             <p className="text-[#6B6B8A] leading-relaxed">{creator.bio || 'No bio provided yet.'}</p>
@@ -169,11 +174,13 @@ export default function CreatorPublicProfile({ username }: CreatorPublicProfileP
             <div>
               <h2 className="font-display font-700 text-[#1F1F2E] mb-3">Recent Campaigns</h2>
               <div className="space-y-3">
-                {creator.recentCampaigns.map((item) => (
-                  <div key={item.id} className="bg-white border border-[#E5E7EB] rounded-xl p-4">
+                {creator.recentCampaigns.map((item, index) => (
+                  <StaggerItem key={item.id} index={index}>
+                  <div className="bg-white border border-[#E5E7EB] rounded-xl p-4">
                     <p className="font-display font-700 text-sm text-[#1F1F2E]">{item.title}</p>
                     <p className="text-xs text-[#9AA0B4] mt-0.5">{item.brand}</p>
                   </div>
+                  </StaggerItem>
                 ))}
               </div>
             </div>
@@ -197,9 +204,9 @@ export default function CreatorPublicProfile({ username }: CreatorPublicProfileP
               </div>
             </div>
           )}
-        </div>
+        </Reveal>
 
-        <div className="w-full lg:w-80 space-y-4">
+        <Reveal delay={0.08} className="w-full lg:w-80 space-y-4">
           <div className="bg-white rounded-2xl border border-[#E5E7EB] p-5 shadow-card">
             <div className="grid grid-cols-2 gap-4 mb-5">
               <div className="text-center">
@@ -226,7 +233,7 @@ export default function CreatorPublicProfile({ username }: CreatorPublicProfileP
 
             <button
               onClick={() => handleInviteCreator(creator.id, (msg) => toast.error(msg))}
-              className="w-full py-3 rounded-xl text-white text-sm font-display font-700 mb-2"
+              className="w-full py-3 rounded-xl text-white text-sm font-display font-700 mb-2 transition-transform duration-200 hover:-translate-y-px hover:shadow-md active:scale-[0.99]"
               style={{ background: 'linear-gradient(90deg, #7B2FF7, #F357A8)' }}
             >
               Invite Creator
@@ -242,7 +249,7 @@ export default function CreatorPublicProfile({ username }: CreatorPublicProfileP
               </a>
             )}
           </div>
-        </div>
+        </Reveal>
       </div>
     </div>
   );

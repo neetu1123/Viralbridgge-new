@@ -1,4 +1,6 @@
 import React from 'react';
+import Reveal from '@/src/components/animations/Reveal';
+import CountUp from '@/src/components/animations/CountUp';
 
 const STATS = [
   { id: 'proof-1', value: '52,000+', label: 'Verified Creators' },
@@ -18,13 +20,15 @@ const BRAND_LOGOS = [
 
 export default function SocialProofStrip() {
   return (
-    <section className="bg-white border-y border-[#E5E7EB] py-12">
+    <Reveal as="section" className="bg-white border-y border-[#E5E7EB] py-12">
       <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
         {/* Stats row */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           {STATS?.map((stat) => (
             <div key={stat?.id} className="text-center">
-              <div className="font-display font-800 text-3xl text-[#1F1F2E] tabular-nums">{stat?.value}</div>
+              <div className="font-display font-800 text-3xl text-[#1F1F2E] tabular-nums">
+                <CountUp value={stat?.value} />
+              </div>
               <div className="text-[#9AA0B4] text-sm font-medium mt-1">{stat?.label}</div>
             </div>
           ))}
@@ -48,6 +52,6 @@ export default function SocialProofStrip() {
           </div>
         </div>
       </div>
-    </section>
+    </Reveal>
   );
 }

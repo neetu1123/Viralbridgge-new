@@ -64,7 +64,7 @@ export default function LoginForm() {
           }`}
         />
         {errors.email && (
-          <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+          <p className="text-red-500 text-xs mt-1 form-error-enter">{errors.email.message}</p>
         )}
       </div>
 
@@ -95,7 +95,7 @@ export default function LoginForm() {
           </button>
         </div>
         {errors.password && (
-          <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+          <p className="text-red-500 text-xs mt-1 form-error-enter">{errors.password.message}</p>
         )}
       </div>
 
