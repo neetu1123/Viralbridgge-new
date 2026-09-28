@@ -2,10 +2,10 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { DollarSign, Calendar, Users, ArrowRight } from 'lucide-react';
+import { DollarSign, Calendar, Users, ArrowRight, ExternalLink } from 'lucide-react';
 import { fetchPublicCampaigns } from '@/src/lib/api/public';
 import type { PublicCampaign } from '@/src/lib/api/types';
-import { mapCampaignSort } from '@/src/lib/explore-utils';
+import { brandProfilePath, mapCampaignSort } from '@/src/lib/explore-utils';
 import type { CampaignFilters } from './CampaignsExploreClient';
 import { StaggerItem } from '@/src/components/animations/Stagger';
 
@@ -216,12 +216,20 @@ export default function CampaignGrid({ filters, updateFilter }: CampaignGridProp
                 </span>
               </div>
 
-              <Link
-                href={`/campaign/public/${campaign.id}`}
-                className="mt-auto w-full text-center py-2.5 rounded-xl border border-[#7B2FF7] text-[#7B2FF7] text-sm font-semibold hover:bg-[#EFEAFF] transition-colors hover:text-black duration-150 group-hover:bg-[#7B2FF7] group-hover:text-white flex items-center justify-center gap-2"
-              >
-                Apply Now <ArrowRight size={14} />
-              </Link>
+              <div className="mt-auto grid grid-cols-2 gap-2">
+                <Link
+                  href={`/campaign/public/${campaign.id}`}
+                  className="text-center py-2.5 rounded-xl border border-[#7B2FF7] text-[#7B2FF7] text-sm font-semibold hover:bg-[#7B2FF7] hover:text-white transition-colors duration-150 flex items-center justify-center gap-1.5"
+                >
+                  Apply Now <ArrowRight size={14} />
+                </Link>
+                <Link
+                  href={brandProfilePath(campaign.brandId, campaign.brand)}
+                  className="text-center py-2.5 rounded-xl border border-[#E5E7EB] text-[#6B6B8A] text-sm font-semibold hover:border-[#7B2FF7] hover:text-[#7B2FF7] hover:bg-[#EFEAFF] transition-colors duration-150 flex items-center justify-center gap-1.5"
+                >
+                  <ExternalLink size={13} /> View Profile
+                </Link>
+              </div>
             </div>
             </StaggerItem>
           ))}

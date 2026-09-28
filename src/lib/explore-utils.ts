@@ -23,6 +23,15 @@ export function mapCreatorSort(sortBy: string): string {
   }
 }
 
+export function brandSlug(name: string): string {
+  return name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+export function brandProfilePath(brandId: string | undefined, brandName: string): string {
+  const key = brandId || brandSlug(brandName);
+  return `/brand/public/${encodeURIComponent(key)}`;
+}
+
 export function mapCampaignSort(sortBy: string): string {
   switch (sortBy) {
     case 'budget_high':

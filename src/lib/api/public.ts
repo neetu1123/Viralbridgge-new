@@ -2,6 +2,7 @@ import { apiFetch, buildQuery } from './client';
 import type {
   PaginatedResponse,
   PlatformStats,
+  PublicBrandProfile,
   PublicCampaign,
   PublicCampaignDetail,
   PublicCreator,
@@ -54,6 +55,10 @@ export function fetchPublicCampaigns(query: CampaignsQuery = {}) {
 
 export function fetchPublicCampaign(id: string) {
   return apiFetch<PublicCampaignDetail>(`/public/campaigns/${encodeURIComponent(id)}`);
+}
+
+export function fetchPublicBrand(idOrSlug: string) {
+  return apiFetch<PublicBrandProfile>(`/public/brands/${encodeURIComponent(idOrSlug)}`);
 }
 
 export function fetchPlatformStats() {

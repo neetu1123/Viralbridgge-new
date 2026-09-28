@@ -61,6 +61,7 @@ export interface PublicCreatorDetail extends PublicCreator {
 
 export interface PublicCampaign {
   id: string;
+  brandId?: string;
   brand: string;
   brandInitial: string;
   brandColor: string;
@@ -90,6 +91,26 @@ export interface PublicCampaign {
 export interface PublicCampaignDetail extends PublicCampaign {
   creatorRequirements: string;
   skills: string[];
+}
+
+export interface PublicBrandProfile {
+  id: string;
+  name: string;
+  slug: string;
+  initial: string;
+  industry: string;
+  industryColor: string;
+  industryBg: string;
+  logo: string;
+  description: string;
+  website: string;
+  location: string;
+  verified: boolean;
+  memberSince: string;
+  activeCampaigns: number;
+  completedCampaigns: number;
+  totalApplicants: number;
+  campaigns: PublicCampaign[];
 }
 
 export interface PlatformStats {
