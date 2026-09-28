@@ -1,9 +1,8 @@
 'use client';
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { usePathname } from 'next/navigation';
 import { fetchMe, ApiError } from '@/src/lib/auth/api';
-import { clearSsoChecked } from '@/src/lib/auth/sso';
+import { clearLoggedOut, clearSsoChecked } from '@/src/lib/auth/sso';
 import {
   clearSession,
   getStoredUser,
@@ -11,13 +10,7 @@ import {
   setSession,
   type AuthUser,
 } from '@/src/lib/auth/session';
-import {
-  buildAdminBridgeUrl,
-  markSsoChecked,
-  wasSsoCheckedRecently,
-  wasLoggedOutRecently,
-  clearLoggedOut,
-} from '@/src/lib/auth/sso';
+
 interface AuthContextValue {
   user: AuthUser | null;
   loading: boolean;
@@ -29,12 +22,7 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-function shouldSkipSso(pathname: string): boolean {
-  return pathname.startsWith('/auth/') || pathname.startsWith('/sign-up-login-screen');
-}
-
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -67,21 +55,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const stored = getStoredUser();
     const token = getToken();
 
-    if (token && stored) {
-      setUser(stored);
-      refreshUser().finally(() => setLoading(false));
-      return;
-    }
-
-    if (shouldSkipSso(pathname) || wasSsoCheckedRecently() || wasLoggedOutRecently()) {
+    if (!token || !stored) {
+      setUser(null);
       setLoading(false);
       return;
     }
 
-    markSsoChecked();
-    const receiveUrl = `${window.location.origin}/auth/receive?next=${encodeURIComponent(pathname || '/')}`;
-    window.location.href = buildAdminBridgeUrl(receiveUrl);
-  }, [pathname, refreshUser]);
+    setUser(stored);
+    refreshUser().finally(() => setLoading(false));
+  }, [refreshUser]);
 
   const logout = useCallback(() => {
     clearSession();

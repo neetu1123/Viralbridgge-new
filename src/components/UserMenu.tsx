@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
 import {
   Bell,
   ChevronDown,
@@ -18,16 +17,19 @@ import {
   getCreateCampaignUrl,
   getFirstName,
   getInitials,
+  getNotificationsUrl,
   getProfileUrl,
   getRoleBadge,
   normalizeRole,
 } from '@/src/lib/auth/session';
 import { logoutApi } from '@/src/lib/auth/api';
 import { buildMarketingLogoutUrl, performMarketingLogout } from '@/src/lib/auth/actions';
+import { fetchUnreadNotificationCount } from '@/src/lib/api/notifications';
 
 export default function UserMenu() {
   const { user, logout } = useAuth();
   const [open, setOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -46,6 +48,25 @@ export default function UserMenu() {
       document.removeEventListener('keydown', handleKey);
     };
   }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    let cancelled = false;
+    const load = async () => {
+      try {
+        const res = await fetchUnreadNotificationCount(user.role);
+        if (!cancelled) setUnreadCount(res.count ?? 0);
+      } catch {
+        if (!cancelled) setUnreadCount(0);
+      }
+    };
+    void load();
+    const interval = window.setInterval(load, 60000);
+    return () => {
+      cancelled = true;
+      window.clearInterval(interval);
+    };
+  }, [user]);
 
   if (!user) return null;
 
@@ -70,13 +91,18 @@ export default function UserMenu() {
 
   return (
     <div className="flex items-center gap-2 md:gap-3" ref={menuRef}>
-      <button
-        type="button"
-        className="hidden sm:flex w-9 h-9 rounded-xl border border-[#E5E7EB] bg-white items-center justify-center text-[#6B6B8A] hover:border-[#7B2FF7] hover:text-[#7B2FF7] transition-colors"
+      <a
+        href={getNotificationsUrl(user.role)}
+        className="hidden sm:flex relative w-9 h-9 rounded-xl border border-[#E5E7EB] bg-white items-center justify-center text-[#6B6B8A] hover:border-[#7B2FF7] hover:text-[#7B2FF7] transition-colors"
         aria-label="Notifications"
       >
         <Bell size={16} />
-      </button>
+        {unreadCount > 0 && (
+          <span className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 rounded-full bg-[#7B2FF7] text-white text-[10px] font-bold leading-4 text-center">
+            {unreadCount > 9 ? '9+' : unreadCount}
+          </span>
+        )}
+      </a>
 
       {isBrand && (
         <a

@@ -72,6 +72,14 @@ export function getProfileUrl(role?: string): string {
   return `${adminBase}/creator-profile`;
 }
 
+export function getNotificationsUrl(role?: string): string {
+  const adminBase = getAdminBase();
+  const normalized = normalizeRole(role);
+  if (normalized === 'BRAND') return `${adminBase}/brand-notifications`;
+  if (normalized === 'ADMIN' || normalized === 'SUPER_ADMIN') return `${adminBase}/admin-panel/notifications`;
+  return `${adminBase}/creator-notifications`;
+}
+
 export function getCreateCampaignUrl(): string {
   return `${getAdminBase()}/brand-campaign-management/create`;
 }

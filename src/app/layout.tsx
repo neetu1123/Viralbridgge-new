@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next';
 import "../styles/index.css";
 import '../styles/tailwind.css';
 import { AuthProvider } from '@/src/components/AuthProvider';
+import ApproachBanner from '@/src/components/ApproachBanner';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           {children}
+          <ApproachBanner />
         </AuthProvider>
         <noscript>
           <style>{`[data-reveal],.scroll-reveal,.scroll-reveal-left,.scroll-reveal-right{opacity:1!important;transform:none!important}`}</style>
