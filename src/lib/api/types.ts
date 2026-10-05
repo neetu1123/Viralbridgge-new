@@ -174,8 +174,18 @@ export interface DiscoveryProfile extends DiscoveryListing {
   gallery: string[];
   businessHours?: unknown;
   establishedYear?: number | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  claimed?: boolean;
   socialLinks: Record<string, string>;
-  campaigns?: Array<{ id: string; title: string; status: string }>;
+  campaigns?: Array<{
+    id: string;
+    title: string;
+    status: string;
+    description?: string;
+    budget?: number | null;
+    platform?: string;
+  }>;
   contact: {
     phone: string | null;
     email: string | null;

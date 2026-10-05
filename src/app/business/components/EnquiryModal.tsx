@@ -8,15 +8,16 @@ import { useAuth } from '@/src/components/AuthProvider';
 interface Props {
   slug: string;
   name: string;
+  initialMessage?: string;
   onClose: () => void;
 }
 
-export default function EnquiryModal({ slug, name, onClose }: Props) {
+export default function EnquiryModal({ slug, name, initialMessage = '', onClose }: Props) {
   const { user } = useAuth();
   const [nameValue, setNameValue] = useState(user?.name ?? '');
   const [email, setEmail] = useState(user?.email ?? '');
   const [phone, setPhone] = useState('');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(initialMessage);
   const [honeypot, setHoneypot] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
