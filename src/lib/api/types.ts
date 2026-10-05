@@ -123,3 +123,70 @@ export interface PlatformStats {
   languagesSupported: number;
   premiumMembers: number;
 }
+
+export interface DiscoveryCategory {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string | null;
+  icon?: string | null;
+  type: string;
+}
+
+export interface DiscoveryLocation {
+  name: string;
+  state: string;
+  slug: string;
+  areas: string[];
+}
+
+export interface DiscoveryListing {
+  id: string;
+  type: 'BUSINESS' | 'CREATOR';
+  name: string;
+  slug: string;
+  logo: string;
+  coverImage: string;
+  shortDescription: string;
+  category: string;
+  subcategory: string;
+  city: string;
+  state: string;
+  area: string;
+  locationLabel: string;
+  verified: boolean;
+  featured: boolean;
+  rating: number;
+  reviewCount: number;
+  services: string[];
+  tags: string[];
+  discoveryStatus?: string;
+  createdAt: string;
+}
+
+export interface DiscoveryProfile extends DiscoveryListing {
+  description: string;
+  website?: string;
+  languages?: string[];
+  followers?: number;
+  engagement?: number;
+  portfolio?: string;
+  gallery: string[];
+  businessHours?: unknown;
+  establishedYear?: number | null;
+  socialLinks: Record<string, string>;
+  campaigns?: Array<{ id: string; title: string; status: string }>;
+  contact: {
+    phone: string | null;
+    email: string | null;
+    whatsapp: string | null;
+    website: string | null;
+    address: string | null;
+  };
+}
+
+export interface DiscoverySearchResponse {
+  data: DiscoveryListing[];
+  pagination: PaginationMeta;
+  meta?: PaginationMeta;
+}

@@ -22,6 +22,7 @@ export default function Navbar() {
   const navLinks = [
     { label: 'Campaign', href: '/explore/campaigns-v2' },
     { label: 'Creators', href: '/explore/creators-v2' },
+    { label: 'Discover', href: '/business' },
     { label: 'Pricing', href: '/pricing' },
     { label: 'Services', href: '/services' },
   ];
