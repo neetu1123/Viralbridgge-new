@@ -13,7 +13,7 @@ ViralBridge Support System --- Frontend & Backend Implementation Specification
 
 1. Purpose
 
-This document converts the uploaded ViralBridgge Support System
+This document converts the uploaded Viralbridge Support System
 requirements into a development-ready specification for the existing
 ViralBridge application.
 

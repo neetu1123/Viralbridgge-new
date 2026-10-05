@@ -59,7 +59,7 @@ export default function AuthFlow() {
             <div className="flex items-center gap-2.5 mb-12">
               <AppLogo src="/viralbridge_logo_transparent.png"
             size={200} />
-              <span className="font-display font-700 text-xl text-white">viralbridgge</span>
+              <span className="font-display font-700 text-xl text-white">Viralbridge</span>
             </div>
 
             <h2 className="font-display font-800 text-3xl text-white leading-tight mb-4">
@@ -116,7 +116,7 @@ export default function AuthFlow() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-[#6B6B8A] text-xs">Email</span>
-                    <span className="font-mono text-xs text-[#1F1F2E] font-medium">demo@viralbridgge.io</span>
+                    <span className="font-mono text-xs text-[#1F1F2E] font-medium">demo@Viralbridge.io</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-[#6B6B8A] text-xs">Password</span>

@@ -12,8 +12,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
-  title: 'ViralBridgge — Launch Influencer Campaigns in Minutes',
-  description: 'ViralBridgge connects brands with high-performing creators and influencers with brand deals — featuring real-time ROI tracking and performance-based pricing.',
+  title: 'Viralbridge — Launch Influencer Campaigns in Minutes',
+  description: 'Viralbridge connects brands with high-performing creators and influencers with brand deals — featuring real-time ROI tracking and performance-based pricing.',
   icons: {
     icon: [
       { url: '/favicon.ico', type: 'image/x-icon' }

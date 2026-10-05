@@ -104,7 +104,7 @@ export default function HeroSection() {
                   <span className="gradient-text">Instantly</span>
                 </h1>
                 <p className="mt-6 text-[#6B6B8A] text-lg leading-relaxed max-w-lg font-body">
-                  viralbridgge is the all-in-one platform where brands find authentic creators, launch campaigns, and track ROI — while creators discover paid opportunities that match their niche.
+                  Viralbridge is the all-in-one platform where brands find authentic creators, launch campaigns, and track ROI — while creators discover paid opportunities that match their niche.
                 </p>
               </div>
             </FadeIn>

@@ -105,7 +105,7 @@ export default function HowItWorks() {
             Built for both sides of the deal
           </h2>
           <p className="text-[#6B6B8A] text-lg mt-4 max-w-xl mx-auto leading-relaxed">
-            Whether you are a creator looking for brand deals or a brand seeking authentic voices, viralbridgge makes it seamless.
+            Whether you are a creator looking for brand deals or a brand seeking authentic voices, Viralbridge makes it seamless.
           </p>
         </Reveal>
 

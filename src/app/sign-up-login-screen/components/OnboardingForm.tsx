@@ -82,7 +82,7 @@ export default function OnboardingForm({ role }: OnboardingFormProps) {
     await new Promise((resolve) => setTimeout(resolve, 1400));
     setLoading(false);
     setDone(true);
-    toast.success('Profile set up! Welcome to viralbridgge 🎉');
+    toast.success('Profile set up! Welcome to Viralbridge 🎉');
   };
 
   if (done) {
