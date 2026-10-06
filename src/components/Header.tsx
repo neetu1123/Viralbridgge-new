@@ -22,12 +22,13 @@ export default function Navbar() {
   const navLinks = [
     { label: 'Campaign', href: '/explore/campaigns-v2' },
     { label: 'Creators', href: '/explore/creators-v2' },
-    { label: 'Discover', href: '/business' },
+    { label: 'Discover', href: '/discover' },
     { label: 'Pricing', href: '/pricing' },
     { label: 'Services', href: '/services' },
   ];
 
   const adminLoginUrl = buildAdminLoginUrl('/explore/creators-v2');
+  const getListedUrl = isAuthenticated ? '/get-listed' : buildAdminLoginUrl('/get-listed');
 
   return (
     <>
@@ -64,9 +65,20 @@ export default function Navbar() {
             {loading ? (
               <div className="w-24 h-9 rounded-xl bg-[#F2F3F7] animate-pulse" />
             ) : isAuthenticated && user ? (
-              <UserMenu />
+              <>
+                <a href="/get-listed" className="text-[#7B2FF7] hover:text-[#1F1F2E] font-semibold text-[15px] px-3 py-2">
+                  Get Listed Free
+                </a>
+                <UserMenu />
+              </>
             ) : (
               <>
+                <a
+                  href={getListedUrl}
+                  className="text-[#7B2FF7] hover:text-[#1F1F2E] font-semibold text-[15px] transition-colors duration-150 px-3 py-2"
+                >
+                  Get Listed Free
+                </a>
                 <a
                   href={adminLoginUrl}
                   className="text-[#6B6B8A] hover:text-[#1F1F2E] font-medium text-[15px] transition-colors duration-150 px-4 py-2"
@@ -126,6 +138,20 @@ export default function Navbar() {
             {!loading && isAuthenticated && user ? (
               <>
                 <p className="px-4 text-sm text-[#6B6B8A]">Signed in as {user.name}</p>
+                <Link
+                  href="/my-listing"
+                  onClick={() => setMobileOpen(false)}
+                  className="text-[#1F1F2E] font-medium text-base py-3 px-4 rounded-xl hover:bg-[#F2F3F7] transition-colors"
+                >
+                  My Listing
+                </Link>
+                <Link
+                  href="/get-listed"
+                  onClick={() => setMobileOpen(false)}
+                  className="text-[#7B2FF7] font-semibold text-base py-3 px-4 rounded-xl hover:bg-[#F2F3F7] transition-colors"
+                >
+                  Get Listed Free
+                </Link>
                 <button
                   onClick={async () => {
                     await logout();
@@ -139,6 +165,13 @@ export default function Navbar() {
               </>
             ) : (
               <>
+                <a
+                  href={getListedUrl}
+                  onClick={() => setMobileOpen(false)}
+                  className="text-[#7B2FF7] font-semibold text-base py-3 px-4 rounded-xl hover:bg-[#F2F3F7] transition-colors"
+                >
+                  Get Listed Free
+                </a>
                 <a
                   href={adminLoginUrl}
                   onClick={() => setMobileOpen(false)}

@@ -19,6 +19,7 @@ import {
   Star,
 } from 'lucide-react';
 import { fetchDiscoveryProfile, trackDiscoveryEvent } from '@/src/lib/api/discovery';
+import { fetchDiscoverProfile, reportDiscoverListing, sendDiscoverEnquiry, trackDiscoverEvent } from '@/src/lib/api/listings';
 import type { DiscoveryProfile } from '@/src/lib/api/types';
 import EnquiryModal from './EnquiryModal';
 
@@ -96,7 +97,15 @@ function answerFromProfile(profile: DiscoveryProfile, question: string): string 
   return profile.shortDescription || profile.description || `Ask ${profile.name} directly with an enquiry.`;
 }
 
-export default function BusinessProfileClient({ slug }: { slug: string }) {
+export default function BusinessProfileClient({
+  slug,
+  source = 'business',
+  kind = 'business',
+}: {
+  slug: string;
+  source?: 'business' | 'discover';
+  kind?: 'business' | 'creator';
+}) {
   const [profile, setProfile] = useState<DiscoveryProfile | null>(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
@@ -109,15 +118,20 @@ export default function BusinessProfileClient({ slug }: { slug: string }) {
   const [hoursOpen, setHoursOpen] = useState(false);
   const [ask, setAsk] = useState('');
   const [askReply, setAskReply] = useState('');
+  const [reportOpen, setReportOpen] = useState(false);
+  const [reportReason, setReportReason] = useState('spam');
+  const [reportDetails, setReportDetails] = useState('');
+  const [reportDone, setReportDone] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
-    fetchDiscoveryProfile(slug)
+    const load = source === 'discover' ? fetchDiscoverProfile(kind, slug) : fetchDiscoveryProfile(slug);
+    load
       .then((data) => {
         if (!cancelled) setProfile(data);
       })
       .catch((err) => {
-        if (!cancelled) setError(err instanceof Error ? err.message : 'Profile not found');
+        if (!cancelled) setError(err instanceof Error ? err.message : 'This listing is currently unavailable.');
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -125,7 +139,7 @@ export default function BusinessProfileClient({ slug }: { slug: string }) {
     return () => {
       cancelled = true;
     };
-  }, [slug]);
+  }, [slug, source, kind]);
 
   useEffect(() => {
     if (!profile) return;
@@ -192,7 +206,9 @@ export default function BusinessProfileClient({ slug }: { slug: string }) {
   const heroPhotos = photos.slice(0, 4);
 
   const track = (event_type: string) => {
-    void trackDiscoveryEvent({ event_type, listing_type: profile.type, listing_id: profile.id });
+    const payload = { event_type, listing_type: profile.type, listing_id: profile.id };
+    if (source === 'discover') void trackDiscoverEvent(payload);
+    else void trackDiscoveryEvent(payload);
   };
 
   const openEnquiry = (message = '') => {
@@ -400,6 +416,9 @@ export default function BusinessProfileClient({ slug }: { slug: string }) {
                 )}
                 <button type="button" onClick={shareProfile} className="p-2.5 rounded-lg border border-[#E5E7EB] text-[#6B6B8A]" aria-label="Share">
                   <Share2 size={16} />
+                </button>
+                <button type="button" onClick={() => setReportOpen(true)} className="text-xs text-[#9AA0B4] underline">
+                  Report this listing
                 </button>
               </div>
 
@@ -659,7 +678,47 @@ export default function BusinessProfileClient({ slug }: { slug: string }) {
           name={profile.name}
           initialMessage={enquiryPrefill}
           onClose={() => setEnquiryOpen(false)}
+          onSubmit={
+            source === 'discover'
+              ? (body) => sendDiscoverEnquiry(profile.id, body)
+              : undefined
+          }
         />
+      )}
+      {reportOpen && (
+        <div className="fixed inset-0 z-[80] flex items-center justify-center p-4">
+          <button type="button" className="absolute inset-0 bg-black/40" onClick={() => setReportOpen(false)} aria-label="Close" />
+          <div className="relative w-full max-w-md bg-white rounded-2xl p-6 shadow-xl">
+            <h2 className="text-lg font-semibold text-[#1F1F2E]">Report this listing</h2>
+            {reportDone ? (
+              <p className="mt-4 text-sm text-emerald-700">Thanks. Our team will review this report.</p>
+            ) : (
+              <form
+                className="mt-4 space-y-3"
+                onSubmit={async (event) => {
+                  event.preventDefault();
+                  try {
+                    await reportDiscoverListing(profile.id, { reason: reportReason, details: reportDetails });
+                    setReportDone(true);
+                  } catch {
+                    setReportDone(true);
+                  }
+                }}
+              >
+                <select value={reportReason} onChange={(e) => setReportReason(e.target.value)} className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2.5 text-sm">
+                  <option value="spam">Spam</option>
+                  <option value="fake_listing">Fake listing</option>
+                  <option value="incorrect_information">Incorrect information</option>
+                  <option value="inappropriate_content">Inappropriate content</option>
+                  <option value="impersonation">Impersonation</option>
+                  <option value="other">Other</option>
+                </select>
+                <textarea value={reportDetails} onChange={(e) => setReportDetails(e.target.value)} rows={3} placeholder="Optional details" className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2.5 text-sm" />
+                <button type="submit" className="w-full btn-primary py-2.5 text-sm">Submit report</button>
+              </form>
+            )}
+          </div>
+        </div>
       )}
       {lightbox && (
         <button type="button" className="fixed inset-0 z-[90] bg-black/80 flex items-center justify-center p-6" onClick={() => setLightbox(null)}>

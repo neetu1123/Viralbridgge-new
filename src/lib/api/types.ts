@@ -162,6 +162,9 @@ export interface DiscoveryListing {
   tags: string[];
   discoveryStatus?: string;
   createdAt: string;
+  source?: 'LISTING' | 'ACCOUNT';
+  publicPath?: string;
+  profileViews?: number;
 }
 
 export interface DiscoveryProfile extends DiscoveryListing {

@@ -10,9 +10,10 @@ interface Props {
   name: string;
   initialMessage?: string;
   onClose: () => void;
+  onSubmit?: (body: { name: string; email: string; phone?: string; message: string; website_url?: string }) => Promise<unknown>;
 }
 
-export default function EnquiryModal({ slug, name, initialMessage = '', onClose }: Props) {
+export default function EnquiryModal({ slug, name, initialMessage = '', onClose, onSubmit }: Props) {
   const { user } = useAuth();
   const [nameValue, setNameValue] = useState(user?.name ?? '');
   const [email, setEmail] = useState(user?.email ?? '');
@@ -28,13 +29,15 @@ export default function EnquiryModal({ slug, name, initialMessage = '', onClose 
     setSubmitting(true);
     setError('');
     try {
-      await sendDiscoveryEnquiry(slug, {
+      const payload = {
         name: nameValue,
         email,
         phone,
         message,
         website_url: honeypot,
-      });
+      };
+      if (onSubmit) await onSubmit(payload);
+      else await sendDiscoveryEnquiry(slug, payload);
       setDone(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not send enquiry');

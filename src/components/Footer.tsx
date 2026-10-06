@@ -34,8 +34,10 @@ const YoutubeIcon = ({ size = 16, className = '' }: { size?: number; className?:
 
 const FOOTER_LINKS = {
   Product: [
-    { label: 'Explore Creators', href: '/discover' },
+    { label: 'Explore Creators', href: '/explore/creators-v2' },
     { label: 'Browse Campaigns', href: '/campaigns-explore-page' },
+    { label: 'Discover', href: '/discover' },
+    { label: 'Get Listed Free', href: '/get-listed' },
     { label: 'Discover Business', href: '/business' },
     { label: 'Pricing', href: '/pricing' },
     { label: 'Creator Dashboard', href: 'https://admin-viralbridgge-new.vercel.app/' },
@@ -47,7 +49,7 @@ const FOOTER_LINKS = {
     { label: 'Creators by Category', href: '/discover/category' },
     { label: 'Creators by Platform', href: '/discover/platform' },
     { label: 'Premium Creators', href: '/discover/premium' },
-    { label: 'View All Creators', href: '/discover' },
+    { label: 'View All Creators', href: '/explore/creators-v2' },
   ],
   Company: [
     { label: 'About Us', href: '/about' },

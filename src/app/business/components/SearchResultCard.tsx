@@ -7,6 +7,11 @@ import type { DiscoveryListing } from '@/src/lib/api/types';
 
 export default function SearchResultCard({ item }: { item: DiscoveryListing }) {
   const initials = item.name.slice(0, 2).toUpperCase();
+  const href =
+    item.publicPath ||
+    (item.source === 'LISTING'
+      ? `/discover/${item.type === 'CREATOR' ? 'creator' : 'business'}/${encodeURIComponent(item.slug)}`
+      : `/business/${encodeURIComponent(item.slug)}`);
   return (
     <article className="bg-white rounded-2xl border border-[#E5E7EB] p-4 hover:border-[#7B2FF7]/40 hover:shadow-sm transition-all">
       <div className="flex gap-3">
@@ -52,7 +57,7 @@ export default function SearchResultCard({ item }: { item: DiscoveryListing }) {
         </div>
       )}
       <Link
-        href={`/business/${encodeURIComponent(item.slug)}`}
+        href={href}
         className="mt-4 inline-flex text-sm font-semibold text-white px-4 py-2 rounded-xl"
         style={{ background: 'linear-gradient(90deg, #7B2FF7, #F357A8)' }}
       >

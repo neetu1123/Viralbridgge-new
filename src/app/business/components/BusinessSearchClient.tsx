@@ -9,12 +9,20 @@ import {
   fetchDiscoveryLocations,
   fetchDiscoverySearch,
 } from '@/src/lib/api/discovery';
+import {
+  fetchDiscoverCategories,
+  fetchDiscoverLocations,
+  fetchDiscoverSearch,
+} from '@/src/lib/api/listings';
 import type { DiscoveryCategory, DiscoveryListing, DiscoveryLocation } from '@/src/lib/api/types';
 import SearchResultCard from './SearchResultCard';
+import { buildAdminLoginUrl } from '@/src/lib/auth/sso';
+import { useAuth } from '@/src/components/AuthProvider';
 
 interface Props {
   initialCategory?: string;
   initialCity?: string;
+  mode?: 'business' | 'discover';
 }
 
 const SORTS = [
@@ -25,10 +33,11 @@ const SORTS = [
   { id: 'name', label: 'Name A-Z' },
 ];
 
-export default function BusinessSearchClient({ initialCategory, initialCity }: Props) {
+export default function BusinessSearchClient({ initialCategory, initialCity, mode = 'business' }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { isAuthenticated } = useAuth();
   const [keyword, setKeyword] = useState(searchParams.get('q') ?? '');
   const [city, setCity] = useState(searchParams.get('city') ?? initialCity ?? '');
   const [area, setArea] = useState(searchParams.get('area') ?? '');
@@ -48,9 +57,19 @@ export default function BusinessSearchClient({ initialCategory, initialCity }: P
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchDiscoveryCategories().then(setCategories).catch(() => setCategories([]));
-    fetchDiscoveryLocations().then(setLocations).catch(() => setLocations([]));
-  }, []);
+    const loadMeta = mode === 'discover'
+      ? Promise.all([fetchDiscoverCategories(), fetchDiscoverLocations()])
+      : Promise.all([fetchDiscoveryCategories(), fetchDiscoveryLocations()]);
+    loadMeta
+      .then(([cats, locs]) => {
+        setCategories(cats);
+        setLocations(locs);
+      })
+      .catch(() => {
+        setCategories([]);
+        setLocations([]);
+      });
+  }, [mode]);
 
   const query = useMemo(
     () => ({
@@ -72,7 +91,7 @@ export default function BusinessSearchClient({ initialCategory, initialCity }: P
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetchDiscoverySearch(query);
+      const res = mode === 'discover' ? await fetchDiscoverSearch(query) : await fetchDiscoverySearch(query);
       setResults(res.data ?? []);
       setTotal(res.pagination?.total ?? res.meta?.total ?? 0);
       setTotalPages(res.pagination?.totalPages ?? res.meta?.totalPages ?? 1);
@@ -83,7 +102,7 @@ export default function BusinessSearchClient({ initialCategory, initialCity }: P
     } finally {
       setLoading(false);
     }
-  }, [query]);
+  }, [query, mode]);
 
   useEffect(() => {
     const timeout = window.setTimeout(() => {
@@ -106,7 +125,7 @@ export default function BusinessSearchClient({ initialCategory, initialCity }: P
     if (page > 1) params.set('page', String(page));
     const next = params.toString();
     const current = searchParams.toString();
-    if (next !== current && pathname.startsWith('/business')) {
+    if (next !== current && (pathname.startsWith('/business') || pathname === '/discover')) {
       router.replace(next ? `${pathname}?${next}` : pathname, { scroll: false });
     }
   }, [keyword, city, area, category, type, verified, rating, sort, status, page, pathname, router, searchParams]);
@@ -220,7 +239,19 @@ export default function BusinessSearchClient({ initialCategory, initialCity }: P
       <section className="pt-10 pb-8">
         <p className="text-sm font-semibold text-[#7B2FF7] mb-2">ViralBridge Discover</p>
         <h1 className="font-display text-3xl sm:text-4xl font-700 text-[#1F1F2E]">What are you looking for?</h1>
-        <p className="mt-2 text-[#6B6B8A] max-w-2xl">Search registered businesses, brands, and creators by service and city — no login required.</p>
+        <p className="mt-2 text-[#6B6B8A] max-w-2xl">
+          Search registered businesses and creators by service and city — no login required.
+        </p>
+        {mode === 'discover' && (
+          <div className="mt-4">
+            <a
+              href={isAuthenticated ? '/get-listed' : buildAdminLoginUrl('/get-listed')}
+              className="inline-flex btn-primary text-sm px-5 py-2.5"
+            >
+              Get Listed Free
+            </a>
+          </div>
+        )}
 
         <form onSubmit={runSearch} className="mt-6 grid gap-3 md:grid-cols-[1fr_220px_auto] bg-white border border-[#E5E7EB] rounded-2xl p-3 shadow-sm">
           <label className="flex items-center gap-2 px-3">
@@ -293,6 +324,11 @@ export default function BusinessSearchClient({ initialCategory, initialCity }: P
               <p className="text-sm text-[#6B6B8A] mt-2">
                 {city ? `No matches in ${city}. Try another city or clear filters.` : 'Try a broader keyword or another city.'}
               </p>
+              {mode === 'discover' && (
+                <a href={isAuthenticated ? '/get-listed' : buildAdminLoginUrl('/get-listed')} className="mt-4 inline-flex btn-primary text-sm px-5 py-2.5">
+                  Get Listed Free
+                </a>
+              )}
               <div className="mt-4 flex flex-wrap justify-center gap-2">
                 {['Mumbai', 'Delhi', 'Noida', 'Bangalore'].map((item) => (
                   <button key={item} type="button" onClick={() => { setCity(item); setPage(1); }} className="rounded-full border border-[#E5E7EB] px-4 py-2 text-sm">

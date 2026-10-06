@@ -8,6 +8,7 @@ import {
   LogOut,
   MessageCircle,
   Plus,
+  Store,
   User,
   LayoutDashboard,
 } from 'lucide-react';
@@ -205,6 +206,14 @@ export default function UserMenu() {
               >
                 <User size={16} className="text-[#7B2FF7]" />
                 {isBrand ? 'Company Profile' : 'My Profile'}
+              </a>
+              <a
+                href="/my-listing"
+                className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm text-[#1F1F2E] hover:bg-[#F2F3F7] transition-colors"
+                role="menuitem"
+              >
+                <Store size={16} className="text-[#7B2FF7]" />
+                My Listing
               </a>
             </div>
 
