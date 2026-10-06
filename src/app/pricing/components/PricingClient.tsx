@@ -12,6 +12,8 @@ interface Plan {
   tier: PlanTier;
   name: string;
   price: { monthly: number; yearly: number };
+  priceRange?: string;
+  priceNote?: string;
   description: string;
   features: string[];
   popular?: boolean;
@@ -71,10 +73,17 @@ const BRAND_PLANS: Plan[] = [
   {
     id: 'brand-free',
     tier: 'free',
-    name: 'Free',
+    name: 'ViralBridge Basic',
     price: { monthly: 0, yearly: 0 },
-    description: 'Explore creators and launch your first campaign.',
-    features: ['Browse creator profiles', '1 campaign/month', 'Basic analytics', 'In-app messaging'],
+    description: 'For every eligible business that wants to establish its presence on ViralBridge.',
+    features: [
+      'Business profile and logo',
+      'Product and service catalogue',
+      'Business category and location listing',
+      'Website, social media and contact details',
+      'Customer enquiry form',
+      'Opportunity to receive influencer collaboration enquiries',
+    ],
     current: true,
   },
   {
@@ -88,10 +97,20 @@ const BRAND_PLANS: Plan[] = [
   {
     id: 'brand-pro',
     tier: 'pro',
-    name: 'Pro',
-    price: { monthly: 7999, yearly: 6399 },
-    description: 'Scale creator marketing with powerful tools.',
-    features: ['Unlimited campaigns', 'Advanced filters', 'Campaign insights', 'Priority support', 'Premium badge', 'Team members (5)'],
+    name: 'ViralBridge Growth',
+    price: { monthly: 1499, yearly: 1499 },
+    priceRange: '₹1,499 – ₹4,999',
+    priceNote: '/month',
+    description: 'For businesses that want more visibility and tools to find creators.',
+    features: [
+      'Everything in Basic',
+      'Enhanced placement in relevant categories',
+      'Access to influencer discovery and filters',
+      'Direct collaboration requests to selected influencers',
+      'Enquiry dashboard and lead tracking',
+      'Basic campaign analytics',
+      'Business profile performance reporting',
+    ],
     popular: true,
     recommended: true,
   },
@@ -106,13 +125,30 @@ const BRAND_PLANS: Plan[] = [
   {
     id: 'brand-enterprise',
     tier: 'enterprise',
-    name: 'Enterprise',
+    name: 'ViralBridge Enterprise',
     price: { monthly: 0, yearly: 0 },
-    description: 'Custom solutions for large brands and agencies.',
-    features: ['Unlimited everything', 'Custom integrations', 'Dedicated brand manager', 'White-label reporting', 'SLA & compliance'],
+    priceRange: '₹25,000+',
+    priceNote: '/month or project-based',
+    description: 'For brands that need campaign execution or multiple creators.',
+    features: [
+      'Dedicated account manager',
+      'Custom influencer shortlists',
+      'Campaign strategy and creator negotiations',
+      'Content brief and deliverable tracking',
+      'Campaign reporting and performance dashboard',
+      'Optional managed campaigns and creator payments',
+    ],
     enterprise: true,
   },
 ];
+
+const BRAND_TIER_LABELS: Record<PlanTier, string> = {
+  free: 'Basic',
+  starter: 'Starter',
+  pro: 'Growth',
+  premium: 'Premium',
+  enterprise: 'Enterprise',
+};
 
 const COMPARISON_FEATURES = [
   { key: 'applications', label: 'Campaign Applications', values: { free: '3/mo', starter: '10/mo', pro: 'Unlimited', premium: 'Unlimited', enterprise: 'Unlimited' } },
@@ -136,7 +172,7 @@ const FAQS = [
 ];
 
 const TESTIMONIALS = [
-  { name: 'Ananya Kapoor', role: 'Brand Manager, GlowCo', quote: 'ViralBridge Pro cut our creator discovery time in half. The advanced filters alone are worth it.', avatar: 'AK', plan: 'Brand Pro' },
+  { name: 'Ananya Kapoor', role: 'Brand Manager, GlowCo', quote: 'ViralBridge Growth cut our creator discovery time in half. The advanced filters alone are worth it.', avatar: 'AK', plan: 'Brand Growth' },
   { name: 'Rahul Verma', role: 'Content Creator, 500K followers', quote: 'Upgrading to Premium got me featured listings and 3x more campaign invites in the first month.', avatar: 'RV', plan: 'Creator Premium' },
   { name: 'Meera Shah', role: 'Marketing Lead, TechStart', quote: 'The comparison table made it easy to pick the right plan. Enterprise support has been exceptional.', avatar: 'MS', plan: 'Brand Enterprise' },
 ];
@@ -203,7 +239,18 @@ function PlanCard({
       </div>
 
       <div>
-        {plan.enterprise ? (
+        {plan.priceRange ? (
+          <>
+            <div className="flex items-baseline gap-1 flex-wrap">
+              {plan.price.monthly === 0 && !plan.enterprise ? (
+                <span className="font-display font-800 text-3xl text-[#1F1F2E]">Free</span>
+              ) : (
+                <span className="font-display font-800 text-3xl text-[#1F1F2E]">{plan.priceRange}</span>
+              )}
+            </div>
+            {plan.priceNote && <span className="text-[#9AA0B4] text-sm">{plan.priceNote}</span>}
+          </>
+        ) : plan.enterprise ? (
           <span className="font-display font-800 text-3xl text-[#1F1F2E]">Custom</span>
         ) : price === 0 ? (
           <span className="font-display font-800 text-3xl text-[#1F1F2E]">Free</span>
@@ -270,6 +317,8 @@ export default function PricingClient() {
 
   const plans = tab === 'creators' ? CREATOR_PLANS : BRAND_PLANS;
   const tiers: PlanTier[] = ['free', 'starter', 'pro', 'premium', 'enterprise'];
+  const comparisonFeatures = COMPARISON_FEATURES;
+  const tierLabel = (tier: PlanTier) => (tab === 'brands' ? BRAND_TIER_LABELS[tier] : tier);
 
   const handleUpgrade = (plan: Plan) => {
     setUpgradePlan(plan);
@@ -385,13 +434,13 @@ export default function PricingClient() {
                   <th className="text-left p-4 text-sm font-display font-700 text-[#1F1F2E]">Feature</th>
                   {tiers.map((tier) => (
                     <th key={tier} className={`p-4 text-center text-xs font-display font-700 uppercase ${tier === 'pro' ? 'text-[#7B2FF7] bg-[#EFEAFF]/50' : 'text-[#6B6B8A]'}`}>
-                      {tier}
+                      {tierLabel(tier)}
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {COMPARISON_FEATURES.map((feat) => (
+                {comparisonFeatures.map((feat) => (
                   <tr key={feat.key} className="border-b border-[#F2F3F7] last:border-0">
                     <td className="p-4 text-sm text-[#1F1F2E] font-medium">{feat.label}</td>
                     {tiers.map((tier) => (
@@ -483,12 +532,12 @@ export default function PricingClient() {
                     <tr className="border-b border-[#E5E7EB]">
                       <th className="text-left p-3 text-sm font-display font-700">Feature</th>
                       {tiers.map((tier) => (
-                        <th key={tier} className="p-3 text-center text-xs font-bold uppercase text-[#6B6B8A]">{tier}</th>
+                        <th key={tier} className="p-3 text-center text-xs font-bold uppercase text-[#6B6B8A]">{tierLabel(tier)}</th>
                       ))}
                     </tr>
                   </thead>
                   <tbody>
-                    {COMPARISON_FEATURES.map((feat) => (
+                    {comparisonFeatures.map((feat) => (
                       <tr key={feat.key} className="border-b border-[#F2F3F7]">
                         <td className="p-3 text-sm text-[#1F1F2E]">{feat.label}</td>
                         {tiers.map((tier) => (
@@ -524,11 +573,13 @@ export default function PricingClient() {
               <p className="text-[#6B6B8A] text-sm mb-6">
                 Upgrade to <strong>{upgradePlan.name}</strong> for{' '}
                 <strong>
-                  {upgradePlan.enterprise
-                    ? 'custom pricing'
-                    : yearly
-                      ? `₹${upgradePlan.price.yearly.toLocaleString()}/mo (billed yearly)`
-                      : `₹${upgradePlan.price.monthly.toLocaleString()}/mo`}
+                  {upgradePlan.priceRange
+                    ? `${upgradePlan.priceRange}${upgradePlan.priceNote ? ` ${upgradePlan.priceNote}` : ''}`
+                    : upgradePlan.enterprise
+                      ? 'custom pricing'
+                      : yearly
+                        ? `₹${upgradePlan.price.yearly.toLocaleString()}/mo (billed yearly)`
+                        : `₹${upgradePlan.price.monthly.toLocaleString()}/mo`}
                 </strong>
                 ?
               </p>
