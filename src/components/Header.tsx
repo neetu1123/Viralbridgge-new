@@ -5,7 +5,7 @@ import Link from 'next/link';
 import AppLogo from './ui/AppLogo';
 import UserMenu from './UserMenu';
 import { useAuth } from './AuthProvider';
-import { buildAdminLoginUrl } from '@/src/lib/auth/sso';
+import { buildAdminLoginUrl, buildBrandListingLoginUrl } from '@/src/lib/auth/sso';
 import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
@@ -28,6 +28,7 @@ export default function Navbar() {
   ];
 
   const adminLoginUrl = buildAdminLoginUrl('/explore/creators-v2');
+  const getFreeListUrl = buildBrandListingLoginUrl();
 
   return (
     <>
@@ -38,8 +39,8 @@ export default function Navbar() {
             : 'bg-transparent'
         }`}
       >
-        <div className="max-w-screen-xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5 group">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between gap-3 flex-nowrap">
+          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
             <AppLogo
               src="/viralbridge_logo_transparent.png"
               size={150}
@@ -48,7 +49,7 @@ export default function Navbar() {
             />
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
             {navLinks.map((link) => (
               <Link
                 key={`nav-${link.label}`}
@@ -60,45 +61,52 @@ export default function Navbar() {
             ))}
           </nav>
 
-          <div className="hidden md:flex items-center gap-3">
+          <div className="flex items-center gap-2 shrink-0">
+            <a
+              href={getFreeListUrl}
+              className="btn-secondary text-sm px-3.5 py-2 inline-block whitespace-nowrap"
+            >
+              Get Free List
+            </a>
             {loading ? (
-              <div className="w-24 h-9 rounded-xl bg-[#F2F3F7] animate-pulse" />
+              <div className="hidden md:block w-24 h-9 rounded-xl bg-[#F2F3F7] animate-pulse" />
             ) : isAuthenticated && user ? (
-              <UserMenu />
+              <div className="hidden md:block">
+                <UserMenu />
+              </div>
             ) : (
-              <>
+              <div className="hidden md:flex items-center gap-2">
                 <a
                   href={adminLoginUrl}
-                  className="text-[#6B6B8A] hover:text-[#1F1F2E] font-medium text-[15px] transition-colors duration-150 px-4 py-2"
+                  className="text-[#6B6B8A] hover:text-[#1F1F2E] font-medium text-[15px] transition-colors duration-150 px-3 py-2"
                 >
                   Login
                 </a>
                 <a
                   href={adminLoginUrl}
-                  className="btn-primary text-sm px-5 py-2.5 inline-block"
+                  className="btn-primary text-sm px-4 py-2 inline-block whitespace-nowrap"
                 >
                   Sign Up Free
                 </a>
-              </>
+              </div>
             )}
-          </div>
-
-          <button
-            className="md:hidden p-2 rounded-xl hover:bg-[#F2F3F7] transition-colors"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
-          >
+            <button
+              className="lg:hidden p-2 rounded-xl hover:bg-[#F2F3F7] transition-colors"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Toggle menu"
+            >
             {mobileOpen ? (
               <X size={22} className="text-[#1F1F2E]" />
             ) : (
               <Menu size={22} className="text-[#1F1F2E]" />
             )}
-          </button>
+            </button>
+          </div>
         </div>
       </header>
 
       <div
-        className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ${
+        className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${
           mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
@@ -123,6 +131,13 @@ export default function Navbar() {
               </Link>
             ))}
             <hr className="my-4 border-[#E5E7EB]" />
+            <a
+              href={getFreeListUrl}
+              onClick={() => setMobileOpen(false)}
+              className="btn-secondary text-center"
+            >
+              Get Free List
+            </a>
             {!loading && isAuthenticated && user ? (
               <>
                 <p className="px-4 text-sm text-[#6B6B8A]">Signed in as {user.name}</p>
