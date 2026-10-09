@@ -16,8 +16,6 @@ import {
 } from '@/src/lib/api/listings';
 import type { DiscoveryCategory, DiscoveryListing, DiscoveryLocation } from '@/src/lib/api/types';
 import SearchResultCard from './SearchResultCard';
-import { buildAdminLoginUrl } from '@/src/lib/auth/sso';
-import { useAuth } from '@/src/components/AuthProvider';
 
 interface Props {
   initialCategory?: string;
@@ -37,7 +35,6 @@ export default function BusinessSearchClient({ initialCategory, initialCity, mod
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { isAuthenticated } = useAuth();
   const [keyword, setKeyword] = useState(searchParams.get('q') ?? '');
   const [city, setCity] = useState(searchParams.get('city') ?? initialCity ?? '');
   const [area, setArea] = useState(searchParams.get('area') ?? '');
@@ -242,16 +239,6 @@ export default function BusinessSearchClient({ initialCategory, initialCity, mod
         <p className="mt-2 text-[#6B6B8A] max-w-2xl">
           Search registered businesses and creators by service and city — no login required.
         </p>
-        {mode === 'discover' && (
-          <div className="mt-4">
-            <a
-              href={isAuthenticated ? '/get-listed' : buildAdminLoginUrl('/get-listed')}
-              className="inline-flex btn-primary text-sm px-5 py-2.5"
-            >
-              Get Listed Free
-            </a>
-          </div>
-        )}
 
         <form onSubmit={runSearch} className="mt-6 grid gap-3 md:grid-cols-[1fr_220px_auto] bg-white border border-[#E5E7EB] rounded-2xl p-3 shadow-sm">
           <label className="flex items-center gap-2 px-3">
@@ -324,11 +311,6 @@ export default function BusinessSearchClient({ initialCategory, initialCity, mod
               <p className="text-sm text-[#6B6B8A] mt-2">
                 {city ? `No matches in ${city}. Try another city or clear filters.` : 'Try a broader keyword or another city.'}
               </p>
-              {mode === 'discover' && (
-                <a href={isAuthenticated ? '/get-listed' : buildAdminLoginUrl('/get-listed')} className="mt-4 inline-flex btn-primary text-sm px-5 py-2.5">
-                  Get Listed Free
-                </a>
-              )}
               <div className="mt-4 flex flex-wrap justify-center gap-2">
                 {['Mumbai', 'Delhi', 'Noida', 'Bangalore'].map((item) => (
                   <button key={item} type="button" onClick={() => { setCity(item); setPage(1); }} className="rounded-full border border-[#E5E7EB] px-4 py-2 text-sm">

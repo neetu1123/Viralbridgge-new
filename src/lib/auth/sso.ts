@@ -112,3 +112,8 @@ export function buildAdminLoginUrl(nextPath = '/'): string {
   const bridgePath = `/auth/bridge?returnUrl=${encodeURIComponent(receiveUrl)}`;
   return `${adminBase}/sign-up-login-screen?redirect=${encodeURIComponent(bridgePath)}`;
 }
+
+export function buildBrandListingLoginUrl(): string {
+  const adminBase = (process.env.NEXT_PUBLIC_ADMIN_URL || 'https://admin-viralbridgge-new.vercel.app').replace(/\/$/, '');
+  return `${adminBase}/sign-up-login-screen?redirect=${encodeURIComponent('/my-listing')}`;
+}

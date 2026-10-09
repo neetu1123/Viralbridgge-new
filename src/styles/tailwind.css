@@ -163,6 +163,18 @@ footer {
   animation: floatUp 4s ease-in-out infinite;
 }
 
+.animate-float-slow {
+  animation: floatUp 5s ease-in-out 2s infinite;
+}
+
+.animate-float-fast {
+  animation: floatUp 3s ease-in-out 0.5s infinite;
+}
+
+.animate-float-delay {
+  animation: floatUp 4s ease-in-out 1s infinite;
+}
+
 .animate-live-pulse {
   animation: livePulse 1.5s ease-in-out infinite;
 }
@@ -546,6 +558,9 @@ footer {
   .scroll-reveal-left,
   .scroll-reveal-right,
   .animate-float,
+  .animate-float-slow,
+  .animate-float-fast,
+  .animate-float-delay,
   .animate-live-pulse,
   .live-dot {
     opacity: 1 !important;
