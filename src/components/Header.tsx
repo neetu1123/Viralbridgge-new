@@ -20,9 +20,9 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
+    { label: 'Discover', href: '/discover' },
     { label: 'Campaign', href: '/explore/campaigns-v2' },
     { label: 'Creators', href: '/explore/creators-v2' },
-    { label: 'Discover', href: '/discover' },
     { label: 'Pricing', href: '/pricing' },
     { label: 'Services', href: '/services' },
   ];

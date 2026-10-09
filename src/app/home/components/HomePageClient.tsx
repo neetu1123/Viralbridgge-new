@@ -3,9 +3,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import {
-  Menu,
-  X,
-  ChevronDown,
   ArrowRight,
   Star,
   MapPin,
@@ -25,20 +22,7 @@ import {
   Award,
   ChevronRight,
 } from 'lucide-react';
-import AppLogo from '@/src/components/ui/AppLogo';
-import UserMenu from '@/src/components/UserMenu';
-import { useAuth } from '@/src/components/AuthProvider';
 import { buildAdminLoginUrl, buildBrandListingLoginUrl } from '@/src/lib/auth/sso';
-
-interface NavChild {
-  label: string;
-  href: string;
-}
-interface NavItem {
-  label: string;
-  href?: string;
-  children?: NavChild[];
-}
 
 const STATS = [
   { value: '1M+', label: 'Businesses on Platform', icon: Building2 },
@@ -70,35 +54,6 @@ const HOW_IT_WORKS = [
   { step: '05', title: 'Measure Results', desc: 'Track performance and ROI in real-time with our analytics dashboard.', icon: BarChart3 },
   { step: '06', title: 'Grow Your Business', desc: 'More customers. More sales. More growth. Repeat the cycle.', icon: TrendingUp },
 ];
-
-function isExternalHref(href: string) {
-  return href.startsWith('http://') || href.startsWith('https://');
-}
-
-function SmartLink({
-  href,
-  className,
-  children,
-  onClick,
-}: {
-  href: string;
-  className?: string;
-  children: React.ReactNode;
-  onClick?: () => void;
-}) {
-  if (isExternalHref(href)) {
-    return (
-      <a href={href} className={className} onClick={onClick}>
-        {children}
-      </a>
-    );
-  }
-  return (
-    <Link href={href} className={className} onClick={onClick}>
-      {children}
-    </Link>
-  );
-}
 
 function useCounter(target: string, duration = 1800) {
   const [count, setCount] = useState('0');
@@ -154,75 +109,6 @@ function StatItem({ value, label, icon: Icon }: { value: string; label: string; 
   );
 }
 
-function NavDropdown({ item, mobile = false }: { item: NavItem; mobile?: boolean }) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, []);
-
-  if (!item.children) {
-    return (
-      <SmartLink
-        href={item.href ?? '#'}
-        className={
-          mobile
-            ? 'block px-4 py-3 text-slate-700 hover:text-violet-700 font-medium border-b border-slate-100'
-            : 'text-slate-700 hover:text-violet-700 font-medium text-sm transition-colors'
-        }
-      >
-        {item.label}
-      </SmartLink>
-    );
-  }
-
-  return (
-    <div ref={ref} className={mobile ? 'border-b border-slate-100' : 'relative'}>
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        className={
-          mobile
-            ? 'w-full flex items-center justify-between px-4 py-3 text-slate-700 hover:text-violet-700 font-medium'
-            : 'flex items-center gap-1 text-slate-700 hover:text-violet-700 font-medium text-sm transition-colors'
-        }
-      >
-        {item.label}
-        <ChevronDown className={`w-4 h-4 transition-transform ${open ? 'rotate-180' : ''}`} />
-      </button>
-      {open && (
-        <div
-          className={
-            mobile
-              ? 'bg-violet-50 px-4 pb-2'
-              : 'absolute top-full left-0 mt-2 w-52 bg-white rounded-xl shadow-lg border border-slate-100 py-2 z-50'
-          }
-        >
-          {item.children.map((child) => (
-            <SmartLink
-              key={`${child.label}-${child.href}`}
-              href={child.href}
-              onClick={() => setOpen(false)}
-              className={
-                mobile
-                  ? 'block py-2 text-sm text-slate-600 hover:text-violet-700'
-                  : 'block px-4 py-2.5 text-sm text-slate-600 hover:text-violet-700 hover:bg-violet-50 transition-colors'
-              }
-            >
-              {child.label}
-            </SmartLink>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
 function InstagramIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -243,156 +129,15 @@ function YoutubeIcon({ className }: { className?: string }) {
 }
 
 export default function HomePageClient() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [promoOption, setPromoOption] = useState<string | null>(null);
-  const { user, loading, isAuthenticated } = useAuth();
 
   const listUrl = buildBrandListingLoginUrl();
-  const loginUrl = buildAdminLoginUrl();
   const creatorJoinUrl = buildAdminLoginUrl('/explore/creators-v2');
   const launchCampaignUrl = buildAdminLoginUrl('/brand-campaign-management');
-  const creatorDashboardUrl = buildAdminLoginUrl('/campaign-discovery');
-  const brandDashboardUrl = buildAdminLoginUrl('/brand-campaign-management');
   const growBusinessUrl = buildAdminLoginUrl('/grow-business');
 
-  const navItems: NavItem[] = [
-    {
-      label: 'Businesses',
-      children: [
-        { label: 'Discover Businesses', href: '/discover' },
-        { label: 'Get Listed Free', href: listUrl },
-        { label: 'Promote My Business', href: '/services' },
-        { label: 'Find Creators', href: '/explore/creators-v2' },
-        { label: 'Launch Campaign', href: launchCampaignUrl },
-      ],
-    },
-    {
-      label: 'Creators',
-      children: [
-        { label: 'Browse Creators', href: '/explore/creators-v2' },
-        { label: 'Join as Creator', href: creatorJoinUrl },
-        { label: 'Creator Dashboard', href: creatorDashboardUrl },
-        { label: 'Creator Guide', href: '/creator-guide' },
-      ],
-    },
-    {
-      label: 'Discover',
-      children: [
-        { label: 'Discover Businesses', href: '/discover' },
-        { label: 'Explore Creators', href: '/explore/creators-v2' },
-        { label: 'Campaigns', href: '/explore/campaigns-v2' },
-        { label: 'Categories', href: '/discover/category' },
-      ],
-    },
-    { label: 'How It Works', href: '#how-it-works' },
-    { label: 'Pricing', href: '/pricing' },
-  ];
-
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 10);
-    window.addEventListener('scroll', handler, { passive: true });
-    return () => window.removeEventListener('scroll', handler);
-  }, []);
-
   return (
-    <div className="min-h-screen bg-white font-sans overflow-x-hidden">
-      <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          scrolled ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-white'
-        } border-b border-slate-100`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[72px] flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3 flex-shrink-0">
-            <Link href="/" className="flex items-center">
-              <AppLogo src="/viralbridge_logo_transparent.png" size={140} />
-            </Link>
-            <div className="hidden 2xl:block h-8 w-px bg-slate-200" />
-            <span className="hidden 2xl:block text-xs text-slate-400 leading-tight max-w-[160px]">
-              India&apos;s Business Growth &amp; Creator Commerce Network
-            </span>
-          </div>
-
-          <nav className="hidden lg:flex items-center gap-6">
-            {navItems.map((item) => (
-              <NavDropdown key={item.label} item={item} />
-            ))}
-          </nav>
-
-          <div className="hidden lg:flex items-center gap-2 flex-shrink-0">
-            {loading ? (
-              <div className="w-28 h-9 rounded-lg bg-slate-100 animate-pulse" />
-            ) : isAuthenticated && user ? (
-              <UserMenu />
-            ) : (
-              <>
-                <a
-                  href={listUrl}
-                  className="px-4 py-2 rounded-lg bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 transition-colors"
-                >
-                  Get Listed Free
-                </a>
-                <a
-                  href={creatorJoinUrl}
-                  className="px-4 py-2 rounded-lg border border-violet-200 text-violet-700 text-sm font-semibold hover:bg-violet-50 transition-colors"
-                >
-                  Join as Creator
-                </a>
-                <a href={loginUrl} className="px-3 py-2 text-slate-600 text-sm font-medium hover:text-violet-700 transition-colors">
-                  Login
-                </a>
-              </>
-            )}
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setMobileOpen((o) => !o)}
-            className="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          >
-            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </div>
-
-        {mobileOpen && (
-          <div className="lg:hidden bg-white border-t border-slate-100 max-h-[80vh] overflow-y-auto">
-            {navItems.map((item) => (
-              <NavDropdown key={item.label} item={item} mobile />
-            ))}
-            <div className="p-4 flex flex-col gap-3 border-t border-slate-100">
-              {isAuthenticated && user ? (
-                <UserMenu />
-              ) : (
-                <>
-                  <a
-                    href={listUrl}
-                    onClick={() => setMobileOpen(false)}
-                    className="w-full text-center py-3 rounded-xl bg-violet-600 text-white font-semibold"
-                  >
-                    Get Listed Free
-                  </a>
-                  <a
-                    href={creatorJoinUrl}
-                    onClick={() => setMobileOpen(false)}
-                    className="w-full text-center py-3 rounded-xl border border-violet-200 text-violet-700 font-semibold"
-                  >
-                    Join as Creator
-                  </a>
-                  <a
-                    href={loginUrl}
-                    onClick={() => setMobileOpen(false)}
-                    className="w-full text-center py-3 text-slate-600 font-medium"
-                  >
-                    Login
-                  </a>
-                </>
-              )}
-            </div>
-          </div>
-        )}
-      </header>
-
+    <div className="bg-white font-sans overflow-x-hidden">
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-violet-50/40 to-white pt-12 pb-0 lg:pt-16">
         <div className="absolute -top-32 -right-32 w-96 h-96 bg-violet-200/30 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute top-1/2 -left-20 w-64 h-64 bg-pink-200/20 rounded-full blur-3xl pointer-events-none" />
@@ -1034,147 +779,6 @@ export default function HomePageClient() {
           </div>
         </div>
       </section>
-
-      <footer className="bg-slate-900 text-slate-400 pt-16 pb-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-12">
-            <div className="col-span-2 md:col-span-3 lg:col-span-2">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center">
-                  <Zap className="w-4 h-4 text-white" />
-                </div>
-                <span className="text-white font-bold text-lg">ViralBridge</span>
-              </div>
-              <p className="text-sm leading-relaxed mb-4 max-w-xs">
-                India&apos;s Business Growth &amp; Creator Commerce Network. Connecting businesses with customers, creators
-                and growth opportunities.
-              </p>
-              <div className="flex gap-3">
-                <a
-                  href="#"
-                  className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center hover:bg-violet-600 transition-colors"
-                  aria-label="Instagram"
-                >
-                  <InstagramIcon className="w-4 h-4" />
-                </a>
-                <a
-                  href="#"
-                  className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center hover:bg-violet-600 transition-colors"
-                  aria-label="X"
-                >
-                  <X className="w-4 h-4" />
-                </a>
-                <a
-                  href="#"
-                  className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center hover:bg-violet-600 transition-colors"
-                  aria-label="YouTube"
-                >
-                  <YoutubeIcon className="w-4 h-4" />
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <div className="text-white font-semibold text-sm mb-4">Product</div>
-              <ul className="space-y-2.5">
-                {[
-                  { label: 'Explore Creators', href: '/explore/creators-v2' },
-                  { label: 'Browse Campaigns', href: '/explore/campaigns-v2' },
-                  { label: 'Get Listed Free', href: listUrl },
-                  { label: 'Pricing', href: '/pricing' },
-                  { label: 'Creator Dashboard', href: creatorDashboardUrl },
-                  { label: 'Brand Dashboard', href: brandDashboardUrl },
-                ].map((l) => (
-                  <li key={l.label}>
-                    <SmartLink href={l.href} className="text-sm hover:text-white transition-colors">
-                      {l.label}
-                    </SmartLink>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <div className="text-white font-semibold text-sm mb-4">Explore Creators</div>
-              <ul className="space-y-2.5">
-                {[
-                  { label: 'Creators by City', href: '/discover/city' },
-                  { label: 'Creators by Category', href: '/discover/category' },
-                  { label: 'Creators by Platform', href: '/discover/platform' },
-                  { label: 'Premium Creators', href: '/discover/premium' },
-                  { label: 'View All Creators', href: '/explore/creators-v2' },
-                ].map((l) => (
-                  <li key={l.label}>
-                    <Link href={l.href} className="text-sm hover:text-white transition-colors">
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <div className="text-white font-semibold text-sm mb-4">Company</div>
-              <ul className="space-y-2.5">
-                {[
-                  { label: 'About Us', href: '/about' },
-                  { label: 'Blog', href: '/blog' },
-                  { label: 'Careers', href: '/careers' },
-                  { label: 'Press Kit', href: '/press-kit' },
-                  { label: 'Services', href: '/services' },
-                ].map((l) => (
-                  <li key={l.label}>
-                    <Link href={l.href} className="text-sm hover:text-white transition-colors">
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <div className="text-white font-semibold text-sm mb-4">Support</div>
-              <ul className="space-y-2.5 mb-6">
-                {[
-                  { label: 'Help Center', href: '/help-center' },
-                  { label: 'Contact Us', href: '/contact' },
-                  { label: 'Creator Guide', href: '/creator-guide' },
-                  { label: 'Brand Guide', href: '/brand-guide' },
-                ].map((l) => (
-                  <li key={l.label}>
-                    <Link href={l.href} className="text-sm hover:text-white transition-colors">
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <div className="text-white font-semibold text-sm mb-4">Legal</div>
-              <ul className="space-y-2.5">
-                {[
-                  { label: 'Privacy Policy', href: '/privacy-policy' },
-                  { label: 'Terms of Service', href: '/privacy-policy' },
-                  { label: 'Cookie Policy', href: '/privacy-policy' },
-                ].map((l) => (
-                  <li key={l.label}>
-                    <Link href={l.href} className="text-sm hover:text-white transition-colors">
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-sm">© 2026 ViralBridge. All rights reserved. Made with ❤️ in India.</div>
-            <div className="flex items-center gap-4 text-sm">
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> Platform Status: Operational
-              </span>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
