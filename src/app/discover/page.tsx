@@ -19,9 +19,9 @@ export default function DiscoverPage() {
           <BusinessSearchClient mode="discover" />
         </Suspense>
         <section className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-10 pb-16">
-          <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6">
-            <h2 className="font-semibold text-[#1F1F2E]">Looking for campaign-ready creators?</h2>
-            <p className="text-sm text-[#6B6B8A] mt-1">Browse the creator marketplace by city, language, category, or platform.</p>
+          <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 hover:shadow-md transition-shadow duration-300">
+            <h2 className="vb-heading text-2xl">Looking for campaign-ready creators?</h2>
+            <p className="vb-lede mt-2">Browse the creator marketplace by city, language, category, or platform.</p>
             <div className="mt-4 flex flex-wrap gap-2">
               <Link href="/discover/city" className="rounded-full border border-[#E5E7EB] px-4 py-2 text-sm">By city</Link>
               <Link href="/discover/language" className="rounded-full border border-[#E5E7EB] px-4 py-2 text-sm">By language</Link>

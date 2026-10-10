@@ -2,7 +2,7 @@
 
 
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Manrope:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Manrope:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 :root {
   --primary: #4E40F1;
@@ -57,12 +57,61 @@ body {
 }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', 'Manrope', sans-serif;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
   }
+
+  h1, h2 {
+    font-weight: 800;
+  }
+
+  h3, h4, h5, h6 {
+    font-weight: 700;
+  }
+
+/* ── Landing heading format (shared across main portal pages) ── */
+.vb-eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #7C3AED;
+  margin-bottom: 0.75rem;
+}
+
+.vb-heading {
+  font-family: 'Plus Jakarta Sans', 'Manrope', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+  color: #0F172A;
+}
+
+.vb-heading-lg {
+  font-size: clamp(2.25rem, 5.4vw, 4.25rem);
+}
+
+.vb-heading-md {
+  font-size: clamp(1.85rem, 3.8vw, 2.75rem);
+}
+
+.vb-heading-accent {
+  color: #6D28D9;
+}
+
+.vb-lede {
+  color: #64748B;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  font-weight: 400;
+  max-width: 36rem;
+}
   
 /* ── TYPOGRAPHY ── */
 .font-display {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', 'Manrope', 'DM Sans', sans-serif;
 }
 .priceSection {
   background-color: var(--bg-surface);

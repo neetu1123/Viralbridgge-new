@@ -6,6 +6,7 @@ import CreatorGrid from './CreatorGrid';
 import ExploreHeader from '@/src/app/creators-explore-page/components/ExploreHeader';
 import ActiveFilterChips from '@/src/app/creators-explore-page/components/ActiveFilterChips';
 import Reveal from '@/src/components/animations/Reveal';
+import FadeIn from '@/src/components/animations/FadeIn';
 
 export interface CreatorFilters {
   search: string;
@@ -52,12 +53,14 @@ export default function CreatorsExploreClient() {
 
   return (
     <div className="max-w-screen-2xl mx-auto px-6 lg:px-10 py-8">
-      <ExploreHeader
-        filters={filters}
-        updateFilter={updateFilter}
-        activeFilterCount={activeFilterCount}
-        onOpenMobileSidebar={() => setSidebarOpen(true)}
-      />
+      <FadeIn>
+        <ExploreHeader
+          filters={filters}
+          updateFilter={updateFilter}
+          activeFilterCount={activeFilterCount}
+          onOpenMobileSidebar={() => setSidebarOpen(true)}
+        />
+      </FadeIn>
 
       {activeFilterCount > 0 && (
         <ActiveFilterChips filters={filters} updateFilter={updateFilter} onReset={resetFilters} />

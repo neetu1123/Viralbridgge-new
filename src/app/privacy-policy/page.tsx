@@ -139,7 +139,7 @@ export default function PrivacyPolicyPage() {
             <Shield className="w-6 h-6 text-violet-400" />
             <span className="text-violet-400 font-semibold text-sm">Legal</span>
           </div>
-          <h1 className="text-4xl font-bold text-white mb-4">Privacy Policy</h1>
+          <h1 className="vb-heading vb-heading-lg text-white mb-4">Privacy Policy</h1>
           <p className="text-slate-400">Last updated: July 1, 2026 · Effective: July 1, 2026</p>
           <p className="text-slate-300 mt-4 max-w-2xl leading-relaxed">
             ViralBridge Technologies Pvt. Ltd. ("ViralBridge", "we", "us", or "our") is committed to protecting your privacy. This policy explains how we collect, use, and protect your personal information when you use our platform.

@@ -51,11 +51,11 @@ export default function AboutPage() {
             <span className="inline-flex items-center gap-2 bg-violet-500/20 text-violet-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-6 border border-violet-500/30">
               <Zap className="w-3.5 h-3.5" /> Our Story
             </span>
-            <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+            <h1 className="vb-heading vb-heading-lg text-white mb-6">
               The infrastructure layer for the{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-rose-400">creator economy</span>
             </h1>
-            <p className="text-xl text-slate-300 leading-relaxed mb-8">
+            <p className="vb-lede text-slate-300 mb-8">
               ViralBridge was built because we watched too many creators get underpaid and too many brands waste budget on the wrong partnerships. We decided to fix both — with AI, escrow, and radical transparency.
             </p>
             <div className="flex items-center gap-4">

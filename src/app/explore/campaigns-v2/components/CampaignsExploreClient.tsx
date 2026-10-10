@@ -50,15 +50,15 @@ export default function CampaignsExploreClient() {
   return (
     <div className="max-w-screen-2xl mx-auto px-6 lg:px-10 py-8">
       <FadeIn className="mb-8">
-        <span className="inline-block text-[#7B2FF7] font-semibold text-sm uppercase tracking-widest mb-2 font-display">
+        <span className="vb-eyebrow">
           Campaigns
         </span>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <h1 className="font-display font-800 text-3xl lg:text-4xl text-[#1F1F2E] tracking-tight">
+            <h1 className="vb-heading vb-heading-md">
               Explore Brand Campaigns
             </h1>
-            <p className="text-[#6B6B8A] mt-2 text-base">
+            <p className="vb-lede mt-3">
               Find paid collaboration opportunities that match your niche and audience.
             </p>
           </div>

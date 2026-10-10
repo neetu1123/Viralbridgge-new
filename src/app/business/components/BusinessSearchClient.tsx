@@ -16,6 +16,9 @@ import {
 } from '@/src/lib/api/listings';
 import type { DiscoveryCategory, DiscoveryListing, DiscoveryLocation } from '@/src/lib/api/types';
 import SearchResultCard from './SearchResultCard';
+import FadeIn from '@/src/components/animations/FadeIn';
+import Reveal from '@/src/components/animations/Reveal';
+import { StaggerContainer, StaggerItem } from '@/src/components/animations/Stagger';
 
 interface Props {
   initialCategory?: string;
@@ -234,12 +237,15 @@ export default function BusinessSearchClient({ initialCategory, initialCity, mod
   return (
     <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-10 pb-16">
       <section className="pt-10 pb-8">
-        <p className="text-sm font-semibold text-[#7B2FF7] mb-2">ViralBridge Discover</p>
-        <h1 className="font-display text-3xl sm:text-4xl font-700 text-[#1F1F2E]">What are you looking for?</h1>
-        <p className="mt-2 text-[#6B6B8A] max-w-2xl">
-          Search registered businesses and creators by service and city — no login required.
-        </p>
+        <FadeIn>
+          <p className="vb-eyebrow">ViralBridge Discover</p>
+          <h1 className="vb-heading vb-heading-md">What are you looking for?</h1>
+          <p className="vb-lede mt-3">
+            Search registered businesses and creators by service and city — no login required.
+          </p>
+        </FadeIn>
 
+        <FadeIn delay={0.1}>
         <form onSubmit={runSearch} className="mt-6 grid gap-3 md:grid-cols-[1fr_220px_auto] bg-white border border-[#E5E7EB] rounded-2xl p-3 shadow-sm">
           <label className="flex items-center gap-2 px-3">
             <Search size={18} className="text-[#9AA0B4]" />
@@ -261,8 +267,9 @@ export default function BusinessSearchClient({ initialCategory, initialCity, mod
           </label>
           <button type="submit" className="btn-primary px-6 py-3 text-sm">Search</button>
         </form>
+        </FadeIn>
 
-        <div className="mt-5 flex gap-2 overflow-x-auto pb-1">
+        <Reveal className="mt-5 flex gap-2 overflow-x-auto pb-1">
           {categories.slice(0, 12).map((item) => (
             <button
               key={item.id}
@@ -275,7 +282,7 @@ export default function BusinessSearchClient({ initialCategory, initialCity, mod
               {item.icon} {item.name}
             </button>
           ))}
-        </div>
+        </Reveal>
       </section>
 
       <div className="flex items-center justify-between gap-3 mb-5">
@@ -321,9 +328,13 @@ export default function BusinessSearchClient({ initialCategory, initialCity, mod
               <button type="button" onClick={clearFilters} className="mt-4 text-sm font-semibold text-[#7B2FF7]">Clear filters</button>
             </div>
           ) : (
-            <div className="grid sm:grid-cols-2 gap-4">
-              {results.map((item) => <SearchResultCard key={`${item.type}-${item.id}`} item={item} />)}
-            </div>
+            <StaggerContainer className="grid sm:grid-cols-2 gap-4">
+              {results.map((item, index) => (
+                <StaggerItem key={`${item.type}-${item.id}`} index={index}>
+                  <SearchResultCard item={item} />
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
           )}
 
           {totalPages > 1 && (

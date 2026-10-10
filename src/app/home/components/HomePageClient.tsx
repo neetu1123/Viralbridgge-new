@@ -23,6 +23,10 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { buildAdminLoginUrl, buildBrandListingLoginUrl } from '@/src/lib/auth/sso';
+import SectionHeading from '@/src/components/SectionHeading';
+import FadeIn from '@/src/components/animations/FadeIn';
+import Reveal from '@/src/components/animations/Reveal';
+import { StaggerContainer, StaggerItem } from '@/src/components/animations/Stagger';
 
 const STATS = [
   { value: '1M+', label: 'Businesses on Platform', icon: Building2 },
@@ -139,74 +143,84 @@ export default function HomePageClient() {
   return (
     <div className="bg-white font-sans overflow-x-hidden">
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-violet-50/40 to-white pt-12 pb-0 lg:pt-16">
-        <div className="absolute -top-32 -right-32 w-96 h-96 bg-violet-200/30 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-1/2 -left-20 w-64 h-64 bg-pink-200/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-amber-100/30 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-32 -right-32 w-96 h-96 bg-violet-200/30 rounded-full blur-3xl pointer-events-none animate-float-slow" />
+        <div className="absolute top-1/2 -left-20 w-64 h-64 bg-pink-200/20 rounded-full blur-3xl pointer-events-none animate-float" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-amber-100/30 rounded-full blur-3xl pointer-events-none animate-float-delay" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="relative z-10 pb-12 lg:pb-20">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-100 border border-violet-200 mb-6">
-                <Sparkles className="w-4 h-4 text-violet-600" />
-                <span className="text-sm font-semibold text-violet-700">India&apos;s #1 Business + Creator Platform</span>
-              </div>
-
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
-                <span className="text-slate-900">Get Discovered.</span>
-                <br />
-                <span className="text-violet-700">Grow Your Business.</span>
-                <br />
-                <span className="bg-gradient-to-r from-violet-600 via-fuchsia-500 to-orange-400 bg-clip-text text-transparent">
-                  Go Viral.
-                </span>
-              </h1>
-
-              <p className="text-lg text-slate-600 mb-3 leading-relaxed max-w-lg">
-                ViralBridge connects businesses with customers, creators and growth opportunities — all in one platform.
-              </p>
-              <p className="text-base text-slate-500 mb-8 leading-relaxed max-w-lg">
-                List your business for free, get discovered by customers, and when you&apos;re ready to grow, launch campaigns
-                with relevant creators.
-              </p>
-
-              <div className="flex flex-wrap gap-3 mb-8">
-                <a
-                  href={listUrl}
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-violet-600 to-purple-700 text-white font-semibold shadow-lg shadow-violet-200 hover:shadow-violet-300 hover:-translate-y-0.5 transition-all duration-200"
-                >
-                  Get Listed Free <ArrowRight className="w-4 h-4" />
-                </a>
-                <Link
-                  href="/explore/creators-v2"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border-2 border-violet-200 text-violet-700 font-semibold hover:bg-violet-50 hover:-translate-y-0.5 transition-all duration-200"
-                >
-                  Find Creators
-                </Link>
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                {['Free business listing', 'AI-powered creator matching', 'Campaign analytics'].map((t) => (
-                  <div key={t} className="flex items-center gap-1.5 text-sm text-slate-600">
-                    <CheckCircle className="w-4 h-4 text-violet-500 flex-shrink-0" />
-                    {t}
-                  </div>
-                ))}
-              </div>
-
-              <div className="hidden lg:flex items-center gap-2 mt-10 text-slate-400">
-                <svg width="40" height="30" viewBox="0 0 40 30" fill="none" className="text-violet-300">
-                  <path d="M2 28 C10 10, 30 5, 38 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
-                  <path d="M34 2 L38 2 L38 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-                <div className="text-xs font-medium text-slate-400 leading-tight">
-                  Real People
-                  <br />
-                  Real Impact
+              <FadeIn>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-100 border border-violet-200 mb-6">
+                  <Sparkles className="w-4 h-4 text-violet-600" />
+                  <span className="text-sm font-semibold text-violet-700">India&apos;s #1 Business + Creator Platform</span>
                 </div>
-              </div>
+              </FadeIn>
+
+              <FadeIn delay={0.08}>
+                <h1 className="vb-heading vb-heading-lg mb-6">
+                  <span>Get Discovered.</span>
+                  <br />
+                  <span className="vb-heading-accent">Grow Your Business.</span>
+                  <br />
+                  <span className="bg-gradient-to-r from-violet-600 via-fuchsia-500 to-orange-400 bg-clip-text text-transparent">
+                    Go Viral.
+                  </span>
+                </h1>
+              </FadeIn>
+
+              <FadeIn delay={0.16}>
+                <p className="vb-lede mb-3">
+                  ViralBridge connects businesses with customers, creators and growth opportunities — all in one platform.
+                </p>
+                <p className="vb-lede mb-8">
+                  List your business for free, get discovered by customers, and when you&apos;re ready to grow, launch campaigns
+                  with relevant creators.
+                </p>
+              </FadeIn>
+
+              <FadeIn delay={0.24}>
+                <div className="flex flex-wrap gap-3 mb-8">
+                  <a
+                    href={listUrl}
+                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-violet-600 to-purple-700 text-white font-semibold shadow-lg shadow-violet-200 hover:shadow-violet-300 hover:-translate-y-0.5 transition-all duration-200"
+                  >
+                    Get Listed Free <ArrowRight className="w-4 h-4" />
+                  </a>
+                  <Link
+                    href="/explore/creators-v2"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border-2 border-violet-200 text-violet-700 font-semibold hover:bg-violet-50 hover:-translate-y-0.5 transition-all duration-200"
+                  >
+                    Find Creators
+                  </Link>
+                </div>
+
+                <div className="flex flex-wrap gap-3">
+                  {['Free business listing', 'AI-powered creator matching', 'Campaign analytics'].map((t) => (
+                    <div key={t} className="flex items-center gap-1.5 text-sm text-slate-600">
+                      <CheckCircle className="w-4 h-4 text-violet-500 flex-shrink-0" />
+                      {t}
+                    </div>
+                  ))}
+                </div>
+              </FadeIn>
+
+              <FadeIn delay={0.32}>
+                <div className="hidden lg:flex items-center gap-2 mt-10 text-slate-400">
+                  <svg width="40" height="30" viewBox="0 0 40 30" fill="none" className="text-violet-300">
+                    <path d="M2 28 C10 10, 30 5, 38 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
+                    <path d="M34 2 L38 2 L38 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                  <div className="text-xs font-medium text-slate-400 leading-tight">
+                    Real People
+                    <br />
+                    Real Impact
+                  </div>
+                </div>
+              </FadeIn>
             </div>
 
-            <div className="relative lg:h-[580px] flex items-end justify-center pb-0">
+            <FadeIn delay={0.18} scale className="relative lg:h-[580px] flex items-end justify-center pb-0">
               <div className="absolute inset-0 bg-gradient-to-br from-violet-100/60 via-transparent to-pink-100/40 rounded-3xl" />
 
               <div className="absolute top-4 left-0 lg:left-4 w-64 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 z-20 animate-float">
@@ -325,40 +339,38 @@ export default function HomePageClient() {
                   <div className="text-sm text-violet-500 mt-1">Business + Creator Network</div>
                 </div>
               </div>
-            </div>
+            </FadeIn>
           </div>
         </div>
       </section>
 
-      <section className="bg-gradient-to-r from-violet-50 via-purple-50 to-violet-50 border-y border-violet-100">
+      <Reveal as="section" className="bg-gradient-to-r from-violet-50 via-purple-50 to-violet-50 border-y border-violet-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-violet-100">
-            {STATS.map((s) => (
-              <StatItem key={s.label} {...s} />
+          <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-violet-100">
+            {STATS.map((s, i) => (
+              <StaggerItem key={s.label} index={i}>
+                <StatItem {...s} />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
-      </section>
+      </Reveal>
 
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
-            <div className="inline-block text-xs font-bold tracking-widest text-violet-500 uppercase mb-3">
-              One Platform. Two Powerful Networks.
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
-              Businesses &amp; Creators.
-              <br />
-              <span className="text-violet-700">Built for Growth.</span>
-            </h2>
-            <p className="text-slate-500 max-w-xl mx-auto">
-              Whether you&apos;re a business looking for more customers or a creator looking for opportunities — ViralBridge is
-              your growth partner.
-            </p>
-          </div>
+          <Reveal>
+            <SectionHeading
+              className="mb-12"
+              eyebrow="One Platform. Two Powerful Networks."
+              title="Businesses & Creators."
+              accent="Built for Growth."
+              description="Whether you're a business looking for more customers or a creator looking for opportunities — ViralBridge is your growth partner."
+            />
+          </Reveal>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-violet-600 via-purple-700 to-indigo-800 p-8 text-white">
+          <StaggerContainer className="grid md:grid-cols-2 gap-6">
+            <StaggerItem>
+            <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-violet-600 via-purple-700 to-indigo-800 p-8 text-white hover:-translate-y-1 transition-transform duration-300">
               <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
               <div className="relative z-10">
@@ -384,8 +396,10 @@ export default function HomePageClient() {
                 </a>
               </div>
             </div>
+            </StaggerItem>
 
-            <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-fuchsia-500 via-pink-600 to-rose-600 p-8 text-white">
+            <StaggerItem index={1}>
+            <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-fuchsia-500 via-pink-600 to-rose-600 p-8 text-white hover:-translate-y-1 transition-transform duration-300">
               <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
               <div className="relative z-10">
@@ -411,26 +425,24 @@ export default function HomePageClient() {
                 </a>
               </div>
             </div>
-          </div>
+            </StaggerItem>
+          </StaggerContainer>
         </div>
       </section>
 
       <section className="py-20 bg-gradient-to-br from-slate-50 to-violet-50/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <Reveal>
             <div>
-              <div className="inline-block text-xs font-bold tracking-widest text-violet-500 uppercase mb-4">
-                Free Business Listing
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-5">
-                Your business deserves
-                <br />
-                <span className="text-violet-700">to be discovered.</span>
-              </h2>
-              <p className="text-slate-500 mb-8 leading-relaxed">
-                Create your free ViralBridge business profile and put your business in front of customers, creators and
-                potential opportunities.
-              </p>
+              <SectionHeading
+                align="left"
+                className="mb-8"
+                eyebrow="Free Business Listing"
+                title="Your business deserves"
+                accent="to be discovered."
+                description="Create your free ViralBridge business profile and put your business in front of customers, creators and potential opportunities."
+              />
               <a
                 href={listUrl}
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-violet-600 to-purple-700 text-white font-bold shadow-lg shadow-violet-200 hover:shadow-violet-300 hover:-translate-y-0.5 transition-all"
@@ -439,8 +451,9 @@ export default function HomePageClient() {
               </a>
               <p className="text-xs text-slate-400 mt-3">No credit card required.</p>
             </div>
+            </Reveal>
 
-            <div className="relative">
+            <FadeIn delay={0.12} scale className="relative">
               <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-5">
                 <div className="h-32 rounded-xl bg-gradient-to-br from-amber-200 via-orange-200 to-rose-200 mb-4 flex items-center justify-center">
                   <div className="text-center">
@@ -507,28 +520,29 @@ export default function HomePageClient() {
                 </a>
               </div>
 
-              <div className="absolute -bottom-4 left-4 flex items-center gap-2 bg-white rounded-xl shadow-md border border-slate-100 px-3 py-2">
+              <div className="absolute -bottom-4 left-4 flex items-center gap-2 bg-white rounded-xl shadow-md border border-slate-100 px-3 py-2 animate-float-fast">
                 <TrendingUp className="w-4 h-4 text-violet-600" />
                 <div className="text-xs font-semibold text-slate-700">Turn Visitors into Customers</div>
               </div>
-            </div>
+            </FadeIn>
           </div>
         </div>
       </section>
 
       <section id="how-it-works" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-14">
-            <div className="inline-block text-xs font-bold tracking-widest text-violet-500 uppercase mb-3">
-              Simple. Smart. Effective.
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">How it works</h2>
-            <p className="text-slate-500 max-w-lg mx-auto">From listing to measurable growth — in just a few steps.</p>
-          </div>
+          <Reveal>
+            <SectionHeading
+              className="mb-14"
+              eyebrow="Simple. Smart. Effective."
+              title="How it works"
+              description="From listing to measurable growth — in just a few steps."
+            />
+          </Reveal>
 
-          <div className="hidden lg:grid grid-cols-6 gap-0 relative">
+          <StaggerContainer className="hidden lg:grid grid-cols-6 gap-0 relative">
             {HOW_IT_WORKS.map((step, i) => (
-              <div key={step.step} className="relative flex flex-col items-center text-center px-3">
+              <StaggerItem key={step.step} index={i} className="relative flex flex-col items-center text-center px-3">
                 {i < HOW_IT_WORKS.length - 1 && (
                   <div className="absolute top-7 left-[calc(50%+28px)] right-0 h-px bg-gradient-to-r from-violet-200 to-violet-100 z-0">
                     <ChevronRight className="absolute -right-2 -top-2 w-4 h-4 text-violet-300" />
@@ -540,13 +554,13 @@ export default function HomePageClient() {
                 <div className="text-xs font-bold text-violet-400 mb-1">{step.step}</div>
                 <div className="text-sm font-bold text-slate-800 mb-1">{step.title}</div>
                 <div className="text-xs text-slate-500 leading-relaxed">{step.desc}</div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
 
-          <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {HOW_IT_WORKS.map((step) => (
-              <div key={step.step} className="flex gap-4 p-4 rounded-2xl bg-violet-50 border border-violet-100">
+          <StaggerContainer className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {HOW_IT_WORKS.map((step, i) => (
+              <StaggerItem key={step.step} index={i} className="flex gap-4 p-4 rounded-2xl bg-violet-50 border border-violet-100">
                 <div className="w-12 h-12 rounded-xl bg-white border border-violet-200 flex items-center justify-center flex-shrink-0">
                   <step.icon className="w-5 h-5 text-violet-600" />
                 </div>
@@ -555,40 +569,36 @@ export default function HomePageClient() {
                   <div className="text-sm font-bold text-slate-800 mb-1">{step.title}</div>
                   <div className="text-xs text-slate-500">{step.desc}</div>
                 </div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       <section className="py-20 bg-gradient-to-br from-slate-50 to-violet-50/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
-            <div>
-              <div className="text-xs font-bold tracking-widest text-violet-500 uppercase mb-3">
-                Thousands of Creators. Endless Possibilities.
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">
-                Find the Perfect Creators
-                <br />
-                for Your Business
-              </h2>
-              <p className="text-slate-500 mt-3 max-w-lg">Access verified creators across categories, locations and audience types.</p>
-            </div>
+          <Reveal className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+            <SectionHeading
+              align="left"
+              eyebrow="Thousands of Creators. Endless Possibilities."
+              title="Find the Perfect Creators"
+              accent="for Your Business"
+              description="Access verified creators across categories, locations and audience types."
+            />
             <Link
               href="/explore/creators-v2"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border-2 border-violet-200 text-violet-700 font-semibold hover:bg-violet-50 transition-colors flex-shrink-0"
             >
               Browse Creators <ArrowRight className="w-4 h-4" />
             </Link>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {CREATORS.map((c) => (
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {CREATORS.map((c, i) => (
+              <StaggerItem key={c.id} index={i}>
               <Link
-                key={c.id}
                 href="/explore/creators-v2"
-                className="group bg-white rounded-2xl border border-slate-100 p-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-200"
+                className="group bg-white rounded-2xl border border-slate-100 p-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 block h-full"
               >
                 <div className="flex items-start gap-3 mb-4">
                   <div
@@ -624,31 +634,34 @@ export default function HomePageClient() {
                   </div>
                 </div>
               </Link>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">
-              Explore Businesses
-              <br />
-              Across Categories
-            </h2>
+          <Reveal className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+            <SectionHeading
+              align="left"
+              eyebrow="Built for every kind of business"
+              title="Explore Businesses"
+              accent="Across Categories"
+            />
             <Link
               href="/discover/category"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border-2 border-violet-200 text-violet-700 font-semibold hover:bg-violet-50 transition-colors flex-shrink-0"
             >
               View All Categories <ArrowRight className="w-4 h-4" />
             </Link>
-          </div>
+          </Reveal>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <StaggerContainer className="grid md:grid-cols-3 gap-6">
+            <StaggerItem>
             <Link
               href="/discover"
-              className="group rounded-3xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 p-7 hover:shadow-lg transition-all duration-200"
+              className="group rounded-3xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 p-7 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 block h-full"
             >
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mb-5">
                 <ShoppingBag className="w-6 h-6 text-white" />
@@ -665,10 +678,12 @@ export default function HomePageClient() {
                 )}
               </ul>
             </Link>
+            </StaggerItem>
 
+            <StaggerItem index={1}>
             <Link
               href="/business"
-              className="group rounded-3xl bg-gradient-to-br from-violet-50 to-purple-50 border border-violet-100 p-7 hover:shadow-lg transition-all duration-200"
+              className="group rounded-3xl bg-gradient-to-br from-violet-50 to-purple-50 border border-violet-100 p-7 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 block h-full"
             >
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center mb-5">
                 <Briefcase className="w-6 h-6 text-white" />
@@ -683,10 +698,12 @@ export default function HomePageClient() {
                 ))}
               </ul>
             </Link>
+            </StaggerItem>
 
+            <StaggerItem index={2}>
             <Link
               href="/pricing"
-              className="group rounded-3xl bg-gradient-to-br from-slate-50 to-indigo-50 border border-slate-200 p-7 hover:shadow-lg transition-all duration-200"
+              className="group rounded-3xl bg-gradient-to-br from-slate-50 to-indigo-50 border border-slate-200 p-7 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 block h-full"
             >
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-700 to-indigo-800 flex items-center justify-center mb-5">
                 <Award className="w-6 h-6 text-white" />
@@ -703,20 +720,25 @@ export default function HomePageClient() {
                 )}
               </ul>
             </Link>
-          </div>
+            </StaggerItem>
+          </StaggerContainer>
         </div>
       </section>
 
       <section className="py-20 bg-gradient-to-br from-violet-50/50 to-pink-50/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-3">Loved by Businesses &amp; Creators</h2>
-            <p className="text-slate-500">Real people. Real success stories.</p>
-          </div>
+          <Reveal>
+            <SectionHeading
+              className="mb-12"
+              title="Loved by Businesses & Creators"
+              description="Real people. Real success stories."
+            />
+          </Reveal>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {TESTIMONIALS.map((t) => (
-              <div key={t.name} className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm hover:shadow-md transition-shadow">
+          <StaggerContainer className="grid md:grid-cols-3 gap-6">
+            {TESTIMONIALS.map((t, i) => (
+              <StaggerItem key={t.name} index={i}>
+              <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 h-full">
                 <div className="flex gap-0.5 mb-4">
                   {Array.from({ length: t.rating }).map((_, i) => (
                     <Star key={i} className="w-4 h-4 text-amber-400 fill-amber-400" />
@@ -737,30 +759,31 @@ export default function HomePageClient() {
                   </div>
                 </div>
               </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-violet-600 via-purple-700 to-pink-600" />
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-1/4 w-64 h-64 bg-white rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-amber-300 rounded-full blur-3xl" />
+          <div className="absolute top-0 left-1/4 w-64 h-64 bg-white rounded-full blur-3xl animate-float-slow" />
+          <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-amber-300 rounded-full blur-3xl animate-float" />
         </div>
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
+        <Reveal scale className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <div className="flex items-center justify-center gap-2 mb-6">
             <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
               <Zap className="w-4 h-4 text-white" />
             </div>
             <span className="text-white/80 font-semibold">ViralBridge</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-bold text-white mb-5 leading-tight">
+          <h2 className="vb-heading vb-heading-md text-white mb-5">
             Your next customer could be
             <br />
             one click away.
           </h2>
-          <p className="text-violet-200 text-lg mb-10 max-w-xl mx-auto">
+          <p className="vb-lede text-violet-100 mx-auto mb-10">
             Get your business discovered, connect with the right creators, and grow with ViralBridge.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
@@ -777,7 +800,7 @@ export default function HomePageClient() {
               Join as Creator
             </a>
           </div>
-        </div>
+        </Reveal>
       </section>
     </div>
   );

@@ -123,12 +123,12 @@ export default function CareersPage() {
           <span className="inline-flex items-center gap-2 bg-violet-500/20 text-violet-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-6 border border-violet-500/30">
             <Briefcase className="w-3.5 h-3.5" /> We're hiring
           </span>
-          <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 max-w-2xl">
+          <h1 className="vb-heading vb-heading-lg text-white mb-6 max-w-2xl">
             Build the future of the{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-rose-400">creator economy</span>
           </h1>
-          <p className="text-xl text-slate-300 max-w-xl leading-relaxed mb-8">
-            We're a 28-person team on a mission to make creator-brand collaboration fair, intelligent, and scalable. Join us.
+          <p className="vb-lede text-slate-300 mb-8">
+            We&apos;re a 28-person team on a mission to make creator-brand collaboration fair, intelligent, and scalable. Join us.
           </p>
           <div className="flex items-center gap-4 flex-wrap">
             <a href="#open-roles" className="inline-flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white px-6 py-3 rounded-xl font-semibold transition-colors">

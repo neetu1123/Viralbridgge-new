@@ -13,7 +13,7 @@ export default function SearchResultCard({ item }: { item: DiscoveryListing }) {
       ? `/discover/${item.type === 'CREATOR' ? 'creator' : 'business'}/${encodeURIComponent(item.slug)}`
       : `/business/${encodeURIComponent(item.slug)}`);
   return (
-    <article className="bg-white rounded-2xl border border-[#E5E7EB] p-4 hover:border-[#7B2FF7]/40 hover:shadow-sm transition-all">
+    <article className="bg-white rounded-2xl border border-[#E5E7EB] p-4 hover:border-[#7B2FF7]/40 hover:shadow-md hover:-translate-y-1 transition-all duration-200 h-full">
       <div className="flex gap-3">
         <div className="w-16 h-16 rounded-2xl overflow-hidden bg-[#F2F3F7] flex items-center justify-center text-sm font-semibold text-[#7B2FF7] flex-shrink-0">
           {item.logo ? (

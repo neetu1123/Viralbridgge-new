@@ -7,10 +7,12 @@ import UserMenu from './UserMenu';
 import { useAuth } from './AuthProvider';
 import { buildAdminLoginUrl, buildBrandListingLoginUrl } from '@/src/lib/auth/sso';
 import { Menu, X } from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
   const { user, loading, logout, isAuthenticated } = useAuth();
 
   useEffect(() => {
@@ -32,7 +34,10 @@ export default function Navbar() {
 
   return (
     <>
-      <header
+      <motion.header
+        initial={reduceMotion ? false : { y: -18, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
         className={`fixed pt-4 top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
             ? 'bg-white/95 backdrop-blur-md shadow-nav'
@@ -103,21 +108,27 @@ export default function Navbar() {
             </button>
           </div>
         </div>
-      </header>
+      </motion.header>
 
-      <div
-        className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${
-          mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
+      <AnimatePresence>
+        {mobileOpen ? (
+      <motion.div
+        className="fixed inset-0 z-40 lg:hidden"
+        initial={reduceMotion ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.22 }}
       >
         <div
           className="absolute inset-0 bg-black/20 backdrop-blur-sm"
           onClick={() => setMobileOpen(false)}
         />
-        <div
-          className={`absolute top-0 right-0 h-full w-72 bg-white shadow-xl transition-transform duration-300 ${
-            mobileOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
+        <motion.div
+          initial={reduceMotion ? false : { x: '100%' }}
+          animate={{ x: 0 }}
+          exit={{ x: '100%' }}
+          transition={{ duration: 0.28, ease: [0.25, 1, 0.5, 1] }}
+          className="absolute top-0 right-0 h-full w-72 bg-white shadow-xl"
         >
           <div className="p-6 pt-20 flex flex-col gap-2">
             {navLinks.map((link) => (
@@ -171,8 +182,10 @@ export default function Navbar() {
               </>
             )}
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }

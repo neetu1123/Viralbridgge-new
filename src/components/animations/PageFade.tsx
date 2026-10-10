@@ -1,10 +1,12 @@
 'use client';
 
 import React from 'react';
+import { usePathname } from 'next/navigation';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ANIMATION } from './config';
 
 export default function PageFade({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const reduce = useReducedMotion();
 
   if (reduce) {
@@ -13,9 +15,10 @@ export default function PageFade({ children }: { children: React.ReactNode }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: ANIMATION.durationFast, ease: 'easeOut' }}
+      key={pathname}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: ANIMATION.duration, ease: ANIMATION.ease }}
     >
       {children}
     </motion.div>

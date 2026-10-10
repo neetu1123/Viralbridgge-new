@@ -4,6 +4,7 @@ import "../styles/index.css";
 import '../styles/tailwind.css';
 import { AuthProvider } from '@/src/components/AuthProvider';
 import ApproachBanner from '@/src/components/ApproachBanner';
+import PageFade from '@/src/components/animations/PageFade';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -30,8 +31,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AuthProvider>
-          {children}
-          <ApproachBanner />
+          <PageFade>
+            {children}
+            <ApproachBanner />
+          </PageFade>
         </AuthProvider>
         <noscript>
           <style>{`[data-reveal],.scroll-reveal,.scroll-reveal-left,.scroll-reveal-right{opacity:1!important;transform:none!important}`}</style>

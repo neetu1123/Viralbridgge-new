@@ -119,8 +119,8 @@ export default function BlogPage() {
             <BookOpen className="w-6 h-6 text-violet-400" />
             <span className="text-violet-400 font-semibold text-sm uppercase tracking-wider">ViralBridge Blog</span>
           </div>
-          <h1 className="text-5xl font-bold text-white mb-4">Insights for the creator economy</h1>
-          <p className="text-xl text-slate-400 max-w-2xl">Data, strategies, and stories from the intersection of creators, brands, and AI.</p>
+          <h1 className="vb-heading vb-heading-lg text-white mb-4">Insights for the creator economy</h1>
+          <p className="vb-lede text-slate-400">Data, strategies, and stories from the intersection of creators, brands, and AI.</p>
           </FadeIn>
         </div>
       </section>

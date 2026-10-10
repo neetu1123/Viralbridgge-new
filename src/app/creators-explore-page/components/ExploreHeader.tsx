@@ -26,8 +26,9 @@ export default function ExploreHeader({ filters, updateFilter, activeFilterCount
     <FadeIn className="mb-2">
       {/* Page title */}
       <div className="mb-6">
-        <h1 className="font-display font-800 text-3xl text-[#1F1F2E] tracking-tight">Discover Creators</h1>
-        <p className="text-[#6B6B8A] text-base mt-1.5">
+        <p className="vb-eyebrow">Creator marketplace</p>
+        <h1 className="vb-heading vb-heading-md">Discover Creators</h1>
+        <p className="vb-lede mt-3">
           Browse 52,000+ verified creators across every niche and platform
         </p>
       </div>

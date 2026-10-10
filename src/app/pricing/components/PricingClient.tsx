@@ -338,14 +338,14 @@ export default function PricingClient() {
       <section className="relative py-20 text-center px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-[#EFEAFF]/50 to-transparent pointer-events-none" />
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="relative">
-          <span className="inline-flex items-center gap-1.5 text-[#7B2FF7] font-semibold text-sm uppercase tracking-widest mb-4 font-display">
+          <span className="vb-eyebrow inline-flex items-center gap-1.5">
             <Crown size={14} />
             Premium Membership
           </span>
-          <h1 className="font-display font-800 text-4xl lg:text-5xl text-[#1F1F2E] tracking-tight mb-4">
+          <h1 className="vb-heading vb-heading-lg mb-4">
             Choose the Perfect Plan
           </h1>
-          <p className="text-[#6B6B8A] text-lg max-w-xl mx-auto mb-10">
+          <p className="vb-lede mx-auto mb-10">
             Unlock premium tools to grow faster with ViralBridge.
           </p>
 
