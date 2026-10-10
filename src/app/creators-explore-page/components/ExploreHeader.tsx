@@ -27,7 +27,9 @@ export default function ExploreHeader({ filters, updateFilter, activeFilterCount
       {/* Page title */}
       <div className="mb-6">
         <p className="vb-eyebrow">Creator marketplace</p>
-        <h1 className="vb-heading vb-heading-md">Discover Creators</h1>
+        <h1 className="vb-heading vb-heading-md">
+          Discover <span className="vb-heading-highlight">Creators</span>
+        </h1>
         <p className="vb-lede mt-3">
           Browse 52,000+ verified creators across every niche and platform
         </p>

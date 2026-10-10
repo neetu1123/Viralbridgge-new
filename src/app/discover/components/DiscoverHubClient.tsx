@@ -68,8 +68,10 @@ export default function DiscoverHubClient() {
           <span className="inline-block bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-full mb-4">
             Discover Creators
           </span>
-          <h1 className="font-display font-800 text-4xl md:text-5xl lg:text-6xl text-white tracking-tight mb-4">
-            Find Your Perfect Creator Match
+          <h1 className="vb-heading vb-heading-md text-white mb-4">
+            Find Your Perfect Creator
+            <br />
+            <span className="vb-heading-highlight">Match</span>
           </h1>
           <p className="text-white/80 text-lg mb-8 max-w-xl mx-auto">
             Explore thousands of verified influencers across cities, languages, and platforms.

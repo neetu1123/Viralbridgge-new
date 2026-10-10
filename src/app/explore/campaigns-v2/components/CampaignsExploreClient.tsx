@@ -56,7 +56,9 @@ export default function CampaignsExploreClient() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <h1 className="vb-heading vb-heading-md">
-              Explore Brand Campaigns
+              Explore Brand
+              <br />
+              <span className="vb-heading-highlight">Campaigns</span>
             </h1>
             <p className="vb-lede mt-3">
               Find paid collaboration opportunities that match your niche and audience.

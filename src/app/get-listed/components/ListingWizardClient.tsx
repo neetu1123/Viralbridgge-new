@@ -216,7 +216,9 @@ export default function ListingWizardClient({ type }: { type: 'BUSINESS' | 'CREA
       <Header />
       <main className="pt-24 pb-16 max-w-2xl mx-auto px-6">
         <p className="text-sm font-semibold text-[#7B2FF7]">{type === 'CREATOR' ? 'Creator listing' : 'Business listing'}</p>
-        <h1 className="font-display text-3xl font-700 text-[#1F1F2E] mt-1">Get listed free</h1>
+        <h1 className="vb-heading vb-heading-md mt-1">
+          Get listed <span className="vb-heading-highlight">free</span>
+        </h1>
         <div className="mt-6 flex gap-2 overflow-x-auto">
           {steps.map((label, index) => (
             <button

@@ -38,65 +38,65 @@ export default function Navbar() {
         initial={reduceMotion ? false : { y: -18, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
-        className={`fixed pt-4 top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 h-16 border-b transition-all duration-300 ${
           scrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-nav'
-            : 'bg-transparent'
+            ? 'bg-white/95 backdrop-blur-md border-[#E5E7EB] shadow-sm'
+            : 'bg-white/90 backdrop-blur-sm border-transparent'
         }`}
       >
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between gap-3 flex-nowrap">
-          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-10 h-full grid grid-cols-[1fr_auto] lg:grid-cols-[1fr_auto_1fr] items-center gap-4">
+          <Link href="/" className="justify-self-start flex items-center h-14">
             <AppLogo
               src="/viralbridge_logo_transparent.png"
-              size={150}
-              className="text-primary"
+              size={220}
+              className="h-14 w-auto max-w-[220px]"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             />
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+          <nav className="hidden lg:flex items-center justify-center gap-7">
             {navLinks.map((link) => (
               <Link
                 key={`nav-${link.label}`}
                 href={link.href}
-                className="text-[#6B6B8A] hover:text-[#1F1F2E] font-medium text-[15px] transition-colors duration-150"
+                className="text-[#6B6B8A] hover:text-[#1F1F2E] font-medium text-[15px] leading-none whitespace-nowrap transition-colors duration-150"
               >
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="justify-self-end flex items-center gap-2.5 h-10">
             <a
               href={getFreeListUrl}
-              className="btn-secondary text-sm px-3.5 py-2 inline-block whitespace-nowrap"
+              className="inline-flex items-center justify-center h-10 px-4 rounded-full border border-[#7B2FF7] text-[#7B2FF7] bg-white text-sm font-semibold whitespace-nowrap hover:bg-[#EFEAFF] transition-colors"
             >
               Get Free List
             </a>
             {loading ? (
-              <div className="hidden md:block w-24 h-9 rounded-xl bg-[#F2F3F7] animate-pulse" />
+              <div className="hidden md:block w-24 h-10 rounded-xl bg-[#F2F3F7] animate-pulse" />
             ) : isAuthenticated && user ? (
-              <div className="hidden md:block">
+              <div className="hidden md:flex items-center h-10">
                 <UserMenu />
               </div>
             ) : (
-              <div className="hidden md:flex items-center gap-2">
+              <div className="hidden md:flex items-center gap-2 h-10">
                 <a
                   href={adminLoginUrl}
-                  className="text-[#6B6B8A] hover:text-[#1F1F2E] font-medium text-[15px] transition-colors duration-150 px-3 py-2"
+                  className="inline-flex items-center h-10 px-3 text-[#6B6B8A] hover:text-[#1F1F2E] font-medium text-[15px] leading-none transition-colors"
                 >
                   Login
                 </a>
                 <a
                   href={adminLoginUrl}
-                  className="btn-primary text-sm px-4 py-2 inline-block whitespace-nowrap"
+                  className="inline-flex items-center justify-center h-10 px-4 rounded-full bg-[#7B2FF7] text-white text-sm font-semibold whitespace-nowrap hover:bg-[#6D28D9] transition-colors"
                 >
                   Sign Up Free
                 </a>
               </div>
             )}
             <button
-              className="lg:hidden p-2 rounded-xl hover:bg-[#F2F3F7] transition-colors"
+              className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl hover:bg-[#F2F3F7] transition-colors"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
             >
@@ -145,7 +145,7 @@ export default function Navbar() {
             <a
               href={getFreeListUrl}
               onClick={() => setMobileOpen(false)}
-              className="btn-secondary text-center"
+              className="inline-flex items-center justify-center h-11 px-4 rounded-full border border-[#7B2FF7] text-[#7B2FF7] bg-white text-sm font-semibold"
             >
               Get Free List
             </a>

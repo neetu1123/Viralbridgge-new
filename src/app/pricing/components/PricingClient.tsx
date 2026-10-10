@@ -342,8 +342,10 @@ export default function PricingClient() {
             <Crown size={14} />
             Premium Membership
           </span>
-          <h1 className="vb-heading vb-heading-lg mb-4">
-            Choose the Perfect Plan
+          <h1 className="vb-heading vb-heading-md mb-4">
+            Choose the Perfect
+            <br />
+            <span className="vb-heading-highlight">Plan</span>
           </h1>
           <p className="vb-lede mx-auto mb-10">
             Unlock premium tools to grow faster with ViralBridge.

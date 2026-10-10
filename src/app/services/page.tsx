@@ -331,9 +331,10 @@ export default function ServicesPage() {
             <span className="inline-flex items-center gap-2 bg-[#7B2FF7]/20 text-[#C4B5FD] text-xs font-semibold px-3 py-1.5 rounded-full mb-6 border border-[#7B2FF7]/30">
               <Zap className="w-3.5 h-3.5" /> Enterprise Creator Campaigns
             </span>
-            <h1 className="vb-heading vb-heading-lg text-white mb-6">
-              Enterprise Creator Campaigns,{' '}
-              <span className="vb-heading-accent gradient-text">Built for Scale</span>
+            <h1 className="vb-heading vb-heading-md text-white mb-6">
+              Enterprise Creator Campaigns,
+              <br />
+              Built for <span className="vb-heading-highlight">Scale</span>
             </h1>
             <p className="vb-lede text-[#9AA0B4] mb-8">
               ViralBridge helps brands and organizations execute creator-powered campaigns across influencers, YouTubers, meme pages, regional creators, review creators, and other distribution networks.

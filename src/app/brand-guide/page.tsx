@@ -50,8 +50,10 @@ export default function BrandGuidePage() {
               <span className="inline-flex items-center gap-2 bg-violet-500/20 text-violet-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-6 border border-violet-500/30">
                 <Target className="w-3.5 h-3.5" /> Brand Guide
               </span>
-              <h1 className="vb-heading vb-heading-lg text-white mb-6">
-                Run creator campaigns that actually convert
+              <h1 className="vb-heading vb-heading-md text-white mb-6">
+                Run creator campaigns that actually
+                <br />
+                <span className="vb-heading-highlight">convert</span>
               </h1>
               <p className="vb-lede text-slate-300 mb-8">
                 From brief to ROI — the complete playbook for brands running influencer campaigns on ViralBridge.

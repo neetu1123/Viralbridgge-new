@@ -20,9 +20,10 @@ import {
   ShoppingBag,
   Briefcase,
   Award,
-  ChevronRight,
 } from 'lucide-react';
 import { buildAdminLoginUrl, buildBrandListingLoginUrl } from '@/src/lib/auth/sso';
+import { fetchPublicCreators } from '@/src/lib/api/public';
+import type { PublicCreator } from '@/src/lib/api/types';
 import SectionHeading from '@/src/components/SectionHeading';
 import FadeIn from '@/src/components/animations/FadeIn';
 import Reveal from '@/src/components/animations/Reveal';
@@ -35,14 +36,62 @@ const STATS = [
   { value: 'Pan India', label: 'Growing Together', icon: Globe },
 ];
 
-const CREATORS = [
-  { id: 'cr-001', name: 'Priya Sharma', niche: 'Food', location: 'Jaipur', followers: '198K', engagement: '8.1%', platform: 'instagram', initials: 'PS', gradient: 'from-rose-400 to-pink-600', verified: true },
-  { id: 'cr-002', name: 'Marcus Reid', niche: 'Fitness', location: 'Delhi', followers: '512K', engagement: '4.2%', platform: 'youtube', initials: 'MR', gradient: 'from-violet-500 to-purple-700', verified: true },
-  { id: 'cr-003', name: 'Sofia Chen', niche: 'Beauty', location: 'Mumbai', followers: '284K', engagement: '6.1%', platform: 'instagram', initials: 'SC', gradient: 'from-amber-400 to-orange-500', verified: true },
-  { id: 'cr-004', name: 'Rohan Mehta', niche: 'Travel', location: 'Bangalore', followers: '143K', engagement: '5.7%', platform: 'youtube', initials: 'RM', gradient: 'from-teal-400 to-cyan-600', verified: false },
-  { id: 'cr-005', name: 'Ananya Kapoor', niche: 'Fashion', location: 'Hyderabad', followers: '321K', engagement: '7.3%', platform: 'instagram', initials: 'AK', gradient: 'from-fuchsia-500 to-pink-600', verified: true },
-  { id: 'cr-006', name: 'Vikram Nair', niche: 'Tech', location: 'Pune', followers: '89K', engagement: '9.2%', platform: 'youtube', initials: 'VN', gradient: 'from-blue-500 to-indigo-600', verified: false },
+const CREATOR_GRADIENTS = [
+  'from-rose-400 to-pink-600',
+  'from-violet-500 to-purple-700',
+  'from-amber-400 to-orange-500',
+  'from-teal-400 to-cyan-600',
+  'from-fuchsia-500 to-pink-600',
+  'from-blue-500 to-indigo-600',
 ];
+
+type HomeCreatorCard = {
+  id: string;
+  name: string;
+  niche: string;
+  location: string;
+  followers: string;
+  engagement: string;
+  platform: string;
+  initials: string;
+  gradient: string;
+  verified: boolean;
+  top: boolean;
+  href: string;
+};
+
+const FALLBACK_CREATORS: HomeCreatorCard[] = [
+  { id: 'cr-002', name: 'Marcus Reid', niche: 'Fitness', location: 'Delhi', followers: '512K', engagement: '4.2%', platform: 'youtube', initials: 'MR', gradient: 'from-violet-500 to-purple-700', verified: true, top: true, href: '/explore/creators-v2' },
+  { id: 'cr-005', name: 'Ananya Kapoor', niche: 'Fashion', location: 'Hyderabad', followers: '321K', engagement: '7.3%', platform: 'instagram', initials: 'AK', gradient: 'from-fuchsia-500 to-pink-600', verified: true, top: true, href: '/explore/creators-v2' },
+  { id: 'cr-003', name: 'Sofia Chen', niche: 'Beauty', location: 'Mumbai', followers: '284K', engagement: '6.1%', platform: 'instagram', initials: 'SC', gradient: 'from-amber-400 to-orange-500', verified: true, top: true, href: '/explore/creators-v2' },
+  { id: 'cr-001', name: 'Priya Sharma', niche: 'Food', location: 'Jaipur', followers: '198K', engagement: '8.1%', platform: 'instagram', initials: 'PS', gradient: 'from-rose-400 to-pink-600', verified: true, top: false, href: '/explore/creators-v2' },
+  { id: 'cr-004', name: 'Rohan Mehta', niche: 'Travel', location: 'Bangalore', followers: '143K', engagement: '5.7%', platform: 'youtube', initials: 'RM', gradient: 'from-teal-400 to-cyan-600', verified: false, top: false, href: '/explore/creators-v2' },
+  { id: 'cr-006', name: 'Vikram Nair', niche: 'Tech', location: 'Pune', followers: '89K', engagement: '9.2%', platform: 'youtube', initials: 'VN', gradient: 'from-blue-500 to-indigo-600', verified: false, top: false, href: '/explore/creators-v2' },
+];
+
+function mapPublicCreator(c: PublicCreator, index: number): HomeCreatorCard {
+  const initials = c.name
+    .split(' ')
+    .map((part) => part[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+
+  return {
+    id: c.id,
+    name: c.name,
+    niche: c.niche,
+    location: c.location || 'India',
+    followers: c.followersDisplay,
+    engagement: c.engagementDisplay,
+    platform: (c.platform || '').toLowerCase().includes('youtube') ? 'youtube' : 'instagram',
+    initials,
+    gradient: CREATOR_GRADIENTS[index % CREATOR_GRADIENTS.length],
+    verified: c.verified,
+    top: index < 3 || c.premium,
+    href: c.username ? `/creator/public/${c.username}` : '/explore/creators-v2',
+  };
+}
 
 const TESTIMONIALS = [
   { name: 'Ananya Verma', role: 'Restaurant Owner', location: 'Jaipur', initials: 'AV', gradient: 'from-violet-500 to-purple-700', quote: 'ViralBridge helped us get more visibility and connect with the right creators. Our footfall increased by 40% in just two months. It\'s been a game changer for our café.', rating: 5 },
@@ -134,6 +183,23 @@ function YoutubeIcon({ className }: { className?: string }) {
 
 export default function HomePageClient() {
   const [promoOption, setPromoOption] = useState<string | null>(null);
+  const [creators, setCreators] = useState<HomeCreatorCard[]>(FALLBACK_CREATORS);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchPublicCreators({ limit: 6, sort: 'followers_desc' })
+      .then((result) => {
+        if (!cancelled && result.data?.length) {
+          setCreators(result.data.slice(0, 6).map(mapPublicCreator));
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setCreators(FALLBACK_CREATORS);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const listUrl = buildBrandListingLoginUrl();
   const creatorJoinUrl = buildAdminLoginUrl('/explore/creators-v2');
@@ -358,15 +424,17 @@ export default function HomePageClient() {
 
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <Reveal>
-            <SectionHeading
-              className="mb-12"
-              eyebrow="One Platform. Two Powerful Networks."
-              title="Businesses & Creators."
-              accent="Built for Growth."
-              description="Whether you're a business looking for more customers or a creator looking for opportunities — ViralBridge is your growth partner."
-            />
-          </Reveal>
+          <SectionHeading
+            className="mb-12"
+            eyebrow="One Platform. Two Powerful Networks."
+            title="Businesses & Creators."
+            accent={
+              <>
+                Built for <span className="vb-heading-highlight">Growth.</span>
+              </>
+            }
+            description="Whether you're a business looking for more customers or a creator looking for opportunities — ViralBridge is your growth partner."
+          />
 
           <StaggerContainer className="grid md:grid-cols-2 gap-6">
             <StaggerItem>
@@ -433,14 +501,17 @@ export default function HomePageClient() {
       <section className="py-20 bg-gradient-to-br from-slate-50 to-violet-50/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <Reveal>
             <div>
               <SectionHeading
                 align="left"
                 className="mb-8"
                 eyebrow="Free Business Listing"
                 title="Your business deserves"
-                accent="to be discovered."
+                accent={
+                  <>
+                    to be <span className="vb-heading-highlight">discovered.</span>
+                  </>
+                }
                 description="Create your free ViralBridge business profile and put your business in front of customers, creators and potential opportunities."
               />
               <a
@@ -451,7 +522,6 @@ export default function HomePageClient() {
               </a>
               <p className="text-xs text-slate-400 mt-3">No credit card required.</p>
             </div>
-            </Reveal>
 
             <FadeIn delay={0.12} scale className="relative">
               <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-5">
@@ -531,44 +601,29 @@ export default function HomePageClient() {
 
       <section id="how-it-works" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <Reveal>
-            <SectionHeading
-              className="mb-14"
-              eyebrow="Simple. Smart. Effective."
-              title="How it works"
-              description="From listing to measurable growth — in just a few steps."
-            />
-          </Reveal>
+          <SectionHeading
+            className="mb-12"
+            eyebrow="Simple. Smart. Effective."
+            title="How ViralBridge"
+            accent={<span className="vb-heading-highlight">works.</span>}
+            description="From listing to measurable growth — in just a few steps."
+          />
 
-          <StaggerContainer className="hidden lg:grid grid-cols-6 gap-0 relative">
+          <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {HOW_IT_WORKS.map((step, i) => (
-              <StaggerItem key={step.step} index={i} className="relative flex flex-col items-center text-center px-3">
-                {i < HOW_IT_WORKS.length - 1 && (
-                  <div className="absolute top-7 left-[calc(50%+28px)] right-0 h-px bg-gradient-to-r from-violet-200 to-violet-100 z-0">
-                    <ChevronRight className="absolute -right-2 -top-2 w-4 h-4 text-violet-300" />
+              <StaggerItem key={step.step} index={i}>
+                <article className="group h-full bg-white rounded-2xl border border-slate-100 p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-100 to-purple-100 border border-violet-200 flex items-center justify-center">
+                      <step.icon className="w-6 h-6 text-violet-600" />
+                    </div>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-violet-600 bg-violet-50 border border-violet-100 px-2.5 py-1 rounded-full">
+                      Step {step.step}
+                    </span>
                   </div>
-                )}
-                <div className="relative z-10 w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-100 to-purple-100 border border-violet-200 flex items-center justify-center mb-4">
-                  <step.icon className="w-6 h-6 text-violet-600" />
-                </div>
-                <div className="text-xs font-bold text-violet-400 mb-1">{step.step}</div>
-                <div className="text-sm font-bold text-slate-800 mb-1">{step.title}</div>
-                <div className="text-xs text-slate-500 leading-relaxed">{step.desc}</div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-
-          <StaggerContainer className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {HOW_IT_WORKS.map((step, i) => (
-              <StaggerItem key={step.step} index={i} className="flex gap-4 p-4 rounded-2xl bg-violet-50 border border-violet-100">
-                <div className="w-12 h-12 rounded-xl bg-white border border-violet-200 flex items-center justify-center flex-shrink-0">
-                  <step.icon className="w-5 h-5 text-violet-600" />
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-violet-400 mb-0.5">{step.step}</div>
-                  <div className="text-sm font-bold text-slate-800 mb-1">{step.title}</div>
-                  <div className="text-xs text-slate-500">{step.desc}</div>
-                </div>
+                  <h3 className="text-lg font-bold text-slate-900 mb-2">{step.title}</h3>
+                  <p className="text-sm text-slate-500 leading-relaxed">{step.desc}</p>
+                </article>
               </StaggerItem>
             ))}
           </StaggerContainer>
@@ -577,27 +632,39 @@ export default function HomePageClient() {
 
       <section className="py-20 bg-gradient-to-br from-slate-50 to-violet-50/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <Reveal className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+          <div className="mb-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <SectionHeading
               align="left"
+              className="min-w-0 flex-1"
               eyebrow="Thousands of Creators. Endless Possibilities."
               title="Find the Perfect Creators"
-              accent="for Your Business"
+              accent={
+                <>
+                  for Your <span className="vb-heading-highlight">Business</span>
+                </>
+              }
               description="Access verified creators across categories, locations and audience types."
             />
             <Link
               href="/explore/creators-v2"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border-2 border-violet-200 text-violet-700 font-semibold hover:bg-violet-50 transition-colors flex-shrink-0"
+              className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl border-2 border-violet-200 text-violet-700 font-semibold hover:bg-violet-50 transition-colors shrink-0 self-start sm:self-end"
             >
               Browse Creators <ArrowRight className="w-4 h-4" />
             </Link>
-          </Reveal>
+          </div>
+
+          <div className="flex items-center gap-2 mb-5">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 text-xs font-bold uppercase tracking-wider">
+              <Award className="w-3.5 h-3.5" /> Top Creators
+            </span>
+            <span className="text-sm text-slate-500">Highest-performing creators on ViralBridge</span>
+          </div>
 
           <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {CREATORS.map((c, i) => (
+            {creators.map((c, i) => (
               <StaggerItem key={c.id} index={i}>
               <Link
-                href="/explore/creators-v2"
+                href={c.href}
                 className="group bg-white rounded-2xl border border-slate-100 p-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 block h-full"
               >
                 <div className="flex items-start gap-3 mb-4">
@@ -614,6 +681,11 @@ export default function HomePageClient() {
                     <div className="text-xs text-slate-500">
                       {c.niche} • {c.location}
                     </div>
+                    {c.top ? (
+                      <span className="inline-flex items-center gap-1 mt-1.5 px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-700 text-[10px] font-bold uppercase tracking-wider">
+                        <Award className="w-3 h-3" /> Top Creator
+                      </span>
+                    ) : null}
                   </div>
                   <div className="flex-shrink-0">
                     {c.platform === 'instagram' ? (
@@ -642,20 +714,25 @@ export default function HomePageClient() {
 
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <Reveal className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+          <div className="mb-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <SectionHeading
               align="left"
+              className="min-w-0 flex-1"
               eyebrow="Built for every kind of business"
               title="Explore Businesses"
-              accent="Across Categories"
+              accent={
+                <>
+                  Across <span className="vb-heading-highlight">Categories</span>
+                </>
+              }
             />
             <Link
               href="/discover/category"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border-2 border-violet-200 text-violet-700 font-semibold hover:bg-violet-50 transition-colors flex-shrink-0"
+              className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl border-2 border-violet-200 text-violet-700 font-semibold hover:bg-violet-50 transition-colors shrink-0 self-start sm:self-end"
             >
               View All Categories <ArrowRight className="w-4 h-4" />
             </Link>
-          </Reveal>
+          </div>
 
           <StaggerContainer className="grid md:grid-cols-3 gap-6">
             <StaggerItem>
@@ -727,13 +804,16 @@ export default function HomePageClient() {
 
       <section className="py-20 bg-gradient-to-br from-violet-50/50 to-pink-50/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <Reveal>
-            <SectionHeading
-              className="mb-12"
-              title="Loved by Businesses & Creators"
-              description="Real people. Real success stories."
-            />
-          </Reveal>
+          <SectionHeading
+            className="mb-12"
+            title="Loved by"
+            accent={
+              <>
+                Businesses & <span className="vb-heading-highlight">Creators</span>
+              </>
+            }
+            description="Real people. Real success stories."
+          />
 
           <StaggerContainer className="grid md:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t, i) => (
@@ -771,21 +851,24 @@ export default function HomePageClient() {
           <div className="absolute top-0 left-1/4 w-64 h-64 bg-white rounded-full blur-3xl animate-float-slow" />
           <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-amber-300 rounded-full blur-3xl animate-float" />
         </div>
-        <Reveal scale className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
-              <Zap className="w-4 h-4 text-white" />
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <FadeIn inView>
+            <div className="flex items-center justify-center gap-2 mb-6">
+              <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+                <Zap className="w-4 h-4 text-white" />
+              </div>
+              <span className="text-white/80 font-semibold">ViralBridge</span>
             </div>
-            <span className="text-white/80 font-semibold">ViralBridge</span>
-          </div>
-          <h2 className="vb-heading vb-heading-md text-white mb-5">
-            Your next customer could be
-            <br />
-            one click away.
-          </h2>
-          <p className="vb-lede text-violet-100 mx-auto mb-10">
-            Get your business discovered, connect with the right creators, and grow with ViralBridge.
-          </p>
+          </FadeIn>
+          <SectionHeading
+            className="mb-10"
+            tone="light"
+            title="Your next customer could be"
+            accent={<span className="vb-heading-highlight">one click away.</span>}
+            description="Get your business discovered, connect with the right creators, and grow with ViralBridge."
+            descriptionClassName="!text-black"
+          />
+          <FadeIn inView delay={0.2}>
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href={listUrl}
@@ -800,7 +883,8 @@ export default function HomePageClient() {
               Join as Creator
             </a>
           </div>
-        </Reveal>
+          </FadeIn>
+        </div>
       </section>
     </div>
   );

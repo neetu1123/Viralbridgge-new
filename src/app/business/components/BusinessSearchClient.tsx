@@ -239,7 +239,11 @@ export default function BusinessSearchClient({ initialCategory, initialCity, mod
       <section className="pt-10 pb-8">
         <FadeIn>
           <p className="vb-eyebrow">ViralBridge Discover</p>
-          <h1 className="vb-heading vb-heading-md">What are you looking for?</h1>
+          <h1 className="vb-heading vb-heading-md">
+            What are you
+            <br />
+            <span className="vb-heading-highlight">looking for?</span>
+          </h1>
           <p className="vb-lede mt-3">
             Search registered businesses and creators by service and city — no login required.
           </p>

@@ -117,7 +117,7 @@ export function DiscoverHero({
             {badge}
           </span>
         )}
-        <h1 className="font-display font-800 text-3xl md:text-4xl lg:text-5xl text-white tracking-tight mb-3">
+        <h1 className="vb-heading vb-heading-md text-white mb-3">
           {title}
         </h1>
         {subtitle && (

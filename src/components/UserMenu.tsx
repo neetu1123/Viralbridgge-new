@@ -90,10 +90,10 @@ export default function UserMenu() {
   };
 
   return (
-    <div className="flex items-center gap-2 md:gap-3" ref={menuRef}>
+    <div className="flex items-center gap-2" ref={menuRef}>
       <a
         href={getNotificationsUrl(user.role)}
-        className="hidden sm:flex relative w-9 h-9 rounded-xl border border-[#E5E7EB] bg-white items-center justify-center text-[#6B6B8A] hover:border-[#7B2FF7] hover:text-[#7B2FF7] transition-colors"
+        className="hidden sm:flex relative w-10 h-10 rounded-xl border border-[#E5E7EB] bg-white items-center justify-center text-[#6B6B8A] hover:border-[#7B2FF7] hover:text-[#7B2FF7] transition-colors"
         aria-label="Notifications"
       >
         <Bell size={16} />
@@ -107,7 +107,7 @@ export default function UserMenu() {
       {isBrand && (
         <a
           href={getCreateCampaignUrl()}
-          className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-white text-sm font-semibold"
+          className="hidden md:inline-flex items-center h-10 gap-1.5 px-3 rounded-xl text-white text-sm font-semibold"
           style={{ background: 'linear-gradient(90deg, #7B2FF7, #F357A8)' }}
         >
           <Plus size={14} /> Create Campaign
@@ -117,7 +117,7 @@ export default function UserMenu() {
       {!isBrand && !isAdmin && (
         <button
           type="button"
-          className="hidden sm:flex w-9 h-9 rounded-xl border border-[#E5E7EB] bg-white items-center justify-center text-[#6B6B8A] hover:border-[#7B2FF7] hover:text-[#7B2FF7] transition-colors"
+          className="hidden sm:flex w-10 h-10 rounded-xl border border-[#E5E7EB] bg-white items-center justify-center text-[#6B6B8A] hover:border-[#7B2FF7] hover:text-[#7B2FF7] transition-colors"
           aria-label="Messages"
         >
           <MessageCircle size={16} />
@@ -127,7 +127,7 @@ export default function UserMenu() {
       {isBrand && (
         <button
           type="button"
-          className="hidden sm:flex w-9 h-9 rounded-xl border border-[#E5E7EB] bg-white items-center justify-center text-[#F357A8] hover:border-[#F357A8] transition-colors"
+          className="hidden sm:flex w-10 h-10 rounded-xl border border-[#E5E7EB] bg-white items-center justify-center text-[#F357A8] hover:border-[#F357A8] transition-colors"
           aria-label="Saved creators"
         >
           <Heart size={16} />
@@ -138,7 +138,7 @@ export default function UserMenu() {
         <button
           type="button"
           onClick={() => setOpen((prev) => !prev)}
-          className="flex items-center gap-2 pl-1 pr-2 py-1 rounded-xl hover:bg-[#F2F3F7] transition-colors"
+          className="flex items-center gap-2 h-10 pl-1 pr-2 rounded-xl hover:bg-[#F2F3F7] transition-colors"
           aria-expanded={open}
           aria-haspopup="menu"
         >

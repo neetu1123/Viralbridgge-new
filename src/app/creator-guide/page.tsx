@@ -55,8 +55,10 @@ export default function CreatorGuidePage() {
               <span className="inline-flex items-center gap-2 bg-rose-500/20 text-rose-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-6 border border-rose-500/30">
                 <Camera className="w-3.5 h-3.5" /> Creator Guide
               </span>
-              <h1 className="vb-heading vb-heading-lg text-white mb-6">
-                Your complete guide to earning on ViralBridge
+              <h1 className="vb-heading vb-heading-md text-white mb-6">
+                Your complete guide to earning on
+                <br />
+                <span className="vb-heading-highlight">ViralBridge</span>
               </h1>
               <p className="vb-lede text-slate-300 mb-8">
                 From profile setup to your first payout — everything you need to build a sustainable income as a creator.

@@ -118,7 +118,9 @@ export default function HelpCenterPage() {
         <div className="relative py-20 text-white">
           <div className="max-w-3xl mx-auto px-6 text-center">
             <FadeIn>
-            <h1 className="vb-heading vb-heading-lg text-white mb-4">How can we help?</h1>
+            <h1 className="vb-heading vb-heading-md text-white mb-4">
+              How can we <span className="vb-heading-highlight">help?</span>
+            </h1>
             <p className="vb-lede text-violet-100 mx-auto mb-8">Search our knowledge base or browse by category below.</p>
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />

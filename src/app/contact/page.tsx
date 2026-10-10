@@ -46,7 +46,9 @@ export default function ContactPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 to-violet-950/80" />
         <div className="relative max-w-6xl mx-auto px-6 py-20">
           <FadeIn>
-          <h1 className="vb-heading vb-heading-lg text-white mb-4">Get in touch</h1>
+          <h1 className="vb-heading vb-heading-md text-white mb-4">
+            Get in <span className="vb-heading-highlight">touch</span>
+          </h1>
           <p className="vb-lede text-slate-300">Whether you&apos;re a creator, brand, or journalist — we&apos;re here to help.</p>
           </FadeIn>
         </div>
