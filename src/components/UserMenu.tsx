@@ -4,17 +4,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   Bell,
   ChevronDown,
-  Heart,
   LogOut,
   MessageCircle,
-  Plus,
   User,
   LayoutDashboard,
 } from 'lucide-react';
 import { useAuth } from './AuthProvider';
 import {
   getDashboardUrl,
-  getCreateCampaignUrl,
   getFirstName,
   getInitials,
   getNotificationsUrl,
@@ -104,16 +101,6 @@ export default function UserMenu() {
         )}
       </a>
 
-      {isBrand && (
-        <a
-          href={getCreateCampaignUrl()}
-          className="hidden md:inline-flex items-center h-10 gap-1.5 px-3 rounded-xl text-white text-sm font-semibold"
-          style={{ background: 'linear-gradient(90deg, #7B2FF7, #F357A8)' }}
-        >
-          <Plus size={14} /> Create Campaign
-        </a>
-      )}
-
       {!isBrand && !isAdmin && (
         <button
           type="button"
@@ -121,16 +108,6 @@ export default function UserMenu() {
           aria-label="Messages"
         >
           <MessageCircle size={16} />
-        </button>
-      )}
-
-      {isBrand && (
-        <button
-          type="button"
-          className="hidden sm:flex w-10 h-10 rounded-xl border border-[#E5E7EB] bg-white items-center justify-center text-[#F357A8] hover:border-[#F357A8] transition-colors"
-          aria-label="Saved creators"
-        >
-          <Heart size={16} />
         </button>
       )}
 
