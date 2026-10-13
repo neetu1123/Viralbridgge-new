@@ -85,11 +85,11 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-             <AppLogo
-             src="/viralbridge_logo_transparent.png"
-            size={200}
-            className="text-primary"
-          />
+            <AppLogo
+              src="/viralbridge_logo_footer.png"
+              size={200}
+              className="text-primary"
+            />
             </div>
             <p className="text-white/50 text-sm leading-relaxed mb-6">
               The creator economy marketplace connecting brands with authentic voices.

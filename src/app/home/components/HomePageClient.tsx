@@ -9,7 +9,6 @@ import {
   Users,
   TrendingUp,
   Phone,
-  MessageCircle,
   Globe,
   CheckCircle,
   Zap,
@@ -22,10 +21,9 @@ import {
   Award,
 } from 'lucide-react';
 import { buildAdminLoginUrl, buildBrandListingLoginUrl } from '@/src/lib/auth/sso';
-import { fetchPublicCreators } from '@/src/lib/api/public';
-import type { PublicCreator } from '@/src/lib/api/types';
 import SectionHeading from '@/src/components/SectionHeading';
 import FadeIn from '@/src/components/animations/FadeIn';
+import HeroBannerVisual from './HeroBannerVisual';
 import Reveal from '@/src/components/animations/Reveal';
 import { StaggerContainer, StaggerItem } from '@/src/components/animations/Stagger';
 
@@ -36,62 +34,48 @@ const STATS = [
   { value: 'Pan India', label: 'Growing Together', icon: Globe },
 ];
 
-const CREATOR_GRADIENTS = [
-  'from-rose-400 to-pink-600',
-  'from-violet-500 to-purple-700',
-  'from-amber-400 to-orange-500',
-  'from-teal-400 to-cyan-600',
-  'from-fuchsia-500 to-pink-600',
-  'from-blue-500 to-indigo-600',
+const SHOWCASE_CREATORS = [
+  {
+    name: 'Priya Sharma',
+    niche: 'Food',
+    location: 'Jaipur',
+    followers: '198K',
+    engagement: '8.1%',
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80',
+  },
+  {
+    name: 'Marcus Reid',
+    niche: 'Fitness',
+    location: 'Delhi',
+    followers: '512K',
+    engagement: '4.2%',
+    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80',
+  },
+  {
+    name: 'Sofia Chen',
+    niche: 'Beauty',
+    location: 'Mumbai',
+    followers: '284K',
+    engagement: '6.3%',
+    avatar: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=200&q=80',
+  },
+  {
+    name: 'Rohan Mehta',
+    niche: 'Travel',
+    location: 'Bangalore',
+    followers: '158K',
+    engagement: '5.1%',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+  },
 ];
 
-type HomeCreatorCard = {
-  id: string;
-  name: string;
-  niche: string;
-  location: string;
-  followers: string;
-  engagement: string;
-  platform: string;
-  initials: string;
-  gradient: string;
-  verified: boolean;
-  top: boolean;
-  href: string;
-};
-
-const FALLBACK_CREATORS: HomeCreatorCard[] = [
-  { id: 'cr-002', name: 'Marcus Reid', niche: 'Fitness', location: 'Delhi', followers: '512K', engagement: '4.2%', platform: 'youtube', initials: 'MR', gradient: 'from-violet-500 to-purple-700', verified: true, top: true, href: '/explore/creators-v2' },
-  { id: 'cr-005', name: 'Ananya Kapoor', niche: 'Fashion', location: 'Hyderabad', followers: '321K', engagement: '7.3%', platform: 'instagram', initials: 'AK', gradient: 'from-fuchsia-500 to-pink-600', verified: true, top: true, href: '/explore/creators-v2' },
-  { id: 'cr-003', name: 'Sofia Chen', niche: 'Beauty', location: 'Mumbai', followers: '284K', engagement: '6.1%', platform: 'instagram', initials: 'SC', gradient: 'from-amber-400 to-orange-500', verified: true, top: true, href: '/explore/creators-v2' },
-  { id: 'cr-001', name: 'Priya Sharma', niche: 'Food', location: 'Jaipur', followers: '198K', engagement: '8.1%', platform: 'instagram', initials: 'PS', gradient: 'from-rose-400 to-pink-600', verified: true, top: false, href: '/explore/creators-v2' },
-  { id: 'cr-004', name: 'Rohan Mehta', niche: 'Travel', location: 'Bangalore', followers: '143K', engagement: '5.7%', platform: 'youtube', initials: 'RM', gradient: 'from-teal-400 to-cyan-600', verified: false, top: false, href: '/explore/creators-v2' },
-  { id: 'cr-006', name: 'Vikram Nair', niche: 'Tech', location: 'Pune', followers: '89K', engagement: '9.2%', platform: 'youtube', initials: 'VN', gradient: 'from-blue-500 to-indigo-600', verified: false, top: false, href: '/explore/creators-v2' },
+const BREW_HOUSE_PHOTOS = [
+  'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=240&q=80',
+  'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=240&q=80',
+  'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=240&q=80',
 ];
 
-function mapPublicCreator(c: PublicCreator, index: number): HomeCreatorCard {
-  const initials = c.name
-    .split(' ')
-    .map((part) => part[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
-
-  return {
-    id: c.id,
-    name: c.name,
-    niche: c.niche,
-    location: c.location || 'India',
-    followers: c.followersDisplay,
-    engagement: c.engagementDisplay,
-    platform: (c.platform || '').toLowerCase().includes('youtube') ? 'youtube' : 'instagram',
-    initials,
-    gradient: CREATOR_GRADIENTS[index % CREATOR_GRADIENTS.length],
-    verified: c.verified,
-    top: index < 3 || c.premium,
-    href: c.username ? `/creator/public/${c.username}` : '/explore/creators-v2',
-  };
-}
+const PROMOTE_OPTIONS = ['More Store Visits', 'More Leads', 'More Sales', 'More Followers', 'More Reviews', 'Brand Awareness'];
 
 const TESTIMONIALS = [
   { name: 'Ananya Verma', role: 'Restaurant Owner', location: 'Jaipur', initials: 'AV', gradient: 'from-violet-500 to-purple-700', quote: 'ViralBridge helped us get more visibility and connect with the right creators. Our footfall increased by 40% in just two months. It\'s been a game changer for our café.', rating: 5 },
@@ -172,34 +156,16 @@ function InstagramIcon({ className }: { className?: string }) {
   );
 }
 
-function YoutubeIcon({ className }: { className?: string }) {
+function WhatsAppIcon({ className }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" />
-      <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" />
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M20.5 3.5A11 11 0 0 0 2.1 17.8L1 23l5.4-1.1A11 11 0 0 0 20.5 3.5zm-8.5 17a9.1 9.1 0 0 1-4.6-1.3l-.3-.2-3.2.7.7-3.1-.2-.3A9.1 9.1 0 1 1 12 20.5zm5-6.8c-.3-.1-1.6-.8-1.8-.9s-.4-.1-.6.1-.7.9-.8 1-.3.2-.6.1a7.4 7.4 0 0 1-2.2-1.4 8.2 8.2 0 0 1-1.5-1.9c-.2-.3 0-.4.1-.6l.4-.5.2-.3a.5.5 0 0 0 0-.5c0-.1-.6-1.4-.8-1.9s-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.5 4 15 15 0 0 0 1.5.6 3.6 3.6 0 0 0 1.7.1 2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .2-1.2c-.1-.1-.3-.2-.6-.3z" />
     </svg>
   );
 }
 
 export default function HomePageClient() {
   const [promoOption, setPromoOption] = useState<string | null>(null);
-  const [creators, setCreators] = useState<HomeCreatorCard[]>(FALLBACK_CREATORS);
-
-  useEffect(() => {
-    let cancelled = false;
-    fetchPublicCreators({ limit: 6, sort: 'followers_desc' })
-      .then((result) => {
-        if (!cancelled && result.data?.length) {
-          setCreators(result.data.slice(0, 6).map(mapPublicCreator));
-        }
-      })
-      .catch(() => {
-        if (!cancelled) setCreators(FALLBACK_CREATORS);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   const listUrl = buildBrandListingLoginUrl();
   const creatorJoinUrl = buildAdminLoginUrl('/explore/creators-v2');
@@ -271,140 +237,10 @@ export default function HomePageClient() {
                 </div>
               </FadeIn>
 
-              <FadeIn delay={0.32}>
-                <div className="hidden lg:flex items-center gap-2 mt-10 text-slate-400">
-                  <svg width="40" height="30" viewBox="0 0 40 30" fill="none" className="text-violet-300">
-                    <path d="M2 28 C10 10, 30 5, 38 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
-                    <path d="M34 2 L38 2 L38 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                  <div className="text-xs font-medium text-slate-400 leading-tight">
-                    Real People
-                    <br />
-                    Real Impact
-                  </div>
-                </div>
-              </FadeIn>
             </div>
 
-            <FadeIn delay={0.18} scale className="relative lg:h-[580px] flex items-end justify-center pb-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-100/60 via-transparent to-pink-100/40 rounded-3xl" />
-
-              <div className="absolute top-4 left-0 lg:left-4 w-64 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 z-20 animate-float">
-                <div className="flex items-start gap-3 mb-3">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
-                    SC
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1">
-                      <span className="font-bold text-slate-900 text-sm">Sharma Café</span>
-                      <CheckCircle className="w-3.5 h-3.5 text-violet-500 flex-shrink-0" />
-                    </div>
-                    <div className="flex items-center gap-1 text-xs text-slate-500">
-                      <MapPin className="w-3 h-3" /> Jaipur
-                    </div>
-                    <div className="flex items-center gap-1 mt-0.5">
-                      <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
-                      <span className="text-xs font-semibold text-slate-700">4.7</span>
-                      <span className="text-xs text-slate-400">• Café & Restaurant</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex gap-1 mb-3">
-                  {['#cafe1', '#cafe2', '#cafe3'].map((k, i) => (
-                    <div
-                      key={k}
-                      className={`flex-1 h-14 rounded-lg bg-gradient-to-br ${
-                        i === 0 ? 'from-amber-200 to-orange-300' : i === 1 ? 'from-rose-200 to-pink-300' : 'from-violet-200 to-purple-300'
-                      }`}
-                    />
-                  ))}
-                </div>
-                <div className="flex gap-1.5">
-                  <span className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg bg-violet-50 text-violet-700 text-xs font-medium border border-violet-100">
-                    <Phone className="w-3 h-3" /> Call
-                  </span>
-                  <span className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg bg-green-50 text-green-700 text-xs font-medium border border-green-100">
-                    <MessageCircle className="w-3 h-3" /> WhatsApp
-                  </span>
-                  <span className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg bg-slate-50 text-slate-600 text-xs font-medium border border-slate-100">
-                    <Globe className="w-3 h-3" /> Web
-                  </span>
-                </div>
-                <div className="mt-2 text-center">
-                  <span className="text-xs text-slate-400">2.8k followers</span>
-                </div>
-              </div>
-
-              <div className="absolute top-8 right-0 lg:right-0 w-60 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 z-20 animate-float-delay">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-bold text-slate-800">Recommended Creators</span>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-violet-100 text-violet-700 font-semibold">AI Match 96%</span>
-                </div>
-                {[
-                  { name: 'Priya Sharma', niche: 'Food', followers: '198K', match: '96%', initials: 'PS', g: 'from-rose-400 to-pink-600' },
-                  { name: 'Marcus Reid', niche: 'Fitness', followers: '512K', match: '92%', initials: 'MR', g: 'from-violet-500 to-purple-700' },
-                  { name: 'Sofia Chen', niche: 'Beauty', followers: '284K', match: '91%', initials: 'SC', g: 'from-amber-400 to-orange-500' },
-                ].map((c) => (
-                  <div key={c.name} className="flex items-center gap-2 py-1.5 border-b border-slate-50 last:border-0">
-                    <div
-                      className={`w-7 h-7 rounded-full bg-gradient-to-br ${c.g} flex items-center justify-center text-white text-xs font-bold flex-shrink-0`}
-                    >
-                      {c.initials}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="text-xs font-semibold text-slate-800 truncate">{c.name}</div>
-                      <div className="text-xs text-slate-400">
-                        {c.niche} • {c.followers}
-                      </div>
-                    </div>
-                    <span className="text-xs font-bold text-violet-600">{c.match}</span>
-                  </div>
-                ))}
-                <a
-                  href={launchCampaignUrl}
-                  className="w-full mt-3 py-2 rounded-lg bg-gradient-to-r from-violet-600 to-purple-700 text-white text-xs font-bold block text-center"
-                >
-                  Launch Campaign
-                </a>
-              </div>
-
-              <div className="absolute bottom-24 left-8 lg:left-12 bg-white rounded-xl shadow-lg border border-slate-100 px-4 py-3 z-30 flex items-center gap-3 animate-float-fast">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center">
-                  <TrendingUp className="w-4 h-4 text-white" />
-                </div>
-                <div>
-                  <div className="text-xs text-slate-500">Potential Growth</div>
-                  <div className="text-sm font-bold text-emerald-600">+32% This Month</div>
-                </div>
-              </div>
-
-              <div className="absolute bottom-16 right-4 lg:right-8 bg-white rounded-xl shadow-lg border border-slate-100 px-4 py-3 z-30 flex items-center gap-3 animate-float-slow">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-fuchsia-500 to-pink-600 flex items-center justify-center text-white font-bold text-sm">
-                  AK
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-slate-800">Ananya Kapoor</div>
-                  <div className="text-xs text-slate-400">321K • Fashion</div>
-                  <div className="flex items-center gap-1 mt-0.5">
-                    <InstagramIcon className="w-3 h-3 text-pink-500" />
-                    <span className="text-xs text-slate-400">7.3% engagement</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="w-full h-[340px] lg:h-[480px] rounded-3xl bg-gradient-to-br from-violet-100 via-purple-50 to-pink-50 flex items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0 opacity-20">
-                  <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-violet-400 rounded-full blur-2xl" />
-                  <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-pink-400 rounded-full blur-2xl" />
-                </div>
-                <div className="relative z-10 text-center">
-                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-600 to-purple-700 flex items-center justify-center mx-auto mb-4 shadow-xl">
-                    <Zap className="w-10 h-10 text-white" />
-                  </div>
-                  <div className="text-2xl font-bold text-violet-800">ViralBridge</div>
-                  <div className="text-sm text-violet-500 mt-1">Business + Creator Network</div>
-                </div>
-              </div>
+            <FadeIn delay={0.18} scale className="relative">
+              <HeroBannerVisual launchCampaignUrl={launchCampaignUrl} />
             </FadeIn>
           </div>
         </div>
@@ -524,76 +360,108 @@ export default function HomePageClient() {
             </div>
 
             <FadeIn delay={0.12} scale className="relative">
-              <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-5">
-                <div className="h-32 rounded-xl bg-gradient-to-br from-amber-200 via-orange-200 to-rose-200 mb-4 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-amber-800">The Brew House</div>
-                    <div className="text-sm text-amber-600">Café & Restaurant</div>
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-stretch">
+                <article className="min-w-0 flex-1 rounded-[28px] border border-white bg-white p-4 shadow-[0_24px_50px_-28px_rgba(91,33,182,0.55)]">
+                  <div className="mb-2 flex justify-end">
+                    <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-sky-600">
+                      <CheckCircle className="h-3.5 w-3.5" /> Verified Business
+                    </span>
                   </div>
-                </div>
-                <div className="flex items-center justify-between mb-3">
-                  <div>
-                    <div className="font-bold text-slate-900">The Brew House Café</div>
-                    <div className="flex items-center gap-1 text-sm text-slate-500">
-                      <MapPin className="w-3.5 h-3.5" /> Jaipur • Café &amp; Restaurant
+                  <div className="mb-3 flex min-w-0 gap-3">
+                    <img
+                      src={BREW_HOUSE_PHOTOS[0]}
+                      alt="Coffee at The Brew House Café"
+                      className="h-16 w-16 flex-shrink-0 rounded-2xl object-cover"
+                    />
+                    <div className="min-w-0">
+                      <h3 className="truncate text-[15px] font-bold text-slate-900">The Brew House Café</h3>
+                      <p className="mt-0.5 flex items-center gap-1 text-xs text-slate-500">
+                        <MapPin className="h-3 w-3" /> Jaipur • Café &amp; Restaurant
+                      </p>
+                      <p className="mt-1 flex flex-wrap items-center gap-1 text-xs text-slate-600">
+                        <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+                        <span className="font-semibold text-slate-800">4.7</span>
+                        <span className="text-slate-400">(2.2k)</span>
+                        <span className="text-slate-400">• Café &amp; Restaurant</span>
+                      </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 bg-amber-50 px-2 py-1 rounded-lg">
-                    <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                    <span className="text-sm font-bold text-amber-700">4.7</span>
+                  <div className="mb-3 grid grid-cols-3 gap-2">
+                    <span className="inline-flex items-center justify-center gap-1 rounded-full bg-violet-50 py-1.5 text-[11px] font-semibold text-violet-700">
+                      <Phone className="h-3.5 w-3.5" /> Call
+                    </span>
+                    <span className="inline-flex items-center justify-center gap-1 rounded-full bg-emerald-50 py-1.5 text-[11px] font-semibold text-emerald-600">
+                      <WhatsAppIcon className="h-3.5 w-3.5" /> WhatsApp
+                    </span>
+                    <span className="inline-flex items-center justify-center gap-1 rounded-full bg-slate-50 py-1.5 text-[11px] font-semibold text-slate-500">
+                      <Globe className="h-3.5 w-3.5" /> Website
+                    </span>
                   </div>
-                </div>
-                <div className="grid grid-cols-3 gap-2 mb-4">
-                  {['from-amber-200 to-orange-300', 'from-rose-200 to-pink-300', 'from-violet-200 to-purple-300'].map((g) => (
-                    <div key={g} className={`h-16 rounded-lg bg-gradient-to-br ${g}`} />
-                  ))}
-                </div>
-                <div className="flex gap-2">
-                  <span className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-violet-50 text-violet-700 text-sm font-medium border border-violet-100">
-                    <Phone className="w-3.5 h-3.5" /> Call
-                  </span>
-                  <span className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-green-50 text-green-700 text-sm font-medium border border-green-100">
-                    <MessageCircle className="w-3.5 h-3.5" /> WhatsApp
-                  </span>
-                  <span className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-slate-50 text-slate-600 text-sm font-medium border border-slate-100">
-                    <Globe className="w-3.5 h-3.5" /> Website
-                  </span>
-                </div>
-              </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    {BREW_HOUSE_PHOTOS.map((src, index) => (
+                      <img
+                        key={src}
+                        src={src}
+                        alt={index === 0 ? 'Brew House coffee' : index === 1 ? 'Brew House breakfast' : 'Brew House dinner'}
+                        className="h-[72px] w-full rounded-xl object-cover"
+                      />
+                    ))}
+                  </div>
+                </article>
 
-              <div className="absolute -right-4 top-8 w-52 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 z-10">
-                <div className="text-xs font-bold text-slate-800 mb-1">Promote My Business</div>
-                <div className="text-xs text-slate-400 mb-3">What do you want to achieve?</div>
-                <div className="grid grid-cols-2 gap-1.5 mb-3">
-                  {['More Store Visits', 'More Leads', 'More Sales', 'More Followers', 'More Reviews', 'Brand Awareness'].map(
-                    (opt) => (
-                      <button
-                        key={opt}
-                        type="button"
-                        onClick={() => setPromoOption(opt)}
-                        className={`text-xs py-1.5 px-2 rounded-lg border transition-colors text-left ${
-                          promoOption === opt
-                            ? 'bg-violet-600 text-white border-violet-600'
-                            : 'border-slate-200 text-slate-600 hover:border-violet-300'
-                        }`}
-                      >
-                        {opt}
-                      </button>
-                    ),
-                  )}
-                </div>
-                <a
-                  href={growBusinessUrl}
-                  className="w-full py-2 rounded-lg bg-gradient-to-r from-violet-600 to-purple-700 text-white text-xs font-bold block text-center"
+                <article className="w-full flex-shrink-0 rounded-[28px] border border-violet-100 bg-[#F6F3FF] p-4 sm:w-[240px]">
+                  <div className="mb-3 flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 text-violet-500" />
+                    <h3 className="text-sm font-bold text-slate-900">Promote My Business</h3>
+                  </div>
+                  <p className="mb-3 text-xs text-slate-500">What do you want to achieve?</p>
+                  <div className="space-y-2">
+                    {PROMOTE_OPTIONS.map((opt) => {
+                      const selected = promoOption === opt;
+                      return (
+                        <button
+                          key={opt}
+                          type="button"
+                          onClick={() => setPromoOption(opt)}
+                          className="flex w-full items-center gap-2 text-left text-[13px] text-slate-700"
+                        >
+                          <span
+                            className={`flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full border ${
+                              selected ? 'border-violet-600 bg-violet-600' : 'border-violet-300 bg-white'
+                            }`}
+                          >
+                            {selected ? <span className="h-1.5 w-1.5 rounded-full bg-white" /> : null}
+                          </span>
+                          {opt}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <a
+                    href={growBusinessUrl}
+                    className="mt-4 block rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 py-2.5 text-center text-sm font-bold text-white"
+                  >
+                    Get AI Recommendation
+                  </a>
+                </article>
+
+                <div
+                  className="hidden w-[92px] flex-shrink-0 flex-col justify-center text-[18px] leading-tight text-violet-500 xl:flex"
+                  style={{ fontFamily: '"Segoe Script", "Bradley Hand", "Comic Sans MS", cursive' }}
                 >
-                  Get AI Recommendation
-                </a>
+                  Turn Visitors into Customers
+                  <svg viewBox="0 0 48 36" className="mt-1 h-8 w-10 text-violet-400" fill="none" aria-hidden="true">
+                    <path d="M40 6 C28 8, 16 16, 10 28" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M4 22 L10 30 L18 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
               </div>
-
-              <div className="absolute -bottom-4 left-4 flex items-center gap-2 bg-white rounded-xl shadow-md border border-slate-100 px-3 py-2 animate-float-fast">
-                <TrendingUp className="w-4 h-4 text-violet-600" />
-                <div className="text-xs font-semibold text-slate-700">Turn Visitors into Customers</div>
-              </div>
+              <p
+                className="mt-3 text-right text-lg leading-tight text-violet-500 xl:hidden"
+                style={{ fontFamily: '"Segoe Script", "Bradley Hand", "Comic Sans MS", cursive' }}
+              >
+                Turn Visitors into Customers
+              </p>
             </FadeIn>
           </div>
         </div>
@@ -652,7 +520,6 @@ export default function HomePageClient() {
               Browse Creators <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-
           <div className="flex items-center gap-2 mb-5">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 text-xs font-bold uppercase tracking-wider">
               <Award className="w-3.5 h-3.5" /> Top Creators
@@ -660,52 +527,35 @@ export default function HomePageClient() {
             <span className="text-sm text-slate-500">Highest-performing creators on ViralBridge</span>
           </div>
 
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {creators.map((c, i) => (
-              <StaggerItem key={c.id} index={i}>
-              <Link
-                href={c.href}
-                className="group bg-white rounded-2xl border border-slate-100 p-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 block h-full"
-              >
-                <div className="flex items-start gap-3 mb-4">
-                  <div
-                    className={`w-12 h-12 rounded-xl bg-gradient-to-br ${c.gradient} flex items-center justify-center text-white font-bold text-base flex-shrink-0`}
-                  >
-                    {c.initials}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-bold text-slate-900 text-sm">{c.name}</span>
-                      {c.verified && <CheckCircle className="w-3.5 h-3.5 text-violet-500 flex-shrink-0" />}
+          <StaggerContainer className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {SHOWCASE_CREATORS.map((creator, i) => (
+              <StaggerItem key={creator.name} index={i}>
+                <Link
+                  href="/explore/creators-v2"
+                  className="flex h-full items-center gap-3 rounded-2xl border border-slate-100 bg-white px-4 py-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+                >
+                  <img
+                    src={creator.avatar}
+                    alt=""
+                    className="h-14 w-14 flex-shrink-0 rounded-full object-cover"
+                  />
+                  <div className="min-w-0">
+                    <div className="truncate text-sm font-bold text-slate-900">{creator.name}</div>
+                    <div className="text-xs font-medium text-violet-500">
+                      {creator.niche} <span className="text-violet-300">|</span> {creator.location}
                     </div>
-                    <div className="text-xs text-slate-500">
-                      {c.niche} • {c.location}
+                    <div className="mt-1.5 flex items-center gap-1 text-xs font-semibold text-slate-700">
+                      <InstagramIcon className="h-3.5 w-3.5 text-pink-500" />
+                      {creator.followers}
                     </div>
-                    {c.top ? (
-                      <span className="inline-flex items-center gap-1 mt-1.5 px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-700 text-[10px] font-bold uppercase tracking-wider">
-                        <Award className="w-3 h-3" /> Top Creator
+                    <div className="mt-0.5 flex items-center gap-1 text-[11px] text-slate-400">
+                      <span className="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-slate-300">
+                        <span className="h-1 w-1 rounded-full bg-slate-400" />
                       </span>
-                    ) : null}
+                      {creator.engagement} engagement
+                    </div>
                   </div>
-                  <div className="flex-shrink-0">
-                    {c.platform === 'instagram' ? (
-                      <InstagramIcon className="w-4 h-4 text-pink-500" />
-                    ) : (
-                      <YoutubeIcon className="w-4 h-4 text-red-500" />
-                    )}
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-slate-50 rounded-xl p-3 text-center">
-                    <div className="text-base font-bold text-slate-900">{c.followers}</div>
-                    <div className="text-xs text-slate-400">Followers</div>
-                  </div>
-                  <div className="bg-violet-50 rounded-xl p-3 text-center">
-                    <div className="text-base font-bold text-violet-700">{c.engagement}</div>
-                    <div className="text-xs text-slate-400">Engagement</div>
-                  </div>
-                </div>
-              </Link>
+                </Link>
               </StaggerItem>
             ))}
           </StaggerContainer>
@@ -853,12 +703,11 @@ export default function HomePageClient() {
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <FadeIn inView>
-            <div className="flex items-center justify-center gap-2 mb-6">
-              <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
-                <Zap className="w-4 h-4 text-white" />
-              </div>
-              <span className="text-white/80 font-semibold">ViralBridge</span>
-            </div>
+            <img
+              src="/viralbridge_logo_footer.png"
+              alt="ViralBridge"
+              className="mx-auto mb-6 h-24 w-auto sm:h-28"
+            />
           </FadeIn>
           <SectionHeading
             className="mb-10"
