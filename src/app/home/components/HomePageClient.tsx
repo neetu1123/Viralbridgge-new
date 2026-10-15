@@ -24,6 +24,7 @@ import { buildAdminLoginUrl, buildBrandListingLoginUrl } from '@/src/lib/auth/ss
 import SectionHeading from '@/src/components/SectionHeading';
 import FadeIn from '@/src/components/animations/FadeIn';
 import HeroBannerVisual from './HeroBannerVisual';
+import ProblemSection from './ProblemSection';
 import Reveal from '@/src/components/animations/Reveal';
 import { StaggerContainer, StaggerItem } from '@/src/components/animations/Stagger';
 
@@ -466,6 +467,8 @@ export default function HomePageClient() {
           </div>
         </div>
       </section>
+
+      <ProblemSection />
 
       <section id="how-it-works" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
