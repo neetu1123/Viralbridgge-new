@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
-import { ArrowRight, Target, BarChart3, Shield, Zap, TrendingUp, CheckCircle, Users, DollarSign } from 'lucide-react';
+import { ArrowRight, Target, BarChart3, Shield, Zap, TrendingUp, CheckCircle, Users, IndianRupee } from 'lucide-react';
 import FadeIn from '@/src/components/animations/FadeIn';
 
 const steps = [
@@ -66,7 +66,7 @@ export default function BrandGuidePage() {
               {[
               { icon: TrendingUp, label: 'Average campaign ROI', value: '3.4x', color: 'border-violet-500/30 bg-violet-500/10' },
               { icon: Users, label: 'Verified creators', value: '12K+', color: 'border-rose-500/30 bg-rose-500/10' },
-              { icon: DollarSign, label: 'Cost per engagement', value: '₹0.18', color: 'border-amber-500/30 bg-amber-500/10' },
+              { icon: IndianRupee, label: 'Cost per engagement', value: '₹0.18', color: 'border-amber-500/30 bg-amber-500/10' },
               { icon: CheckCircle, label: 'Campaign success rate', value: '94%', color: 'border-green-500/30 bg-green-500/10' }]?.
               map((s) =>
               <div key={s?.label} className={`rounded-2xl p-5 border ${s?.color}`}>

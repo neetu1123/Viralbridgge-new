@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { DollarSign, Calendar, Users, ArrowRight, ExternalLink } from 'lucide-react';
+import { IndianRupee, Calendar, Users, ArrowRight, ExternalLink } from 'lucide-react';
 import { fetchPublicCampaigns } from '@/src/lib/api/public';
 import type { PublicCampaign } from '@/src/lib/api/types';
 import { brandProfilePath, mapCampaignSort } from '@/src/lib/explore-utils';
@@ -150,7 +150,7 @@ export default function CampaignGrid({ filters, updateFilter }: CampaignGridProp
       {campaigns.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-24 text-center">
           <div className="w-16 h-16 rounded-2xl bg-[#EFEAFF] flex items-center justify-center mb-4">
-            <DollarSign size={28} className="text-[#7B2FF7]" />
+            <IndianRupee size={28} className="text-[#7B2FF7]" />
           </div>
           <h3 className="font-display font-700 text-[#1F1F2E] text-lg mb-2">No active campaigns</h3>
           <p className="text-[#6B6B8A] text-sm max-w-xs">Try adjusting your filters to discover more brand opportunities.</p>

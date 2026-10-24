@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {
   ArrowLeft,
   Calendar,
-  DollarSign,
+  IndianRupee,
   Globe,
   MapPin,
   Users,
@@ -121,7 +121,7 @@ export default function CampaignPublicDetail({ campaignId }: CampaignPublicDetai
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-white rounded-xl border border-[#E5E7EB] p-4">
               <div className="flex items-center gap-2 text-[#9AA0B4] text-xs uppercase tracking-wide mb-1">
-                <DollarSign size={14} /> Budget
+                <IndianRupee size={14} /> Budget
               </div>
               <p className="font-display font-700 text-xl text-[#1F1F2E]">{campaign.budgetLabel}</p>
             </div>

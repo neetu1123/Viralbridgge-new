@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserPlus, Send, DollarSign, Megaphone, Users, Handshake } from 'lucide-react';
+import { UserPlus, Send, IndianRupee, Megaphone, Users, Handshake } from 'lucide-react';
 import Reveal from '@/src/components/animations/Reveal';
 import { StaggerItem } from '@/src/components/animations/Stagger';
 // import AppIcon from '@/src/components/ui/AppIcon';
@@ -27,7 +27,7 @@ const CREATOR_STEPS = [
   {
     id: 'creator-step-3',
     step: '03',
-    icon: DollarSign,
+    icon: IndianRupee,
     title: 'Create & Get Paid',
     desc: 'Deliver your content, get brand approval, and receive payment directly to your bank — no chasing invoices.',
     color: '#F9A826',

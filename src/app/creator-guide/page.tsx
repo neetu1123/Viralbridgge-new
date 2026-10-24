@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
-import { ArrowRight, CheckCircle, Star, TrendingUp, Shield, Zap, DollarSign, Users, Camera, ChevronDown } from 'lucide-react';
+import { ArrowRight, CheckCircle, Star, TrendingUp, Shield, Zap, IndianRupee, Users, Camera, ChevronDown } from 'lucide-react';
 import FadeIn from '@/src/components/animations/FadeIn';
 
 const steps = [
@@ -69,7 +69,7 @@ export default function CreatorGuidePage() {
             </FadeIn>
             <div className="grid grid-cols-2 gap-4">
               {[
-              { icon: DollarSign, label: 'Avg monthly earnings', value: '₹48,200', color: 'border-green-500/30 bg-green-500/10 text-green-300' },
+              { icon: IndianRupee, label: 'Avg monthly earnings', value: '₹48,200', color: 'border-green-500/30 bg-green-500/10 text-green-300' },
               { icon: Star, label: 'Campaign success rate', value: '94%', color: 'border-violet-500/30 bg-violet-500/10 text-violet-300' },
               { icon: Shield, label: 'Escrow protected', value: '100%', color: 'border-blue-500/30 bg-blue-500/10 text-blue-300' },
               { icon: TrendingUp, label: 'Creators growing YoY', value: '+340%', color: 'border-amber-500/30 bg-amber-500/10 text-amber-300' }]?.
