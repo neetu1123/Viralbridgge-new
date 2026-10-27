@@ -34,6 +34,22 @@ const SORTS = [
   { id: 'name', label: 'Name A-Z' },
 ];
 
+function titleCase(value: string) {
+  return value
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function matchCategory(categories: DiscoveryCategory[], slug: string) {
+  const needle = slug.toLowerCase();
+  const words = needle.replace(/-/g, ' ');
+  return categories.find((item) => {
+    const name = item.name.toLowerCase();
+    const nameSlug = name.replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    return item.slug.toLowerCase() === needle || nameSlug === needle || name === words || name.includes(words);
+  });
+}
+
 export default function BusinessSearchClient({ initialCategory, initialCity, mode = 'business' }: Props) {
   const router = useRouter();
   const pathname = usePathname();
@@ -70,6 +86,17 @@ export default function BusinessSearchClient({ initialCategory, initialCity, mod
         setLocations([]);
       });
   }, [mode]);
+
+  useEffect(() => {
+    if (!initialCategory || categories.length === 0) return;
+    const match = matchCategory(categories, initialCategory);
+    if (match) {
+      setCategory(match.slug);
+      return;
+    }
+    setCategory('');
+    setKeyword((current) => current.trim() || initialCategory.replace(/-/g, ' '));
+  }, [initialCategory, categories]);
 
   const query = useMemo(
     () => ({
@@ -150,6 +177,10 @@ export default function BusinessSearchClient({ initialCategory, initialCity, mod
   };
 
   const selectedAreas = locations.find((item) => item.name === city)?.areas ?? [];
+  const activeCategory = categories.find((item) => item.slug === category);
+  const activeLabel = activeCategory?.name
+    || (category ? titleCase(category) : '')
+    || (initialCategory ? titleCase(keyword.trim() || initialCategory) : '');
 
   const filters = (
     <div className="space-y-5">
@@ -170,6 +201,9 @@ export default function BusinessSearchClient({ initialCategory, initialCity, mod
           className="w-full rounded-xl border border-[#E5E7EB] px-3 py-2.5 text-sm bg-white"
         >
           <option value="">All categories</option>
+          {category && !categories.some((item) => item.slug === category) && (
+            <option value={category}>{titleCase(category)}</option>
+          )}
           {categories.map((item) => (
             <option key={item.id} value={item.slug}>{item.icon} {item.name}</option>
           ))}
@@ -240,12 +274,24 @@ export default function BusinessSearchClient({ initialCategory, initialCity, mod
         <FadeIn>
           <p className="vb-eyebrow">ViralBridge Discover</p>
           <h1 className="vb-heading vb-heading-md">
-            What are you
-            <br />
-            <span className="vb-heading-highlight">looking for?</span>
+            {activeLabel ? (
+              <>
+                {activeLabel}
+                <br />
+                <span className="vb-heading-highlight">near you</span>
+              </>
+            ) : (
+              <>
+                What are you
+                <br />
+                <span className="vb-heading-highlight">looking for?</span>
+              </>
+            )}
           </h1>
           <p className="vb-lede mt-3">
-            Search registered businesses and creators by service and city — no login required.
+            {activeLabel
+              ? `Browse ${activeLabel} businesses and creators. Filter by city, rating, or keyword — no login required.`
+              : 'Search registered businesses and creators by service and city — no login required.'}
           </p>
         </FadeIn>
 

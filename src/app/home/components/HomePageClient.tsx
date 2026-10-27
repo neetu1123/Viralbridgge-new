@@ -16,8 +16,6 @@ import {
   Target,
   Sparkles,
   Building2,
-  ShoppingBag,
-  Briefcase,
   Award,
 } from 'lucide-react';
 import { buildAdminLoginUrl, buildBrandListingLoginUrl } from '@/src/lib/auth/sso';
@@ -25,6 +23,7 @@ import SectionHeading from '@/src/components/SectionHeading';
 import FadeIn from '@/src/components/animations/FadeIn';
 import HeroBannerVisual from './HeroBannerVisual';
 import ProblemSection from './ProblemSection';
+import BusinessCategoryGrid from './BusinessCategoryGrid';
 import Reveal from '@/src/components/animations/Reveal';
 import { StaggerContainer, StaggerItem } from '@/src/components/animations/Stagger';
 
@@ -565,93 +564,20 @@ export default function HomePageClient() {
         </div>
       </section>
 
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="mb-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-            <SectionHeading
-              align="left"
-              className="min-w-0 flex-1"
-              eyebrow="Built for every kind of business"
-              title="Explore Businesses"
-              accent={
-                <>
-                  Across <span className="vb-heading-highlight">Categories</span>
-                </>
-              }
-            />
-            <Link
-              href="/discover/category"
-              className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl border-2 border-violet-200 text-violet-700 font-semibold hover:bg-violet-50 transition-colors shrink-0 self-start sm:self-end"
-            >
-              View All Categories <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-
-          <StaggerContainer className="grid md:grid-cols-3 gap-6">
-            <StaggerItem>
-            <Link
-              href="/discover"
-              className="group rounded-3xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 p-7 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 block h-full"
-            >
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mb-5">
-                <ShoppingBag className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Local Businesses</h3>
-              <p className="text-sm text-slate-500 mb-5">Discover and connect with local businesses in your city.</p>
-              <ul className="space-y-2">
-                {['Restaurants & Cafes', 'Retailers & Boutiques', 'Salons & Gyms', 'Real Estate & More', 'Clinics & Hospitals', 'Hotels & Travel'].map(
-                  (item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm text-slate-600">
-                      <div className="w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" /> {item}
-                    </li>
-                  ),
-                )}
-              </ul>
-            </Link>
-            </StaggerItem>
-
-            <StaggerItem index={1}>
-            <Link
-              href="/business"
-              className="group rounded-3xl bg-gradient-to-br from-violet-50 to-purple-50 border border-violet-100 p-7 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 block h-full"
-            >
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center mb-5">
-                <Briefcase className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">D2C / Brands &amp; Startups</h3>
-              <p className="text-sm text-slate-500 mb-5">Fast-growing brands and startups looking for creator partnerships.</p>
-              <ul className="space-y-2">
-                {['D2C Brands', 'Consumer Brands', 'E-commerce', 'SaaS & Apps', 'Startups', 'And More'].map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-slate-600">
-                    <div className="w-1.5 h-1.5 rounded-full bg-violet-400 flex-shrink-0" /> {item}
-                  </li>
-                ))}
-              </ul>
-            </Link>
-            </StaggerItem>
-
-            <StaggerItem index={2}>
-            <Link
-              href="/pricing"
-              className="group rounded-3xl bg-gradient-to-br from-slate-50 to-indigo-50 border border-slate-200 p-7 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 block h-full"
-            >
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-700 to-indigo-800 flex items-center justify-center mb-5">
-                <Award className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Enterprise</h3>
-              <p className="text-sm text-slate-500 mb-5">Large-scale campaigns for enterprise brands and organizations.</p>
-              <ul className="space-y-2">
-                {['Large Brands', 'Agencies', 'Media & Entertainment', 'Education', 'Government / Public Awareness', 'And More'].map(
-                  (item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm text-slate-600">
-                      <div className="w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" /> {item}
-                    </li>
-                  ),
-                )}
-              </ul>
-            </Link>
-            </StaggerItem>
-          </StaggerContainer>
+      <section className="bg-white py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <SectionHeading
+            align="left"
+            className="mb-10"
+            eyebrow="Built for every kind of business"
+            title="Explore Businesses"
+            accent={
+              <>
+                Across <span className="vb-heading-highlight">Categories</span>
+              </>
+            }
+          />
+          <BusinessCategoryGrid />
         </div>
       </section>
 
