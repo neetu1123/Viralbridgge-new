@@ -173,7 +173,7 @@ export default function ProblemSection() {
           </Reveal>
         </div>
 
-        <Reveal delay={0.1}>
+        {/* <Reveal delay={0.1}>
           <div className="relative mt-12 overflow-hidden rounded-[2rem] bg-slate-950 px-6 py-12 text-center sm:px-12 sm:py-14">
             <div className="pointer-events-none absolute -left-16 -top-16 h-64 w-64 rounded-full bg-violet-600/40 blur-3xl" aria-hidden="true" />
             <div className="pointer-events-none absolute -bottom-20 -right-16 h-72 w-72 rounded-full bg-fuchsia-500/30 blur-3xl" aria-hidden="true" />
@@ -188,7 +188,7 @@ export default function ProblemSection() {
               One platform. Better connections. Clearer collaborations. More opportunities.
             </p>
           </div>
-        </Reveal>
+        </Reveal> */}
       </div>
     </section>
   );

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { Eye, EyeOff, Loader2, ArrowRight } from 'lucide-react';
 import { toast } from 'sonner';
-import { login } from '@/src/lib/auth/api';
+import { forgotPassword, login } from '@/src/lib/auth/api';
 import { useAuth } from '@/src/components/AuthProvider';
 
 interface LoginFormData {
@@ -17,6 +17,11 @@ interface LoginFormData {
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showForgot, setShowForgot] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [forgotError, setForgotError] = useState('');
+  const [forgotSent, setForgotSent] = useState(false);
+  const [forgotLoading, setForgotLoading] = useState(false);
   const router = useRouter();
   const { setUser } = useAuth();
 
@@ -25,6 +30,7 @@ export default function LoginForm() {
     handleSubmit,
     formState: { errors },
     setError,
+    getValues,
   } = useForm<LoginFormData>();
 
   const onSubmit = async (data: LoginFormData) => {
@@ -45,6 +51,78 @@ export default function LoginForm() {
       setLoading(false);
     }
   };
+
+  const sendResetLink = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const email = forgotEmail.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setForgotError('Enter a valid email address');
+      return;
+    }
+    setForgotError('');
+    setForgotLoading(true);
+    try {
+      await forgotPassword(email, window.location.origin);
+      setForgotSent(true);
+      toast.success('Check your inbox for a reset link');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Could not send the reset email');
+    } finally {
+      setForgotLoading(false);
+    }
+  };
+
+  if (showForgot) {
+    return (
+      <form onSubmit={sendResetLink} className="flex flex-col gap-5">
+        <div>
+          <h3 className="font-display font-700 text-lg text-[#1F1F2E]">Reset your password</h3>
+          <p className="text-[#6B6B8A] text-sm mt-1">
+            {forgotSent
+              ? `If an account exists for ${forgotEmail.trim()}, a reset link is on its way. It expires in 30 minutes.`
+              : 'Enter your email and we will send a link to choose a new password.'}
+          </p>
+        </div>
+        {!forgotSent && (
+          <div>
+            <label className="block font-display font-600 text-[#1F1F2E] text-sm mb-1.5">
+              Email address <span className="text-[#F357A8]">*</span>
+            </label>
+            <input
+              type="email"
+              value={forgotEmail}
+              onChange={(event) => setForgotEmail(event.target.value)}
+              placeholder="your@email.com"
+              className={`w-full px-4 py-2.5 rounded-xl border text-[#1F1F2E] text-sm placeholder-[#9AA0B4] outline-none transition-all duration-150 focus:border-[#7B2FF7] focus:ring-2 focus:ring-[#7B2FF7]/10 ${
+                forgotError ? 'border-red-400 bg-red-50' : 'border-[#E5E7EB] bg-white'
+              }`}
+            />
+            {forgotError && <p className="text-red-500 text-xs mt-1">{forgotError}</p>}
+          </div>
+        )}
+        {!forgotSent && (
+          <button
+            type="submit"
+            disabled={forgotLoading}
+            className="w-full py-3.5 rounded-xl font-display font-700 text-base text-white flex items-center justify-center gap-2 disabled:opacity-70"
+            style={{ background: 'linear-gradient(90deg, #7B2FF7, #F357A8)' }}
+          >
+            {forgotLoading ? 'Sending...' : 'Send reset link'}
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={() => {
+            setShowForgot(false);
+            setForgotSent(false);
+          }}
+          className="text-[#7B2FF7] text-sm font-medium hover:underline"
+        >
+          Back to sign in
+        </button>
+      </form>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
@@ -73,9 +151,18 @@ export default function LoginForm() {
           <label className="font-display font-600 text-[#1F1F2E] text-sm">
             Password <span className="text-[#F357A8]">*</span>
           </label>
-          <a href="#forgot" className="text-[#7B2FF7] text-xs font-medium hover:underline">
+          <button
+            type="button"
+            onClick={() => {
+              setForgotEmail(getValues('email') || '');
+              setForgotError('');
+              setForgotSent(false);
+              setShowForgot(true);
+            }}
+            className="text-[#7B2FF7] text-xs font-medium hover:underline"
+          >
             Forgot password?
-          </a>
+          </button>
         </div>
         <div className="relative">
           <input

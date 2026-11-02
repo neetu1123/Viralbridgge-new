@@ -182,10 +182,7 @@ export default function ContactPage() {
               <div className="bg-violet-50 rounded-2xl p-5 border border-violet-100">
                 <h3 className="font-semibold text-slate-900 mb-2">Specific contacts</h3>
                 <div className="space-y-2 text-sm">
-                  <div className="flex justify-between"><span className="text-slate-500">Support</span><a href="mailto:support@viralbridge.in" className="text-violet-600 hover:underline">support@viralbridge.in</a></div>
-                  <div className="flex justify-between"><span className="text-slate-500">Press</span><a href="mailto:press@viralbridge.in" className="text-violet-600 hover:underline">press@viralbridge.in</a></div>
-                  <div className="flex justify-between"><span className="text-slate-500">Partnerships</span><a href="mailto:partners@viralbridge.in" className="text-violet-600 hover:underline">partners@viralbridge.in</a></div>
-                  <div className="flex justify-between"><span className="text-slate-500">Legal</span><a href="mailto:legal@viralbridge.in" className="text-violet-600 hover:underline">legal@viralbridge.in</a></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Support</span><a href="mailto:enquiries@viralbridge.in" className="text-violet-600 hover:underline">enquiries@viralbridge.in</a></div>
                 </div>
               </div>
             </Reveal>
